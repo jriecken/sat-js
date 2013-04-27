@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Sat-js : A simple JavaScript library for performing 2D collision detection" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Sat-js</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/jriecken/sat-js">View on GitHub</a>
+
+          <h1 id="project_title">Sat-js</h1>
+          <h2 id="project_tagline">A simple JavaScript library for performing 2D collision detection</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/jriecken/sat-js/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/jriecken/sat-js/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>SAT.js</h1>
+
+<ul>
+<li><a href="#classes">Classes</a></li>
+<li><a href="#tests">Collision Tests</a></li>
+<li><a href="#examples">Examples</a></li>
+</ul><h2>About</h2>
+
+<p>SAT.js is a simple JavaScript library for performing collision detection (and projection-based collision response) of simple 2D shapes.  It uses the <a href="http://en.wikipedia.org/wiki/Hyperplane_separation_theorem">Separating Axis Theorem</a> (hence the name)</p>
+
+<p>It supports detecting collisions between:</p>
+
+<ul>
+<li>Circles (using Vornoi Regions.)</li>
+<li>Convex Polygons (and simple Axis-Aligned Boxes, which are of course polygons.)</li>
+</ul><p>It's released under the <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a> license.</p>
+
+<p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 4.7KB (1.7KB gzipped)</p>
+
+<p><a name="classes"></a></p>
+
+<h2>Classes</h2>
+
+<p>SAT.js contains the following JavaScript classes:</p>
+
+<h3>SAT.Vector (aliased as SAT.V)</h3>
+
+<p>This is a simple 2D vector/point class.  It is created by calling:</p>
+
+<pre><code>// Create the vector (10,10) - If (x,y) not specified, defaults to (0,0).
+var v = new SAT.Vector(10, 10) 
+</code></pre>
+
+<p>It has the following properties:</p>
+
+<ul>
+<li>
+<code>x</code> - The x-coordinate of the Vector.</li>
+<li>
+<code>y</code> - The y-coordinate of the Vector.</li>
+</ul><p>It contains the following methods:</p>
+
+<ul>
+<li>
+<code>copy(other)</code> - Copy the value of another Vector to this one.</li>
+<li>
+<code>perp()</code> - Rotate this Vector by 90 degrees (clockwise)</li>
+<li>
+<code>reverse()</code> - Reverse this Vector.</li>
+<li>
+<code>normalize()</code> - Make the Vector unit-lengthed.</li>
+<li>
+<code>add(other)</code> - Add another Vector to this one.</li>
+<li>
+<code>sub(other)</code> - Subtract another Vector from this one.</li>
+<li>
+<code>scale(x,y)</code> - Scale this Vector in the X and Y directions.</li>
+<li>
+<code>project(other)</code> - Project this Vector onto another one.</li>
+<li>
+<code>projectN(other)</code> - Project this Vector onto a unit Vector.</li>
+<li>
+<code>reflect(axis)</code> - Reflect this Vector on an arbitrary axis Vector.</li>
+<li>
+<code>reflectN(axis)</code> - Reflect this Vector on an arbitrary axis unit Vector.</li>
+<li>
+<code>dot(other)</code> - Get the dot product of this Vector and another.</li>
+<li>
+<code>len2()</code> - Get the length squared of this Vector.</li>
+<li>
+<code>len()</code> - Get the length of this Vector</li>
+</ul><h3>SAT.Circle</h3>
+
+<p>This is a simple circle with a center position and a radius.  It is created by calling:</p>
+
+<pre><code>// Create a circle whose center is (10,10) with radius of 20
+var c = new SAT.Circle(new Sat.Vector(10,10), 20);
+</code></pre>
+
+<p>It has the following properties:</p>
+
+<ul>
+<li>
+<code>pos</code> - A Vector representing the center of the circle.</li>
+<li>
+<code>r</code> - The radius of the circle</li>
+</ul><h3>SAT.Polygon</h3>
+
+<p>This is a <strong>convex</strong> polygon, whose points are specified in a clockwise fashion.  It is created by calling:</p>
+
+<pre><code>// Create a triangle at (0,0)
+var p = new SAT.Polygon(new SAT.Vector(), [
+  new SAT.Vector(),
+  new SAT.Vector(100,0),
+  new SAT.Vector(50,75)
+]);
+</code></pre>
+
+<p>It has the following properties:</p>
+
+<ul>
+<li>
+<code>pos</code> - The position of the polygon (all points are relative to this).</li>
+<li>
+<code>points</code> - Array of vectors representing the points of the polygon.</li>
+<li>
+<code>edges</code> - Array of Vectors representing the edges of the polygon</li>
+<li>
+<code>normals</code> - Array of Vectors representing the edge normals of the polygon (perpendiculars)</li>
+</ul><p>It has the following methods:</p>
+
+<ul>
+<li>
+<code>recalc()</code> - Call this method to recalculate the edges and normals when any of the points change.</li>
+</ul><h3>SAT.Box</h3>
+
+<p>This is a simple Box with a position, width, and height.  It is created by calling:</p>
+
+<pre><code>// Create a box at (10,10) with width 20 and height 40.
+var b = new SAT.Box(new SAT.Vector(10,10), 20, 40);
+</code></pre>
+
+<p>It has the following properties:</p>
+
+<ul>
+<li>
+<code>pos</code> - The top-left coordinate of the box.</li>
+<li>
+<code>w</code> - The width of the box.</li>
+<li>
+<code>h</code> - The height of the box.</li>
+</ul><p>It has the following methods:</p>
+
+<ul>
+<li>
+<code>toPolygon()</code> - Returns a new Polygon whose edges are the edges of the box.</li>
+</ul><h3>SAT.Response</h3>
+
+<p>This is the object representing the result of a collision between two objects.  It just has a simple <code>new Response()</code> constructor.</p>
+
+<p>It has the following properties:</p>
+
+<ul>
+<li>
+<code>a</code> - The first object in the collision.</li>
+<li>
+<code>b</code> - The second object in the collison.</li>
+<li>
+<code>overlap</code> - Magnitude of the overlap on the shortest colliding axis.</li>
+<li>
+<code>overlapN</code> - The shortest colliding axis (unit-vector)</li>
+<li>
+<code>overlapV</code> - The overlap vector (i.e. <code>overlapN.scale(overlap, overlap)</code>).  If this vector is subtracted from the position of <code>a</code>, <code>a</code> and <code>b</code> will no longer be colliding.</li>
+<li>
+<code>aInB</code> - Whether the first object is completely inside the second.</li>
+<li>
+<code>bInA</code> - Whether the second object is completely inside the first.</li>
+</ul><p>It has the following methods:</p>
+
+<ul>
+<li>
+<code>clear()</code> - Clear the response so that it is ready to be reused for another collision test.</li>
+</ul><p><a name="tests"></a></p>
+
+<h2>Collision Tests</h2>
+
+<p>SAT.js contains the following collision tests:</p>
+
+<h3><code>SAT.testCircleCircle(a, b, response)</code></h3>
+
+<p>Tests for a collision between two <code>Circle</code>s, <code>a</code>, and <code>b</code>.  If a response is to be calculated in the event of collision, pass in a cleared <code>Response</code> object.</p>
+
+<p>Returns <code>true</code> if the circles collide, <code>false</code> otherwise.</p>
+
+<h3><code>SAT.testPolygonCircle(polygon, circle, response)</code></h3>
+
+<p>Tests for a collision between a <code>Polygon</code> and a <code>Circle</code>.  If a response is to be calculated in the event of a collision, pass in a cleared <code>Response</code> object.</p>
+
+<p>Returns <code>true</code> if there is a collision, <code>false</code> otherwise.</p>
+
+<h3><code>SAT.testCirclePolybon(circle, polygon, response)</code></h3>
+
+<p>The same thing as <code>SAT.testPolygonCircle</code>, but in the other direction.</p>
+
+<p>Returns <code>true</code> if there is a collision, <code>false</code> otherwise.</p>
+
+<p><em>NOTE: This is slightly slower than <code>SAT.testPolygonCircle</code> as it just calls that and reverses the result</em></p>
+
+<h3><code>SAT.testPolygonPolygon(a, b, response)</code></h3>
+
+<p>Tests whether two polygons <code>a</code> and <code>b</code> collide. If a response is to be calculated in the event of collision, pass in a cleared <code>Response</code> object.</p>
+
+<p>Returns <code>true</code> if there is a collision, <code>false</code> otherwise.</p>
+
+<p><em>NOTE: If you want to detect a collision between <code>Box</code>es, use the <code>toPolygon()</code> method</em></p>
+
+<p><a name="examples"></a></p>
+
+<h2>Examples</h2>
+
+<p>Test two circles</p>
+
+<pre><code>var V = SAT.Vector;
+var C = SAT.Circle;
+
+var circle1 = new C(new V(0,0), 20);
+var circle2 = new C(new V(30,0), 20);
+var response = new SAT.Response();
+var collided = SAT.testCircleCircle(circle1, circle2, response);
+
+// collided =&gt; true
+// response.overlap =&gt; 10
+// response.overlapV =&gt; (10, 0)
+</code></pre>
+
+<p>Test a circle and a polygon</p>
+
+<pre><code>var V = SAT.Vector;
+var C = SAT.Circle;
+var P = SAT.Polygon;
+
+var circle = new C(new V(50,50), 20);
+// A square
+var polygon = new P(new V(0,0), [
+  new V(0,0), new V(40,0), new V(40,40), new V(0,40)
+]);
+var response = new SAT.Response();
+var collided = SAT.testPolygonCircle(polygon, circle, response);
+
+// collided =&gt; true
+// response.overlap ~&gt; 5.86
+// response.overlapV ~&gt; (4.14, 4.14) - i.e. on a diagonal
+</code></pre>
+
+<p>Test two polygons</p>
+
+<pre><code>var V = SAT.Vector;
+var P = SAT.Polygon;
+
+// A square
+var polygon1 = new P(new V(0,0), [
+  new V(0,0), new V(40,0), new V(40,40), new V(0,40)
+]);
+// A triangle
+var polygon2 = new P(new V(30,0), [
+  new V(0,0), new V(30, 0), new V(0, 30)
+]);
+var response = new SAT.Response();
+var collided = SAT.testPolygonPolygon(polygon1, polygon2, response);
+
+// collided =&gt; true
+// response.overlap =&gt; 10
+// response.overlapN =&gt; (10, 0)
+</code></pre>
+
+<p>No collision between two Boxes</p>
+
+<pre><code>var B = SAT.Box;
+
+var box1 = new B(new V(0,0), 20, 20).toPolygon();
+var box2 = new B(new V(100,100), 20, 20).toPolygon();
+var collided = SAT.testPolygonPolygon(box1, box2);
+
+// collided =&gt; false
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Sat-js maintained by <a href="https://github.com/jriecken">jriecken</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
