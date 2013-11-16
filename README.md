@@ -142,7 +142,7 @@ Tests for a collision between a `Polygon` and a `Circle`.  If a response is to b
 
 Returns `true` if there is a collision, `false` otherwise.
 
-### `SAT.testCirclePolybon(circle, polygon, response)`
+### `SAT.testCirclePolygon(circle, polygon, response)`
 
 The same thing as `SAT.testPolygonCircle`, but in the other direction.
 
