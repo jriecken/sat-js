@@ -175,7 +175,7 @@ var SAT = window['SAT'] = {};
     this.y -= y;
     return this;
   };
-  Vector.prototype['relectN'] = Vector.prototype.reflectN;
+  Vector.prototype['reflectN'] = Vector.prototype.reflectN;
   
   /**
    * Get the dot product of this vector against another.
