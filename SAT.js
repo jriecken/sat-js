@@ -17,7 +17,7 @@ var SAT = window['SAT'] = {};
    * @param {?number=} y The y position.
    * @constructor
    */
-  var Vector = function(x, y) {
+  function Vector(x, y) {
     this['x'] = this.x = x || 0;
     this['y'] = this.y = y || 0;
   };
@@ -215,7 +215,7 @@ var SAT = window['SAT'] = {};
    * @param {?number=} r The radius of the circle
    * @constructor
    */
-  var Circle = function(pos, r) {
+  function Circle(pos, r) {
     this['pos'] = this.pos = pos || new Vector();
     this['r'] = this.r = r || 0;
   };
@@ -230,7 +230,7 @@ var SAT = window['SAT'] = {};
    *   in clockwise order.
    * @constructor
    */
-  var Polygon = function(pos, points) {
+  function Polygon(pos, points) {
     this['pos'] = this.pos = pos || new Vector();
     this['points'] = this.points = points || [];
     this.recalc();
@@ -266,7 +266,7 @@ var SAT = window['SAT'] = {};
    * @param {?number=} h The height of the box.
    * @constructor
    */
-  var Box = function(pos, w, h) {
+  function Box(pos, w, h) {
     this['pos'] = this.pos = pos || new Vector();
     this['w'] = this.w = w || 0; 
     this['h'] = this.h = h || 0;
@@ -313,7 +313,7 @@ var SAT = window['SAT'] = {};
    * 
    * @constructor
    */  
-  var Response = function() {
+  function Response() {
     this['a'] = this.a = null;
     this['b'] = this.b = null;
     this['overlapN'] = this.overlapN = new Vector(); // Unit vector in the direction of overlap
@@ -347,7 +347,7 @@ var SAT = window['SAT'] = {};
    *   result[0] will be the minimum value,
    *   result[1] will be the maximum value.
    */
-  var flattenPointsOn = function(points, normal, result) {
+  function flattenPointsOn(points, normal, result) {
     var min = Number.MAX_VALUE;
     var max = -Number.MAX_VALUE;
     var len = points.length;
@@ -376,7 +376,7 @@ var SAT = window['SAT'] = {};
    *   and a response is passed in, information about how much overlap and
    *   the direction of the overlap will be populated.
    */
-  var isSeparatingAxis = function(aPos, bPos, aPoints, bPoints, axis, response) {
+  function isSeparatingAxis(aPos, bPos, aPoints, bPoints, axis, response) {
     var rangeA = T_ARRAYS.pop();
     var rangeB = T_ARRAYS.pop();
     // Get the magnitude of the offset between the two polygons
@@ -455,7 +455,7 @@ var SAT = window['SAT'] = {};
    *          MIDDLE_VORNOI_REGION (0) if it is the middle region, 
    *          RIGHT_VORNOI_REGION (1) if it is the right region.
    */
-  var vornoiRegion = function(line, point) {
+  function vornoiRegion(line, point) {
     var len2 = line.len2();
     var dp = point.dot(line);
     if (dp < 0) { return LEFT_VORNOI_REGION; }
@@ -484,7 +484,7 @@ var SAT = window['SAT'] = {};
    *   the circles intersect.
    * @return {boolean} true if the circles intersect, false if they don't. 
    */
-  var testCircleCircle = function(a, b, response) {
+  function testCircleCircle(a, b, response) {
     var differenceV = T_VECTORS.pop().copy(b.pos).sub(a.pos);
     var totalRadius = a.r + b.r;
     var totalRadiusSq = totalRadius * totalRadius;
@@ -519,7 +519,7 @@ var SAT = window['SAT'] = {};
    *   they interset.
    * @return {boolean} true if they intersect, false if they don't.
    */
-  var testPolygonCircle = function(polygon, circle, response) {
+  function testPolygonCircle(polygon, circle, response) {
     var circlePos = T_VECTORS.pop().copy(circle.pos).sub(polygon.pos);
     var radius = circle.r;
     var radius2 = radius * radius;
@@ -655,7 +655,7 @@ var SAT = window['SAT'] = {};
    *   they interset.
    * @return {boolean} true if they intersect, false if they don't.
    */
-  var testCirclePolygon = function(circle, polygon, response) {
+  function testCirclePolygon(circle, polygon, response) {
     var result = testPolygonCircle(polygon, circle, response);
     if (result && response) {
       // Swap A and B in the response.
@@ -681,7 +681,7 @@ var SAT = window['SAT'] = {};
    *   they interset.
    * @return {boolean} true if they intersect, false if they don't.
    */
-  var testPolygonPolygon = function(a, b, response) {
+  function testPolygonPolygon(a, b, response) {
     var aPoints = a.points;
     var aLen = aPoints.length;
     var bPoints = b.points;
