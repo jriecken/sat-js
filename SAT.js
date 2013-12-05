@@ -299,7 +299,7 @@ var SAT = window['SAT'] = {};
   /**
    * Pool of Arrays used in calculations.
    * 
-   * @type {Array.<Array.<*>>}
+   * @type {Array.<Array.<number>>}
    */
   var T_ARRAYS = [];
   for (var i = 0; i < 5; i++) { T_ARRAYS.push([]); }
