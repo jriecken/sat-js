@@ -12,7 +12,7 @@ SAT.js is a simple JavaScript library for performing collision detection (and pr
 
 It supports detecting collisions between:
  - Circles (using Vornoi Regions.)
- - Convex Polygons (and simple Axis-Aligned Boxes, which are of course polygons.)
+ - Convex Polygons (and simple Axis-Aligned Boxes, which are of course, convex polygons.)
 
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
