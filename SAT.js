@@ -1,4 +1,4 @@
-// Version 0.1 - Copyright 2013 -  Jim Riecken <jimr@jimr.ca>
+// Version 0.2 - Copyright 2013 -  Jim Riecken <jimr@jimr.ca>
 //
 // Released under the MIT License - https://github.com/jriecken/sat-js
 //
@@ -6,17 +6,36 @@
 // polygons using the Separating Axis Theorem.
 /** @preserve Copyright 2013 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. */
 
+/*global define: false, module: false*/
 /*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
   eqeqeq:true, bitwise:true, strict:true, undef:true, 
   curly:true, browser:true */
 
-// Create the global namespace for SAT
+// Create a UMD wrapper for SAT. Works in:
+//
+//  - Plain browser via global SAT variable
+//  - AMD loader (like require.js)
+//  - Node.js
 //
 // The quoted properties all over the place are used so that the Closure Compiler
 // does not mangle the exposed API in advanced mode.
-var SAT = window['SAT'] = {};
-(function(SAT) {
+/**
+ * @param {*} root - The global scope
+ * @param {Function} factory - Factory that creates SAT module
+ */
+(function (root, factory) {
   "use strict";
+  if (typeof define === 'function' && define['amd']) {
+    define(factory);
+  } else if (typeof exports === 'object') {
+    module['exports'] = factory();
+  } else {
+    root['SAT'] = factory();
+  }
+}(this, function () {
+  "use strict";
+
+  var SAT = {};
 
   //
   // ## Vector
@@ -731,4 +750,6 @@ var SAT = window['SAT'] = {};
     return true;
   }
   SAT['testPolygonPolygon'] = testPolygonPolygon;
-}(SAT));
+
+  return SAT;
+}));
