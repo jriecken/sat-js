@@ -212,7 +212,7 @@ Test two polygons
     
     // collided => true
     // response.overlap => 10
-    // response.overlapN => (10, 0)
+    // response.overlapV => (10, 0)
     
 No collision between two Boxes
 
