@@ -70,7 +70,8 @@
     return this;
   };
 
-  // Rotate this vector (clockwise) by 90 degrees.
+  // Change this vector to be perpendicular to what it was before. (Effectively
+  // roatates it 90 degrees in a clockwise direction)
   /**
    * @return {Vector} This for chaining.
    */
@@ -240,7 +241,7 @@
 
   // ## Polygon
   //
-  // Represents a *convex* polygon with any number of points (specified in clockwise order)
+  // Represents a *convex* polygon with any number of points (specified in counter-clockwise order)
   //
   // The edges/normals of the polygon will be calculated on creation and stored in the
   // `edges` and `normals` properties. If you change the polygon's points, you will need
@@ -253,7 +254,7 @@
    * @param {Vector=} pos A vector representing the origin of the polygon. (all other
    *   points are relative to this one)
    * @param {Array.<Vector>=} points An array of vectors representing the points in the polygon,
-   *   in clockwise order.
+   *   in counter-clockwise order.
    * @constructor
    */
   function Polygon(pos, points) {
@@ -280,7 +281,7 @@
       this['normals'].push(n);
     }
   };
-  
+
   // ## Box
   //
   // Represents an axis-aligned box, with a width and height.
@@ -392,7 +393,7 @@
     result[0] = min; result[1] = max;
   }
   
-  // Check whether two convex clockwise polygons are separated by the specified
+  // Check whether two convex polygons are separated by the specified
   // axis (must be a unit vector).
   /**
    * @param {Vector} aPos The position of the first polygon.

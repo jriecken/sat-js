@@ -68,7 +68,7 @@ It has the following properties:
 
 ### SAT.Polygon
 
-This is a **convex** polygon, whose points are specified in a clockwise fashion.  It is created by calling:
+This is a **convex** polygon, whose points are specified in a counter-clockwise fashion.  It is created by calling:
 
     // Create a triangle at (0,0)
     var p = new SAT.Polygon(new SAT.Vector(), [
