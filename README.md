@@ -16,7 +16,7 @@ It supports detecting collisions between:
 
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
-Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 4.7KB (1.7KB gzipped)
+Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 5KB (1.8KB gzipped)
  
 <a name="classes"></a>
 Classes
@@ -39,7 +39,8 @@ It has the following properties:
 It contains the following methods:
 
  - `copy(other)` - Copy the value of another Vector to this one.
- - `perp()` - Rotate this Vector by 90 degrees (clockwise)
+ - `perp()` - Change this vector to be perpendicular to what it was before.
+ - `rotate(angle)` - Rotate this vector counter-clockwise by the specified number of radians.
  - `reverse()` - Reverse this Vector.
  - `normalize()` - Make the Vector unit-lengthed.
  - `add(other)` - Add another Vector to this one.
@@ -87,6 +88,8 @@ It has the following properties:
 It has the following methods:
 
  - `recalc()` - Call this method to recalculate the edges and normals when any of the points change.
+ - `rotate(angle)` - Rotate this polygon counter-clockwise (around its local coordinate system) by the specified number of radians.
+ - `translate(x, y)` - Translate the points of this polygin (relative to the local coordinate system) by the specified amounts. Most useful for changing the "center" of the polygon.
  
 ### SAT.Box
 

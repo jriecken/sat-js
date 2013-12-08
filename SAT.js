@@ -82,6 +82,19 @@
     return this;
   };
 
+  // Rotate this vector (counter-clockwise) by the specified angle (in radians).
+  /**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['rotate'] = Vector.prototype.rotate = function (angle) {
+    var x = this['x'];
+    var y = this['y'];
+    this['x'] = x * Math.cos(angle) - y * Math.sin(angle);
+    this['y'] = x * Math.sin(angle) + y * Math.cos(angle);
+    return this;
+  };
+
   // Reverse this vector.
   /**
    * @return {Vector} This for chaining.
@@ -267,8 +280,17 @@
   // Recalculates the edges and normals of the polygon. This **must** be called
   // if the `points` array is modified at all and the edges or normals are to be
   // accessed.
+  /**
+   * @return {Polygon} This for chaining.
+   */
   Polygon.prototype['recalc'] = Polygon.prototype.recalc = function() {
+    // The edges here are the direction of the `n`th edge of the polygon, relative to
+    // the `n`th point. If you want to draw a given edge from the edge value, you must
+    // first translate to the position of the starting point.
     this['edges'] = [];
+    // The normals here are the direction of the normal for the `n`th edge of the polygon, relative
+    // to the position of the `n`th point. If you want to draw an edge normal, you must first
+    // translate to the position of the starting point.
     this['normals'] = [];
     var points = this['points'];
     var len = points.length;
@@ -280,6 +302,50 @@
       this['edges'].push(e);
       this['normals'].push(n);
     }
+    return this;
+  };
+
+  // Rotates this polygon counter-clockwise around the origin of *its local coordinate system* (i.e. `pos`).
+  //
+  // Note: You do **not** need to call `recalc` after rotation.
+  /**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Polygon} This for chaining.
+   */
+  Polygon.prototype['rotate'] = Polygon.prototype.rotate = function(angle) {
+    var i;
+    var points = this['points'];
+    var edges = this['edges'];
+    var normals = this['normals'];
+    var len = points.length;
+    for (i = 0; i < len; i++) {
+      points[i].rotate(angle);
+      edges[i].rotate(angle);
+      normals[i].rotate(angle);
+    }
+    return this;
+  };
+
+  // Translates the points of this polygon by a specified amount relative to the origin of *its own coordinate
+  // system* (i.e. `pos`).
+  //
+  // This is most useful to change the "center point" of a polygon.
+  //
+  // Note: You do **not** need to call `recalc` after translation.
+  /**
+   * @param {number} x The horizontal amount to translate.
+   * @param {number} y The vertical amount to translate.
+   * @return {Polygon} This for chaining.
+   */
+  Polygon.prototype['translate'] = Polygon.prototype.translate = function (x, y) {
+    var i;
+    var points = this['points'];
+    var len = points.length;
+    for (i = 0; i < len; i++) {
+      points[i].x += x;
+      points[i].y += y;
+    }
+    return this;
   };
 
   // ## Box
