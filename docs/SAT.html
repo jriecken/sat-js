@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>SAT.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>SAT.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Version 0.2 - Copyright 2013 -  Jim Riecken <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#105;&#x6d;&#114;&#x40;&#106;&#x69;&#109;&#x72;&#46;&#99;&#x61;">&#x6a;&#105;&#x6d;&#114;&#x40;&#106;&#x69;&#109;&#x72;&#46;&#99;&#x61;</a></p>
+<p>Released under the MIT License - <a href="https://github.com/jriecken/sat-js">https://github.com/jriecken/sat-js</a></p>
+<p>A simple library for determining intersections of circles and
+polygons using the Separating Axis Theorem.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="comment">/** @preserve SAT.js - Version 0.2 - Copyright 2013 - Jim Riecken &lt;jimr@jimr.ca&gt; - released under the MIT License. https://github.com/jriecken/sat-js */</span>
+
+<span class="comment">/*global define: false, module: false*/</span>
+<span class="comment">/*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
+  eqeqeq:true, bitwise:true, strict:true, undef:true, 
+  curly:true, browser:true */</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Create a UMD wrapper for SAT. Works in:</p>
+<ul>
+<li>Plain browser via global SAT variable</li>
+<li>AMD loader (like require.js)</li>
+<li>Node.js</li>
+</ul>
+<p>The quoted properties all over the place are used so that the Closure Compiler
+does not mangle the exposed API in advanced mode.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="comment">/**
+ * @param {*} root - The global scope
+ * @param {Function} factory - Factory that creates SAT module
+ */</span>
+(<span class="function"><span class="keyword">function</span> <span class="params">(root, factory)</span> {</span>
+  <span class="string">"use strict"</span>;
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">'function'</span> &amp;&amp; define[<span class="string">'amd'</span>]) {
+    define(factory);
+  } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> exports === <span class="string">'object'</span>) {
+    module[<span class="string">'exports'</span>] = factory();
+  } <span class="keyword">else</span> {
+    root[<span class="string">'SAT'</span>] = factory();
+  }
+}(<span class="keyword">this</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  <span class="string">"use strict"</span>;
+
+  <span class="keyword">var</span> SAT = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h2 id="vector">Vector</h2>
+<p>Represents a vector in two dimensions with <code>x</code> and <code>y</code> properties.</p>
+<p>Create a new Vector, optionally passing in the <code>x</code> and <code>y</code> coordinates. If
+a coordinate is not specified, it will be set to <code>0</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/** 
+   * @param {?number=} x The x position.
+   * @param {?number=} y The y position.
+   * @constructor
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">Vector</span><span class="params">(x, y)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'x'</span>] = x || <span class="number">0</span>;
+    <span class="keyword">this</span>[<span class="string">'y'</span>] = y || <span class="number">0</span>;
+  }
+  SAT[<span class="string">'Vector'</span>] = Vector;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Alias <code>Vector</code> as <code>V</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  SAT[<span class="string">'V'</span>] = Vector;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Copy the values of another Vector into this one.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} other The other Vector.
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'copy'</span>] = Vector.prototype.copy = <span class="function"><span class="keyword">function</span><span class="params">(other)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'x'</span>] = other[<span class="string">'x'</span>];
+    <span class="keyword">this</span>[<span class="string">'y'</span>] = other[<span class="string">'y'</span>];
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Change this vector to be perpendicular to what it was before. (Effectively
+roatates it 90 degrees in a clockwise direction)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'perp'</span>] = Vector.prototype.perp = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> x = <span class="keyword">this</span>[<span class="string">'x'</span>];
+    <span class="keyword">this</span>[<span class="string">'x'</span>] = <span class="keyword">this</span>[<span class="string">'y'</span>];
+    <span class="keyword">this</span>[<span class="string">'y'</span>] = -x;
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Rotate this vector (counter-clockwise) by the specified angle (in radians).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'rotate'</span>] = Vector.prototype.rotate = <span class="function"><span class="keyword">function</span> <span class="params">(angle)</span> {</span>
+    <span class="keyword">var</span> x = <span class="keyword">this</span>[<span class="string">'x'</span>];
+    <span class="keyword">var</span> y = <span class="keyword">this</span>[<span class="string">'y'</span>];
+    <span class="keyword">this</span>[<span class="string">'x'</span>] = x * Math.cos(angle) - y * Math.sin(angle);
+    <span class="keyword">this</span>[<span class="string">'y'</span>] = x * Math.sin(angle) + y * Math.cos(angle);
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Reverse this vector.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'reverse'</span>] = Vector.prototype.reverse = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'x'</span>] = -<span class="keyword">this</span>[<span class="string">'x'</span>];
+    <span class="keyword">this</span>[<span class="string">'y'</span>] = -<span class="keyword">this</span>[<span class="string">'y'</span>];
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Normalize this vector.  (make it have length of <code>1</code>)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'normalize'</span>] = Vector.prototype.normalize = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> d = <span class="keyword">this</span>.len();
+    <span class="keyword">if</span>(d &gt; <span class="number">0</span>) {
+      <span class="keyword">this</span>[<span class="string">'x'</span>] = <span class="keyword">this</span>[<span class="string">'x'</span>] / d;
+      <span class="keyword">this</span>[<span class="string">'y'</span>] = <span class="keyword">this</span>[<span class="string">'y'</span>] / d;
+    }
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Add another vector to this one.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} other The other Vector.
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'add'</span>] = Vector.prototype.add = <span class="function"><span class="keyword">function</span><span class="params">(other)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'x'</span>] += other[<span class="string">'x'</span>];
+    <span class="keyword">this</span>[<span class="string">'y'</span>] += other[<span class="string">'y'</span>];
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Subtract another vector from this one.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} other The other Vector.
+   * @return {Vector} This for chaiing.
+   */</span>
+  Vector.prototype[<span class="string">'sub'</span>] = Vector.prototype.sub = <span class="function"><span class="keyword">function</span><span class="params">(other)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'x'</span>] -= other[<span class="string">'x'</span>];
+    <span class="keyword">this</span>[<span class="string">'y'</span>] -= other[<span class="string">'y'</span>];
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Scale this vector. An independant scaling factor can be provided
+for each axis, or a single scaling factor that will scale both <code>x</code> and <code>y</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {number} x The scaling factor in the x direction.
+   * @param {?number=} y The scaling factor in the y direction.  If this
+   *   is not specified, the x scaling factor will be used.
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'scale'</span>] = Vector.prototype.scale = <span class="function"><span class="keyword">function</span><span class="params">(x,y)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'x'</span>] *= x;
+    <span class="keyword">this</span>[<span class="string">'y'</span>] *= y || x;
+    <span class="keyword">return</span> <span class="keyword">this</span>; 
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Project this vector on to another vector.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} other The vector to project onto.
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'project'</span>] = Vector.prototype.project = <span class="function"><span class="keyword">function</span><span class="params">(other)</span> {</span>
+    <span class="keyword">var</span> amt = <span class="keyword">this</span>.dot(other) / other.len2();
+    <span class="keyword">this</span>[<span class="string">'x'</span>] = amt * other[<span class="string">'x'</span>];
+    <span class="keyword">this</span>[<span class="string">'y'</span>] = amt * other[<span class="string">'y'</span>];
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Project this vector onto a vector of unit length. This is slightly more efficient
+than <code>project</code> when dealing with unit vectors.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} other The unit vector to project onto.
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'projectN'</span>] = Vector.prototype.projectN = <span class="function"><span class="keyword">function</span><span class="params">(other)</span> {</span>
+    <span class="keyword">var</span> amt = <span class="keyword">this</span>.dot(other);
+    <span class="keyword">this</span>[<span class="string">'x'</span>] = amt * other[<span class="string">'x'</span>];
+    <span class="keyword">this</span>[<span class="string">'y'</span>] = amt * other[<span class="string">'y'</span>];
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Reflect this vector on an arbitrary axis.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} axis The vector representing the axis.
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'reflect'</span>] = Vector.prototype.reflect = <span class="function"><span class="keyword">function</span><span class="params">(axis)</span> {</span>
+    <span class="keyword">var</span> x = <span class="keyword">this</span>[<span class="string">'x'</span>];
+    <span class="keyword">var</span> y = <span class="keyword">this</span>[<span class="string">'y'</span>];
+    <span class="keyword">this</span>.project(axis).scale(<span class="number">2</span>);
+    <span class="keyword">this</span>[<span class="string">'x'</span>] -= x;
+    <span class="keyword">this</span>[<span class="string">'y'</span>] -= y;
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Reflect this vector on an arbitrary axis (represented by a unit vector). This is
+slightly more efficient than <code>reflect</code> when dealing with an axis that is a unit vector.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} axis The unit vector representing the axis.
+   * @return {Vector} This for chaining.
+   */</span>
+  Vector.prototype[<span class="string">'reflectN'</span>] = Vector.prototype.reflectN = <span class="function"><span class="keyword">function</span><span class="params">(axis)</span> {</span>
+    <span class="keyword">var</span> x = <span class="keyword">this</span>[<span class="string">'x'</span>];
+    <span class="keyword">var</span> y = <span class="keyword">this</span>[<span class="string">'y'</span>];
+    <span class="keyword">this</span>.projectN(axis).scale(<span class="number">2</span>);
+    <span class="keyword">this</span>[<span class="string">'x'</span>] -= x;
+    <span class="keyword">this</span>[<span class="string">'y'</span>] -= y;
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Get the dot product of this vector and another.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector}  other The vector to dot this one against.
+   * @return {number} The dot product.
+   */</span>
+  Vector.prototype[<span class="string">'dot'</span>] = Vector.prototype.dot = <span class="function"><span class="keyword">function</span><span class="params">(other)</span> {</span>
+    <span class="keyword">return</span> <span class="keyword">this</span>[<span class="string">'x'</span>] * other[<span class="string">'x'</span>] + <span class="keyword">this</span>[<span class="string">'y'</span>] * other[<span class="string">'y'</span>];
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Get the squared length of this vector.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {number} The length^2 of this vector.
+   */</span>
+  Vector.prototype[<span class="string">'len2'</span>] = Vector.prototype.len2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">return</span> <span class="keyword">this</span>.dot(<span class="keyword">this</span>);
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Get the length of this vector.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {number} The length of this vector.
+   */</span>
+  Vector.prototype[<span class="string">'len'</span>] = Vector.prototype.len = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">return</span> Math.sqrt(<span class="keyword">this</span>.len2());
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <h2 id="circle">Circle</h2>
+<p>Represents a circle with a position and a radius.</p>
+<p>Create a new circle, optionally passing in a position and/or radius. If no position
+is given, the circle will be at <code>(0,0)</code>. If no radius is provided, the circle will
+have a radius of <code>0</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector=} pos A vector representing the position of the center of the circle
+   * @param {?number=} r The radius of the circle
+   * @constructor
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">Circle</span><span class="params">(pos, r)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'pos'</span>] = pos || <span class="keyword">new</span> Vector();
+    <span class="keyword">this</span>[<span class="string">'r'</span>] = r || <span class="number">0</span>;
+  }
+  SAT[<span class="string">'Circle'</span>] = Circle;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h2 id="polygon">Polygon</h2>
+<p>Represents a <em>convex</em> polygon with any number of points (specified in counter-clockwise order)</p>
+<p>The edges/normals of the polygon will be calculated on creation and stored in the
+<code>edges</code> and <code>normals</code> properties. If you change the polygon&#39;s points, you will need
+to call <code>recalc</code> to recalculate the edges/normals.</p>
+<p>Create a new polygon, passing in a position vector, and an array of points (represented
+by vectors relative to the position vector). If no position is passed in, the position
+of the polygon will be <code>(0,0)</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector=} pos A vector representing the origin of the polygon. (all other
+   *   points are relative to this one)
+   * @param {Array.&lt;Vector&gt;=} points An array of vectors representing the points in the polygon,
+   *   in counter-clockwise order.
+   * @constructor
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">Polygon</span><span class="params">(pos, points)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'pos'</span>] = pos || <span class="keyword">new</span> Vector();
+    <span class="keyword">this</span>[<span class="string">'points'</span>] = points || [];
+    <span class="keyword">this</span>.recalc();
+  }
+  SAT[<span class="string">'Polygon'</span>] = Polygon;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Recalculates the edges and normals of the polygon. This <strong>must</strong> be called
+if the <code>points</code> array is modified at all and the edges or normals are to be
+accessed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {Polygon} This for chaining.
+   */</span>
+  Polygon.prototype[<span class="string">'recalc'</span>] = Polygon.prototype.recalc = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>The edges here are the direction of the <code>n</code>th edge of the polygon, relative to
+the <code>n</code>th point. If you want to draw a given edge from the edge value, you must
+first translate to the position of the starting point.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>[<span class="string">'edges'</span>] = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>The normals here are the direction of the normal for the <code>n</code>th edge of the polygon, relative
+to the position of the <code>n</code>th point. If you want to draw an edge normal, you must first
+translate to the position of the starting point.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>[<span class="string">'normals'</span>] = [];
+    <span class="keyword">var</span> points = <span class="keyword">this</span>[<span class="string">'points'</span>];
+    <span class="keyword">var</span> len = points.length;
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) {
+      <span class="keyword">var</span> p1 = points[i]; 
+      <span class="keyword">var</span> p2 = i &lt; len - <span class="number">1</span> ? points[i + <span class="number">1</span>] : points[<span class="number">0</span>];
+      <span class="keyword">var</span> e = <span class="keyword">new</span> Vector().copy(p2).sub(p1);
+      <span class="keyword">var</span> n = <span class="keyword">new</span> Vector().copy(e).perp().normalize();
+      <span class="keyword">this</span>[<span class="string">'edges'</span>].push(e);
+      <span class="keyword">this</span>[<span class="string">'normals'</span>].push(n);
+    }
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Rotates this polygon counter-clockwise around the origin of <em>its local coordinate system</em> (i.e. <code>pos</code>).</p>
+<p>Note: You do <strong>not</strong> need to call <code>recalc</code> after rotation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Polygon} This for chaining.
+   */</span>
+  Polygon.prototype[<span class="string">'rotate'</span>] = Polygon.prototype.rotate = <span class="function"><span class="keyword">function</span><span class="params">(angle)</span> {</span>
+    <span class="keyword">var</span> i;
+    <span class="keyword">var</span> points = <span class="keyword">this</span>[<span class="string">'points'</span>];
+    <span class="keyword">var</span> edges = <span class="keyword">this</span>[<span class="string">'edges'</span>];
+    <span class="keyword">var</span> normals = <span class="keyword">this</span>[<span class="string">'normals'</span>];
+    <span class="keyword">var</span> len = points.length;
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) {
+      points[i].rotate(angle);
+      edges[i].rotate(angle);
+      normals[i].rotate(angle);
+    }
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Translates the points of this polygon by a specified amount relative to the origin of <em>its own coordinate
+system</em> (i.e. <code>pos</code>).</p>
+<p>This is most useful to change the &quot;center point&quot; of a polygon.</p>
+<p>Note: You do <strong>not</strong> need to call <code>recalc</code> after translation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {number} x The horizontal amount to translate.
+   * @param {number} y The vertical amount to translate.
+   * @return {Polygon} This for chaining.
+   */</span>
+  Polygon.prototype[<span class="string">'translate'</span>] = Polygon.prototype.translate = <span class="function"><span class="keyword">function</span> <span class="params">(x, y)</span> {</span>
+    <span class="keyword">var</span> i;
+    <span class="keyword">var</span> points = <span class="keyword">this</span>[<span class="string">'points'</span>];
+    <span class="keyword">var</span> len = points.length;
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) {
+      points[i].x += x;
+      points[i].y += y;
+    }
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <h2 id="box">Box</h2>
+<p>Represents an axis-aligned box, with a width and height.</p>
+<p>Create a new box, with the specified position, width, and height. If no position
+is given, the position will be <code>(0,0)</code>. If no width or height are given, they will
+be set to <code>0</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector=} pos A vector representing the top-left of the box.
+   * @param {?number=} w The width of the box.
+   * @param {?number=} h The height of the box.
+   * @constructor
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">Box</span><span class="params">(pos, w, h)</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'pos'</span>] = pos || <span class="keyword">new</span> Vector();
+    <span class="keyword">this</span>[<span class="string">'w'</span>] = w || <span class="number">0</span>;
+    <span class="keyword">this</span>[<span class="string">'h'</span>] = h || <span class="number">0</span>;
+  }
+  SAT[<span class="string">'Box'</span>] = Box;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Returns a polygon whose edges are the same as this box.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {Polygon} A new Polygon that represents this box.
+   */</span>
+  Box.prototype[<span class="string">'toPolygon'</span>] = Box.prototype.toPolygon = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> pos = <span class="keyword">this</span>[<span class="string">'pos'</span>];
+    <span class="keyword">var</span> w = <span class="keyword">this</span>[<span class="string">'w'</span>];
+    <span class="keyword">var</span> h = <span class="keyword">this</span>[<span class="string">'h'</span>];
+    <span class="keyword">return</span> <span class="keyword">new</span> Polygon(<span class="keyword">new</span> Vector(pos[<span class="string">'x'</span>], pos[<span class="string">'y'</span>]), [
+     <span class="keyword">new</span> Vector(), <span class="keyword">new</span> Vector(w, <span class="number">0</span>), 
+     <span class="keyword">new</span> Vector(w,h), <span class="keyword">new</span> Vector(<span class="number">0</span>,h)
+    ]);
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <h2 id="response">Response</h2>
+<p>An object representing the result of an intersection. Contains:</p>
+<ul>
+<li>The two objects participating in the intersection</li>
+<li>The vector representing the minimum change necessary to extract the first object
+from the second one (as well as a unit vector in that direction and the magnitude
+of the overlap)</li>
+<li>Whether the first object is entirely inside the second, and vice versa.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @constructor
+   */</span>  
+  <span class="function"><span class="keyword">function</span> <span class="title">Response</span><span class="params">()</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'a'</span>] = <span class="literal">null</span>;
+    <span class="keyword">this</span>[<span class="string">'b'</span>] = <span class="literal">null</span>;
+    <span class="keyword">this</span>[<span class="string">'overlapN'</span>] = <span class="keyword">new</span> Vector();
+    <span class="keyword">this</span>[<span class="string">'overlapV'</span>] = <span class="keyword">new</span> Vector();
+    <span class="keyword">this</span>.clear();
+  }
+  SAT[<span class="string">'Response'</span>] = Response;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Set some values of the response back to their defaults.  Call this between tests if
+you are going to reuse a single Response object for multiple intersection tests (recommented
+as it will avoid allcating extra memory)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @return {Response} This for chaining
+   */</span>
+  Response.prototype[<span class="string">'clear'</span>] = Response.prototype.clear = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">this</span>[<span class="string">'aInB'</span>] = <span class="literal">true</span>;
+    <span class="keyword">this</span>[<span class="string">'bInA'</span>] = <span class="literal">true</span>;
+    <span class="keyword">this</span>[<span class="string">'overlap'</span>] = Number.MAX_VALUE;
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <h2 id="object-pools">Object Pools</h2>
+<p>A pool of <code>Vector</code> objects that are used in calculations to avoid
+allocating memory.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @type {Array.&lt;Vector&gt;}
+   */</span>
+  <span class="keyword">var</span> T_VECTORS = [];
+  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) { T_VECTORS.push(<span class="keyword">new</span> Vector()); }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>A pool of arrays of numbers used in calculations to avoid allocating
+memory.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @type {Array.&lt;Array.&lt;number&gt;&gt;}
+   */</span>
+  <span class="keyword">var</span> T_ARRAYS = [];
+  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) { T_ARRAYS.push([]); }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <h2 id="helper-functions">Helper Functions</h2>
+<p>Flattens the specified array of points onto a unit vector axis,
+resulting in a one dimensional range of the minimum and
+maximum value on that axis.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Array.&lt;Vector&gt;} points The points to flatten.
+   * @param {Vector} normal The unit vector axis to flatten on.
+   * @param {Array.&lt;number&gt;} result An array.  After calling this function,
+   *   result[0] will be the minimum value,
+   *   result[1] will be the maximum value.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">flattenPointsOn</span><span class="params">(points, normal, result)</span> {</span>
+    <span class="keyword">var</span> min = Number.MAX_VALUE;
+    <span class="keyword">var</span> max = -Number.MAX_VALUE;
+    <span class="keyword">var</span> len = points.length;
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++ ) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>The magnitude of the projection of the point onto the normal</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> dot = points[i].dot(normal);
+      <span class="keyword">if</span> (dot &lt; min) { min = dot; }
+      <span class="keyword">if</span> (dot &gt; max) { max = dot; }
+    }
+    result[<span class="number">0</span>] = min; result[<span class="number">1</span>] = max;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Check whether two convex polygons are separated by the specified
+axis (must be a unit vector).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} aPos The position of the first polygon.
+   * @param {Vector} bPos The position of the second polygon.
+   * @param {Array.&lt;Vector&gt;} aPoints The points in the first polygon.
+   * @param {Array.&lt;Vector&gt;} bPoints The points in the second polygon.
+   * @param {Vector} axis The axis (unit sized) to test against.  The points of both polygons
+   *   will be projected onto this axis.
+   * @param {Response=} response A Response object (optional) which will be populated
+   *   if the axis is not a separating axis.
+   * @return {boolean} true if it is a separating axis, false otherwise.  If false,
+   *   and a response is passed in, information about how much overlap and
+   *   the direction of the overlap will be populated.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">isSeparatingAxis</span><span class="params">(aPos, bPos, aPoints, bPoints, axis, response)</span> {</span>
+    <span class="keyword">var</span> rangeA = T_ARRAYS.pop();
+    <span class="keyword">var</span> rangeB = T_ARRAYS.pop();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>The magnitude of the offset between the two polygons</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> offsetV = T_VECTORS.pop().copy(bPos).sub(aPos);
+    <span class="keyword">var</span> projectedOffset = offsetV.dot(axis);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Project the polygons onto the axis.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    flattenPointsOn(aPoints, axis, rangeA);
+    flattenPointsOn(bPoints, axis, rangeB);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Move B&#39;s range to its position relative to A.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    rangeB[<span class="number">0</span>] += projectedOffset;
+    rangeB[<span class="number">1</span>] += projectedOffset;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Check if there is a gap. If there is, this is a separating axis and we can stop</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (rangeA[<span class="number">0</span>] &gt; rangeB[<span class="number">1</span>] || rangeB[<span class="number">0</span>] &gt; rangeA[<span class="number">1</span>]) {
+      T_VECTORS.push(offsetV); 
+      T_ARRAYS.push(rangeA); 
+      T_ARRAYS.push(rangeB);
+      <span class="keyword">return</span> <span class="literal">true</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>This is not a separating axis. If we&#39;re calculating a response, calculate the overlap.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (response) {
+      <span class="keyword">var</span> overlap = <span class="number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>A starts further left than B</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> (rangeA[<span class="number">0</span>] &lt; rangeB[<span class="number">0</span>]) {
+        response[<span class="string">'aInB'</span>] = <span class="literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>A ends before B does. We have to pull A out of B</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">if</span> (rangeA[<span class="number">1</span>] &lt; rangeB[<span class="number">1</span>]) { 
+          overlap = rangeA[<span class="number">1</span>] - rangeB[<span class="number">0</span>];
+          response[<span class="string">'bInA'</span>] = <span class="literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>B is fully inside A.  Pick the shortest way out.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        } <span class="keyword">else</span> {
+          <span class="keyword">var</span> option1 = rangeA[<span class="number">1</span>] - rangeB[<span class="number">0</span>];
+          <span class="keyword">var</span> option2 = rangeB[<span class="number">1</span>] - rangeA[<span class="number">0</span>];
+          overlap = option1 &lt; option2 ? option1 : -option2;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>B starts further left than A</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      } <span class="keyword">else</span> {
+        response[<span class="string">'bInA'</span>] = <span class="literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>B ends before A ends. We have to push A out of B</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">if</span> (rangeA[<span class="number">1</span>] &gt; rangeB[<span class="number">1</span>]) { 
+          overlap = rangeA[<span class="number">0</span>] - rangeB[<span class="number">1</span>];
+          response[<span class="string">'aInB'</span>] = <span class="literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>A is fully inside B.  Pick the shortest way out.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        } <span class="keyword">else</span> {
+          <span class="keyword">var</span> option1 = rangeA[<span class="number">1</span>] - rangeB[<span class="number">0</span>];
+          <span class="keyword">var</span> option2 = rangeB[<span class="number">1</span>] - rangeA[<span class="number">0</span>];
+          overlap = option1 &lt; option2 ? option1 : -option2;
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>If this is the smallest amount of overlap we&#39;ve seen so far, set it as the minimum overlap.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> absOverlap = Math.abs(overlap);
+      <span class="keyword">if</span> (absOverlap &lt; response[<span class="string">'overlap'</span>]) {
+        response[<span class="string">'overlap'</span>] = absOverlap;
+        response[<span class="string">'overlapN'</span>].copy(axis);
+        <span class="keyword">if</span> (overlap &lt; <span class="number">0</span>) {
+          response[<span class="string">'overlapN'</span>].reverse();
+        }
+      }      
+    }
+    T_VECTORS.push(offsetV); 
+    T_ARRAYS.push(rangeA); 
+    T_ARRAYS.push(rangeB);
+    <span class="keyword">return</span> <span class="literal">false</span>;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>Calculates which Vornoi region a point is on a line segment.
+It is assumed that both the line and the point are relative to <code>(0,0)</code></p>
+<pre><code>       |       (0)      |
+(-1)  [S]--------------[E]  (1)
+       |       (0)      |</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} line The line segment.
+   * @param {Vector} point The point.
+   * @return  {number} LEFT_VORNOI_REGION (-1) if it is the left region, 
+   *          MIDDLE_VORNOI_REGION (0) if it is the middle region, 
+   *          RIGHT_VORNOI_REGION (1) if it is the right region.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">vornoiRegion</span><span class="params">(line, point)</span> {</span>
+    <span class="keyword">var</span> len2 = line.len2();
+    <span class="keyword">var</span> dp = point.dot(line);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>If the point is beyond the start of the line, it is in the
+left vornoi region.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (dp &lt; <span class="number">0</span>) { <span class="keyword">return</span> LEFT_VORNOI_REGION; }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>If the point is beyond the end of the line, it is in the
+right vornoi region.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">else</span> <span class="keyword">if</span> (dp &gt; len2) { <span class="keyword">return</span> RIGHT_VORNOI_REGION; }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>Otherwise, it&#39;s in the middle one.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">else</span> { <span class="keyword">return</span> MIDDLE_VORNOI_REGION; }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Constants for Vornoi regions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @const
+   */</span>
+  <span class="keyword">var</span> LEFT_VORNOI_REGION = -<span class="number">1</span>;
+  <span class="comment">/**
+   * @const
+   */</span>
+  <span class="keyword">var</span> MIDDLE_VORNOI_REGION = <span class="number">0</span>;
+  <span class="comment">/**
+   * @const
+   */</span>
+  <span class="keyword">var</span> RIGHT_VORNOI_REGION = <span class="number">1</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <h2 id="collision-tests">Collision Tests</h2>
+<p>Check if two circles collide.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Circle} a The first circle.
+   * @param {Circle} b The second circle.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   the circles intersect.
+   * @return {boolean} true if the circles intersect, false if they don't. 
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">testCircleCircle</span><span class="params">(a, b, response)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <p>Check if the distance between the centers of the two
+circles is greater than their combined radius.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> differenceV = T_VECTORS.pop().copy(b[<span class="string">'pos'</span>]).sub(a[<span class="string">'pos'</span>]);
+    <span class="keyword">var</span> totalRadius = a[<span class="string">'r'</span>] + b[<span class="string">'r'</span>];
+    <span class="keyword">var</span> totalRadiusSq = totalRadius * totalRadius;
+    <span class="keyword">var</span> distanceSq = differenceV.len2();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <p>If the distance is bigger than the combined radius, they don&#39;t intersect.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (distanceSq &gt; totalRadiusSq) {
+      T_VECTORS.push(differenceV);
+      <span class="keyword">return</span> <span class="literal">false</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>They intersect.  If we&#39;re calculating a response, calculate the overlap.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (response) { 
+      <span class="keyword">var</span> dist = Math.sqrt(distanceSq);
+      response[<span class="string">'a'</span>] = a;
+      response[<span class="string">'b'</span>] = b;
+      response[<span class="string">'overlap'</span>] = totalRadius - dist;
+      response[<span class="string">'overlapN'</span>].copy(differenceV.normalize());
+      response[<span class="string">'overlapV'</span>].copy(differenceV).scale(response[<span class="string">'overlap'</span>]);
+      response[<span class="string">'aInB'</span>]= a[<span class="string">'r'</span>] &lt;= b[<span class="string">'r'</span>] &amp;&amp; dist &lt;= b[<span class="string">'r'</span>] - a[<span class="string">'r'</span>];
+      response[<span class="string">'bInA'</span>] = b[<span class="string">'r'</span>] &lt;= a[<span class="string">'r'</span>] &amp;&amp; dist &lt;= a[<span class="string">'r'</span>] - b[<span class="string">'r'</span>];
+    }
+    T_VECTORS.push(differenceV);
+    <span class="keyword">return</span> <span class="literal">true</span>;
+  }
+  SAT[<span class="string">'testCircleCircle'</span>] = testCircleCircle;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Check if a polygon and a circle collide.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Polygon} polygon The polygon.
+   * @param {Circle} circle The circle.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   they interset.
+   * @return {boolean} true if they intersect, false if they don't.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">testPolygonCircle</span><span class="params">(polygon, circle, response)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>Get the position of the circle relative to the polygon.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> circlePos = T_VECTORS.pop().copy(circle[<span class="string">'pos'</span>]).sub(polygon[<span class="string">'pos'</span>]);
+    <span class="keyword">var</span> radius = circle[<span class="string">'r'</span>];
+    <span class="keyword">var</span> radius2 = radius * radius;
+    <span class="keyword">var</span> points = polygon[<span class="string">'points'</span>];
+    <span class="keyword">var</span> len = points.length;
+    <span class="keyword">var</span> edge = T_VECTORS.pop();
+    <span class="keyword">var</span> point = T_VECTORS.pop();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              <p>For each edge in the polygon:</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) {
+      <span class="keyword">var</span> next = i === len - <span class="number">1</span> ? <span class="number">0</span> : i + <span class="number">1</span>;
+      <span class="keyword">var</span> prev = i === <span class="number">0</span> ? len - <span class="number">1</span> : i - <span class="number">1</span>;
+      <span class="keyword">var</span> overlap = <span class="number">0</span>;
+      <span class="keyword">var</span> overlapN = <span class="literal">null</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>Get the edge.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      edge.copy(polygon[<span class="string">'edges'</span>][i]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>Calculate the center of the circle relative to the starting point of the edge.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      point.copy(circlePos).sub(points[i]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p>If the distance between the center of the circle and the point
+is bigger than the radius, the polygon is definitely not fully in
+the circle.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> (response &amp;&amp; point.len2() &gt; radius2) {
+        response[<span class="string">'aInB'</span>] = <span class="literal">false</span>;
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <p>Calculate which Vornoi region the center of the circle is in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> region = vornoiRegion(edge, point);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <p>If it&#39;s the left region:</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> (region === LEFT_VORNOI_REGION) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <p>We need to make sure we&#39;re in the RIGHT_VORNOI_REGION of the previous edge.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        edge.copy(polygon[<span class="string">'edges'</span>][prev]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>Calculate the center of the circle relative the starting point of the previous edge</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> point2 = T_VECTORS.pop().copy(circlePos).sub(points[prev]);
+        region = vornoiRegion(edge, point2);
+        <span class="keyword">if</span> (region === RIGHT_VORNOI_REGION) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>It&#39;s in the region we want.  Check if the circle intersects the point.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">var</span> dist = point.len();
+          <span class="keyword">if</span> (dist &gt; radius) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>No intersection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            T_VECTORS.push(circlePos); 
+            T_VECTORS.push(edge);
+            T_VECTORS.push(point); 
+            T_VECTORS.push(point2);
+            <span class="keyword">return</span> <span class="literal">false</span>;
+          } <span class="keyword">else</span> <span class="keyword">if</span> (response) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>It intersects, calculate the overlap.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            response[<span class="string">'bInA'</span>] = <span class="literal">false</span>;
+            overlapN = point.normalize();
+            overlap = radius - dist;
+          }
+        }
+        T_VECTORS.push(point2);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>If it&#39;s the right region:</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      } <span class="keyword">else</span> <span class="keyword">if</span> (region === RIGHT_VORNOI_REGION) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <p>We need to make sure we&#39;re in the left region on the next edge</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        edge.copy(polygon[<span class="string">'edges'</span>][next]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              <p>Calculate the center of the circle relative to the starting point of the next edge.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        point.copy(circlePos).sub(points[next]);
+        region = vornoiRegion(edge, point);
+        <span class="keyword">if</span> (region === LEFT_VORNOI_REGION) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-73">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-73">&#182;</a>
+              </div>
+              <p>It&#39;s in the region we want.  Check if the circle intersects the point.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">var</span> dist = point.len();
+          <span class="keyword">if</span> (dist &gt; radius) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-74">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-74">&#182;</a>
+              </div>
+              <p>No intersection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            T_VECTORS.push(circlePos); 
+            T_VECTORS.push(edge); 
+            T_VECTORS.push(point);
+            <span class="keyword">return</span> <span class="literal">false</span>;              
+          } <span class="keyword">else</span> <span class="keyword">if</span> (response) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-75">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p>It intersects, calculate the overlap.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            response[<span class="string">'bInA'</span>] = <span class="literal">false</span>;
+            overlapN = point.normalize();
+            overlap = radius - dist;
+          }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <p>Otherwise, it&#39;s the middle region:</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      } <span class="keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              <p>Need to check if the circle is intersecting the edge,
+Change the edge into its &quot;edge normal&quot;.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> normal = edge.perp().normalize();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>Find the perpendicular distance between the center of the 
+circle and the edge.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> dist = point.dot(normal);
+        <span class="keyword">var</span> distAbs = Math.abs(dist);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>If the circle is on the outside of the edge, there is no intersection.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">if</span> (dist &gt; <span class="number">0</span> &amp;&amp; distAbs &gt; radius) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <p>No intersection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          T_VECTORS.push(circlePos); 
+          T_VECTORS.push(normal); 
+          T_VECTORS.push(point);
+          <span class="keyword">return</span> <span class="literal">false</span>;
+        } <span class="keyword">else</span> <span class="keyword">if</span> (response) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-81">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-81">&#182;</a>
+              </div>
+              <p>It intersects, calculate the overlap.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          overlapN = normal;
+          overlap = radius - dist;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-82">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-82">&#182;</a>
+              </div>
+              <p>If the center of the circle is on the outside of the edge, or part of the
+circle is on the outside, the circle is not fully inside the polygon.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">if</span> (dist &gt;= <span class="number">0</span> || overlap &lt; <span class="number">2</span> * radius) {
+            response[<span class="string">'bInA'</span>] = <span class="literal">false</span>;
+          }
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-83">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-83">&#182;</a>
+              </div>
+              <p>If this is the smallest overlap we&#39;ve seen, keep it. 
+(overlapN may be null if the circle was in the wrong Vornoi region).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> (overlapN &amp;&amp; response &amp;&amp; Math.abs(overlap) &lt; Math.abs(response[<span class="string">'overlap'</span>])) {
+        response[<span class="string">'overlap'</span>] = overlap;
+        response[<span class="string">'overlapN'</span>].copy(overlapN);
+      }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-84">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-84">&#182;</a>
+              </div>
+              <p>Calculate the final overlap vector - based on the smallest overlap.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (response) {
+      response[<span class="string">'a'</span>] = polygon;
+      response[<span class="string">'b'</span>] = circle;
+      response[<span class="string">'overlapV'</span>].copy(response[<span class="string">'overlapN'</span>]).scale(response[<span class="string">'overlap'</span>]);
+    }
+    T_VECTORS.push(circlePos); 
+    T_VECTORS.push(edge); 
+    T_VECTORS.push(point);
+    <span class="keyword">return</span> <span class="literal">true</span>;
+  }
+  SAT[<span class="string">'testPolygonCircle'</span>] = testPolygonCircle;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-85">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-85">&#182;</a>
+              </div>
+              <p>Check if a circle and a polygon collide.</p>
+<p><strong>NOTE:</strong> This is slightly less efficient than polygonCircle as it just
+runs polygonCircle and reverses everything at the end.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Circle} circle The circle.
+   * @param {Polygon} polygon The polygon.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   they interset.
+   * @return {boolean} true if they intersect, false if they don't.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">testCirclePolygon</span><span class="params">(circle, polygon, response)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-86">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-86">&#182;</a>
+              </div>
+              <p>Test the polygon against the circle.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> result = testPolygonCircle(polygon, circle, response);
+    <span class="keyword">if</span> (result &amp;&amp; response) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-87">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-87">&#182;</a>
+              </div>
+              <p>Swap A and B in the response.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> a = response[<span class="string">'a'</span>];
+      <span class="keyword">var</span> aInB = response[<span class="string">'aInB'</span>];
+      response[<span class="string">'overlapN'</span>].reverse();
+      response[<span class="string">'overlapV'</span>].reverse();
+      response[<span class="string">'a'</span>] = response[<span class="string">'b'</span>];
+      response[<span class="string">'b'</span>] = a;
+      response[<span class="string">'aInB'</span>] = response[<span class="string">'bInA'</span>];
+      response[<span class="string">'bInA'</span>] = aInB;
+    }
+    <span class="keyword">return</span> result;
+  }
+  SAT[<span class="string">'testCirclePolygon'</span>] = testCirclePolygon;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-88">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-88">&#182;</a>
+              </div>
+              <p>Checks whether polygons collide.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Polygon} a The first polygon.
+   * @param {Polygon} b The second polygon.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   they interset.
+   * @return {boolean} true if they intersect, false if they don't.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">testPolygonPolygon</span><span class="params">(a, b, response)</span> {</span>
+    <span class="keyword">var</span> aPoints = a[<span class="string">'points'</span>];
+    <span class="keyword">var</span> aLen = aPoints.length;
+    <span class="keyword">var</span> bPoints = b[<span class="string">'points'</span>];
+    <span class="keyword">var</span> bLen = bPoints.length;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-89">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-89">&#182;</a>
+              </div>
+              <p>If any of the edge normals of A is a separating axis, no intersection.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aLen; i++) {
+      <span class="keyword">if</span> (isSeparatingAxis(a[<span class="string">'pos'</span>], b[<span class="string">'pos'</span>], aPoints, bPoints, a[<span class="string">'normals'</span>][i], response)) {
+        <span class="keyword">return</span> <span class="literal">false</span>;
+      }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-90">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-90">&#182;</a>
+              </div>
+              <p>If any of the edge normals of B is a separating axis, no intersection.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>;i &lt; bLen; i++) {
+      <span class="keyword">if</span> (isSeparatingAxis(a[<span class="string">'pos'</span>], b[<span class="string">'pos'</span>], aPoints, bPoints, b[<span class="string">'normals'</span>][i], response)) {
+        <span class="keyword">return</span> <span class="literal">false</span>;
+      }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-91">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-91">&#182;</a>
+              </div>
+              <p>Since none of the edge normals of A or B are a separating axis, there is an intersection
+and we&#39;ve already calculated the smallest overlap (in isSeparatingAxis).  Calculate the
+final overlap vector.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (response) {
+      response[<span class="string">'a'</span>] = a;
+      response[<span class="string">'b'</span>] = b;
+      response[<span class="string">'overlapV'</span>].copy(response[<span class="string">'overlapN'</span>]).scale(response[<span class="string">'overlap'</span>]);
+    }
+    <span class="keyword">return</span> <span class="literal">true</span>;
+  }
+  SAT[<span class="string">'testPolygonPolygon'</span>] = testPolygonPolygon;
+
+  <span class="keyword">return</span> SAT;
+}));</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
