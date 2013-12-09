@@ -16,6 +16,8 @@ It supports detecting collisions between:
 
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
+Current version: `0.2`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
+
 Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 5KB (1.8KB gzipped)
  
 <a name="classes"></a>
