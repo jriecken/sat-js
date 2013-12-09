@@ -31,13 +31,15 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>SAT.js</h1>
+        <h1>
+<a name="satjs" class="anchor" href="#satjs"><span class="octicon octicon-link"></span></a>SAT.js</h1>
 
 <ul>
 <li><a href="#classes">Classes</a></li>
 <li><a href="#tests">Collision Tests</a></li>
 <li><a href="#examples">Examples</a></li>
-</ul><h2>About</h2>
+</ul><h2>
+<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
 
 <p>SAT.js is a simple JavaScript library for performing collision detection (and projection-based collision response) of simple 2D shapes.  It uses the <a href="http://en.wikipedia.org/wiki/Hyperplane_separation_theorem">Separating Axis Theorem</a> (hence the name)</p>
 
@@ -45,18 +47,22 @@
 
 <ul>
 <li>Circles (using Vornoi Regions.)</li>
-<li>Convex Polygons (and simple Axis-Aligned Boxes, which are of course polygons.)</li>
+<li>Convex Polygons (and simple Axis-Aligned Boxes, which are of course, convex polygons.)</li>
 </ul><p>It's released under the <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a> license.</p>
 
-<p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 4.7KB (1.7KB gzipped)</p>
+<p>Current version: <code>0.2</code>. <a href="http://jriecken.github.io/sat-js/docs/SAT.html">Annotated source code</a> is available.</p>
+
+<p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 5KB (1.8KB gzipped)</p>
 
 <p><a name="classes"></a></p>
 
-<h2>Classes</h2>
+<h2>
+<a name="classes" class="anchor" href="#classes"><span class="octicon octicon-link"></span></a>Classes</h2>
 
 <p>SAT.js contains the following JavaScript classes:</p>
 
-<h3>SAT.Vector (aliased as SAT.V)</h3>
+<h3>
+<a name="satvector-aliased-as-satv" class="anchor" href="#satvector-aliased-as-satv"><span class="octicon octicon-link"></span></a>SAT.Vector (aliased as SAT.V)</h3>
 
 <p>This is a simple 2D vector/point class.  It is created by calling:</p>
 
@@ -77,7 +83,9 @@ var v = new SAT.Vector(10, 10)
 <li>
 <code>copy(other)</code> - Copy the value of another Vector to this one.</li>
 <li>
-<code>perp()</code> - Rotate this Vector by 90 degrees (clockwise)</li>
+<code>perp()</code> - Change this vector to be perpendicular to what it was before.</li>
+<li>
+<code>rotate(angle)</code> - Rotate this vector counter-clockwise by the specified number of radians.</li>
 <li>
 <code>reverse()</code> - Reverse this Vector.</li>
 <li>
@@ -102,7 +110,8 @@ var v = new SAT.Vector(10, 10)
 <code>len2()</code> - Get the length squared of this Vector.</li>
 <li>
 <code>len()</code> - Get the length of this Vector</li>
-</ul><h3>SAT.Circle</h3>
+</ul><h3>
+<a name="satcircle" class="anchor" href="#satcircle"><span class="octicon octicon-link"></span></a>SAT.Circle</h3>
 
 <p>This is a simple circle with a center position and a radius.  It is created by calling:</p>
 
@@ -117,9 +126,10 @@ var c = new SAT.Circle(new Sat.Vector(10,10), 20);
 <code>pos</code> - A Vector representing the center of the circle.</li>
 <li>
 <code>r</code> - The radius of the circle</li>
-</ul><h3>SAT.Polygon</h3>
+</ul><h3>
+<a name="satpolygon" class="anchor" href="#satpolygon"><span class="octicon octicon-link"></span></a>SAT.Polygon</h3>
 
-<p>This is a <strong>convex</strong> polygon, whose points are specified in a clockwise fashion.  It is created by calling:</p>
+<p>This is a <strong>convex</strong> polygon, whose points are specified in a counter-clockwise fashion.  It is created by calling:</p>
 
 <pre><code>// Create a triangle at (0,0)
 var p = new SAT.Polygon(new SAT.Vector(), [
@@ -145,7 +155,12 @@ var p = new SAT.Polygon(new SAT.Vector(), [
 <ul>
 <li>
 <code>recalc()</code> - Call this method to recalculate the edges and normals when any of the points change.</li>
-</ul><h3>SAT.Box</h3>
+<li>
+<code>rotate(angle)</code> - Rotate this polygon counter-clockwise (around its local coordinate system) by the specified number of radians.</li>
+<li>
+<code>translate(x, y)</code> - Translate the points of this polygin (relative to the local coordinate system) by the specified amounts. Most useful for changing the "center" of the polygon.</li>
+</ul><h3>
+<a name="satbox" class="anchor" href="#satbox"><span class="octicon octicon-link"></span></a>SAT.Box</h3>
 
 <p>This is a simple Box with a position, width, and height.  It is created by calling:</p>
 
@@ -167,7 +182,8 @@ var b = new SAT.Box(new SAT.Vector(10,10), 20, 40);
 <ul>
 <li>
 <code>toPolygon()</code> - Returns a new Polygon whose edges are the edges of the box.</li>
-</ul><h3>SAT.Response</h3>
+</ul><h3>
+<a name="satresponse" class="anchor" href="#satresponse"><span class="octicon octicon-link"></span></a>SAT.Response</h3>
 
 <p>This is the object representing the result of a collision between two objects.  It just has a simple <code>new Response()</code> constructor.</p>
 
@@ -195,23 +211,30 @@ var b = new SAT.Box(new SAT.Vector(10,10), 20, 40);
 <code>clear()</code> - Clear the response so that it is ready to be reused for another collision test.</li>
 </ul><p><a name="tests"></a></p>
 
-<h2>Collision Tests</h2>
+<h2>
+<a name="collision-tests" class="anchor" href="#collision-tests"><span class="octicon octicon-link"></span></a>Collision Tests</h2>
 
 <p>SAT.js contains the following collision tests:</p>
 
-<h3><code>SAT.testCircleCircle(a, b, response)</code></h3>
+<h3>
+<a name="sattestcirclecirclea-b-response" class="anchor" href="#sattestcirclecirclea-b-response"><span class="octicon octicon-link"></span></a><code>SAT.testCircleCircle(a, b, response)</code>
+</h3>
 
 <p>Tests for a collision between two <code>Circle</code>s, <code>a</code>, and <code>b</code>.  If a response is to be calculated in the event of collision, pass in a cleared <code>Response</code> object.</p>
 
 <p>Returns <code>true</code> if the circles collide, <code>false</code> otherwise.</p>
 
-<h3><code>SAT.testPolygonCircle(polygon, circle, response)</code></h3>
+<h3>
+<a name="sattestpolygoncirclepolygon-circle-response" class="anchor" href="#sattestpolygoncirclepolygon-circle-response"><span class="octicon octicon-link"></span></a><code>SAT.testPolygonCircle(polygon, circle, response)</code>
+</h3>
 
 <p>Tests for a collision between a <code>Polygon</code> and a <code>Circle</code>.  If a response is to be calculated in the event of a collision, pass in a cleared <code>Response</code> object.</p>
 
 <p>Returns <code>true</code> if there is a collision, <code>false</code> otherwise.</p>
 
-<h3><code>SAT.testCirclePolybon(circle, polygon, response)</code></h3>
+<h3>
+<a name="sattestcirclepolygoncircle-polygon-response" class="anchor" href="#sattestcirclepolygoncircle-polygon-response"><span class="octicon octicon-link"></span></a><code>SAT.testCirclePolygon(circle, polygon, response)</code>
+</h3>
 
 <p>The same thing as <code>SAT.testPolygonCircle</code>, but in the other direction.</p>
 
@@ -219,7 +242,9 @@ var b = new SAT.Box(new SAT.Vector(10,10), 20, 40);
 
 <p><em>NOTE: This is slightly slower than <code>SAT.testPolygonCircle</code> as it just calls that and reverses the result</em></p>
 
-<h3><code>SAT.testPolygonPolygon(a, b, response)</code></h3>
+<h3>
+<a name="sattestpolygonpolygona-b-response" class="anchor" href="#sattestpolygonpolygona-b-response"><span class="octicon octicon-link"></span></a><code>SAT.testPolygonPolygon(a, b, response)</code>
+</h3>
 
 <p>Tests whether two polygons <code>a</code> and <code>b</code> collide. If a response is to be calculated in the event of collision, pass in a cleared <code>Response</code> object.</p>
 
@@ -229,7 +254,8 @@ var b = new SAT.Box(new SAT.Vector(10,10), 20, 40);
 
 <p><a name="examples"></a></p>
 
-<h2>Examples</h2>
+<h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
 
 <p>Test two circles</p>
 
@@ -283,7 +309,7 @@ var collided = SAT.testPolygonPolygon(polygon1, polygon2, response);
 
 // collided =&gt; true
 // response.overlap =&gt; 10
-// response.overlapN =&gt; (10, 0)
+// response.overlapV =&gt; (10, 0)
 </code></pre>
 
 <p>No collision between two Boxes</p>
