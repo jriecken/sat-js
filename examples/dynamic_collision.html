@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SAT.js - Simple Collision Examples</title>
+    <script src="../SAT.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+    <script src="examples.js"></script>
+  </head>
+  <body style="margin: 50px">
+    <h1>Dynamic Collision Examples</h1>
+
+    <h2>Dynamic response</h2>
+    <p>Drag the shapes around. If they collide they will be moved so that they don't collide.  The circle is "heavy" - it will not be moved by other items (but will move other items)</p>
+    <div id="example1" style="border: 1px solid #CCC; width: 640px; height: 480px;"></div>
+    <script>
+    (function () {
+      var canvas = Raphael('example1', 640, 480);
+      var world = new World(canvas);
+      var poly = world.addEntity(P(V(160,120), [V(0,0), V(60, 0), V(100, 40), V(60, 80), V(0, 80)]).translate(-50, -40), { solid: true, draggable: true });
+      var poly2 = world.addEntity(P(V(10,10), [V(0,0), V(30, 0), V(30, 30), V(0, 30)]), { solid: true, draggable: true });
+      var circle1 = world.addEntity(C(V(50, 200), 30), { solid: true, heavy: true, draggable: true });
+      function doRotate() {
+        poly.data.rotate(Math.PI / 60); // Assuming 60fps this will take ~2 seconds for a full rotation
+        world.simulate();
+        window.requestAnimationFrame(doRotate);
+      }
+      window.requestAnimationFrame(doRotate);
+    }());
+    </script>
+
+    <h2>Lots of circles, all collidable with each other.</h2>
+    <p>Drag any of the circles and watch them react.</p>
+    <div id="example2" style="border: 1px solid #CCC; width: 640px; height: 640px;"></div>
+    <script>
+    (function () {
+      var canvas = Raphael('example2', 640, 640);
+      var world = new World(canvas, {
+        loopCount: 5
+      });
+      for (var i = 0; i < 16; i++) {
+        for (var j = 0; j < 16; j++) {
+          var displayAttrs = {
+            fill: 'rgba(' + Math.floor(Math.random() * 255) + ',' +  Math.floor(Math.random() * 255) + ',' +  Math.floor(Math.random() * 255) + ')'
+          }
+          var c = world.addEntity(C(V((40 * i) + 20, (40 * j) + 20), 18), { solid: true, draggable: true, displayAttrs: displayAttrs });
+        }
+      }
+    }());
+    </script>
+
+  </body>
+</html>

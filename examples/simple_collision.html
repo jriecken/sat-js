@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SAT.js - Simple Collision Examples</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+    <script src="../SAT.js"></script>
+    <script src="examples.js"></script>
+    <script>
+    // Simple onCollide handler that changes colors of displayed items.
+    function displayCollision(other, response) {
+      this.displayAttrs.fill = response.aInB ? '#0F0' : '#F00';
+      other.displayAttrs.fill = response.bInA ? '#0F0' : '#F00';
+    }
+    // onTick handler that restores "non collided" color
+    function restoreNoCollisionColors() {
+      this.displayAttrs.fill = '#CCC';
+    }
+    // Default entity options that will just highlight entities when they overlap
+    var defaultEntityOptions = {
+      solid: false,
+      draggable: true,
+      onCollide: displayCollision,
+      onTick: restoreNoCollisionColors
+    };
+    </script>
+  </head>
+  <body style="margin: 50px">
+    <h1>Simple Collision Examples</h1>
+    <p>Drag the shapes around. The shapes will turn red when they are colliding. The smaller shape will turn green if it is completely inside the larger one.</p>
+    <h2>Circle-Circle collision</h2>
+    <div id="example1" style="border: 1px solid #CCC; width: 320px; height: 240px;"></div>
+    <script>
+    (function () {
+      var canvas = Raphael('example1', 320, 240);
+      var world = new World(canvas);
+      var circle1 = world.addEntity(C(V(160, 120), 30), defaultEntityOptions);
+      var circle2 = world.addEntity(C(V(30,30), 10), defaultEntityOptions);
+    }());
+    </script>
+
+    <h2>Circle-Polygon Collision</h2>
+    <div id="example2" style="border: 1px solid #CCC; width: 320px; height: 240px;"></div>
+    <script>
+    (function () {
+      var canvas = Raphael('example2', 320, 240);
+      var world = new World(canvas);
+      var poly = world.addEntity(P(V(160,120), [V(0,0), V(60, 0), V(100, 40), V(60, 80), V(0, 80)]), defaultEntityOptions);
+      var circle = world.addEntity(C(V(30,30), 20), defaultEntityOptions);
+    }());
+    </script>
+
+    <h2>Polygon-Polygon Collision</h2>
+    <div id="example3" style="border: 1px solid #CCC; width: 320px; height: 240px;"></div>
+    <script>
+    (function () {
+      var canvas = Raphael('example3', 320, 240);
+      var world = new World(canvas);
+      var poly = world.addEntity(P(V(160,120), [V(0,0), V(60, 0), V(100, 40), V(60, 80), V(0, 80)]), defaultEntityOptions);
+      var poly2 = world.addEntity(P(V(10,10), [V(0,0), V(30, 0), V(30, 30), V(0, 30)]), defaultEntityOptions);
+    }());
+    </script>
+  </body>
+</html>

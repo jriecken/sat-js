@@ -4,7 +4,7 @@
 //
 // A simple library for determining intersections of circles and
 // polygons using the Separating Axis Theorem.
-/** @preserve Copyright 2013 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. */
+/** @preserve SAT.js - Version 0.2 - Copyright 2013 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. https://github.com/jriecken/sat-js */
 
 /*global define: false, module: false*/
 /*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
