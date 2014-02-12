@@ -1,10 +1,10 @@
-// Version 0.2 - Copyright 2013 -  Jim Riecken <jimr@jimr.ca>
+// Version 0.3 - Copyright 2013 -  Jim Riecken <jimr@jimr.ca>
 //
 // Released under the MIT License - https://github.com/jriecken/sat-js
 //
 // A simple library for determining intersections of circles and
 // polygons using the Separating Axis Theorem.
-/** @preserve SAT.js - Version 0.2 - Copyright 2013 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. https://github.com/jriecken/sat-js */
+/** @preserve SAT.js - Version 0.3 - Copyright 2013 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. https://github.com/jriecken/sat-js */
 
 /*global define: false, module: false*/
 /*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
@@ -434,6 +434,18 @@
   var T_ARRAYS = [];
   for (var i = 0; i < 5; i++) { T_ARRAYS.push([]); }
 
+  // Temporary response used for polygon hit detection.
+  /**
+   * @type {Response}
+   */
+  var T_RESPONSE = new Response();
+
+  // Unit square polygon used for polygon hit detection.
+  /**
+   * @type {Polygon}
+   */
+  var UNIT_SQUARE = new Box(new Vector(), 1, 1).toPolygon();
+
   // ## Helper Functions
 
   // Flattens the specified array of points onto a unit vector axis,
@@ -579,6 +591,38 @@
   var RIGHT_VORNOI_REGION = 1;
   
   // ## Collision Tests
+
+  // Check if a point is inside a circle.
+  /**
+   * @param {Vector} p The point to test.
+   * @param {Circle} c The circle to test.
+   * @return {boolean} true if the point is inside the circle, false if it is not.
+   */
+  function pointInCircle(p, c) {
+    var differenceV = T_VECTORS.pop().copy(p).sub(c['pos']);
+    var radiusSq = c['r'] * c['r'];
+    var distanceSq = differenceV.len2();
+    // If the distance between is smaller than the radius then the point is inside the circle.
+    return distanceSq <= radiusSq;
+  }
+  SAT['pointInCircle'] = pointInCircle;
+
+  // Check if a point is inside a convex polygon.
+  /**
+   * @param {Vector} p The point to test.
+   * @param {Polygon} poly The polygon to test.
+   * @return {boolean} true if the point is inside the polygon, false if it is not.
+   */
+  function pointInPolygon(p, poly) {
+    UNIT_SQUARE['pos'].copy(p);
+    T_RESPONSE.clear();
+    var result = testPolygonPolygon(UNIT_SQUARE, poly, T_RESPONSE);
+    if (result) {
+      result = T_RESPONSE['aInB'];
+    }
+    return result;
+  }
+  SAT['pointInPolygon'] = pointInPolygon;
 
   // Check if two circles collide.
   /**
