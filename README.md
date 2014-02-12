@@ -14,6 +14,8 @@ It supports detecting collisions between:
  - Circles (using Vornoi Regions.)
  - Convex Polygons (and simple Axis-Aligned Boxes, which are of course, convex polygons.)
 
+It also supports checking whether a point is inside a circle or polygon.
+
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
 Current version: `0.3`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
@@ -134,6 +136,14 @@ Collision Tests
 ---------------
 
 SAT.js contains the following collision tests:
+
+### `SAT.pointInCircle(p, c)`
+
+Checks whether a given point is inside the specified circle.
+
+### `SAT.pointInPolygon(p, poly)`
+
+Checks whether a given point is inside a specified convex polygon.
 
 ### `SAT.testCircleCircle(a, b, response)`
 
