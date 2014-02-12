@@ -27,14 +27,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Version 0.2 - Copyright 2013 -  Jim Riecken <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#105;&#x6d;&#114;&#x40;&#106;&#x69;&#109;&#x72;&#46;&#99;&#x61;">&#x6a;&#105;&#x6d;&#114;&#x40;&#106;&#x69;&#109;&#x72;&#46;&#99;&#x61;</a></p>
+              <p>Version 0.3 - Copyright 2013 -  Jim Riecken <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x6a;&#x69;&#109;&#x72;&#64;&#x6a;&#x69;&#x6d;&#x72;&#46;&#x63;&#x61;">&#x6a;&#x69;&#109;&#x72;&#64;&#x6a;&#x69;&#x6d;&#x72;&#46;&#x63;&#x61;</a></p>
 <p>Released under the MIT License - <a href="https://github.com/jriecken/sat-js">https://github.com/jriecken/sat-js</a></p>
 <p>A simple library for determining intersections of circles and
 polygons using the Separating Axis Theorem.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="comment">/** @preserve SAT.js - Version 0.2 - Copyright 2013 - Jim Riecken &lt;jimr@jimr.ca&gt; - released under the MIT License. https://github.com/jriecken/sat-js */</span>
+            <div class="content"><div class='highlight'><pre><span class="comment">/** @preserve SAT.js - Version 0.3 - Copyright 2013 - Jim Riecken &lt;jimr@jimr.ca&gt; - released under the MIT License. https://github.com/jriecken/sat-js */</span>
 
 <span class="comment">/*global define: false, module: false*/</span>
 <span class="comment">/*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
@@ -831,6 +831,42 @@ memory.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
+              <p>Temporary response used for polygon hit detection.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @type {Response}
+   */</span>
+  <span class="keyword">var</span> T_RESPONSE = <span class="keyword">new</span> Response();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Unit square polygon used for polygon hit detection.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @type {Polygon}
+   */</span>
+  <span class="keyword">var</span> UNIT_SQUARE = <span class="keyword">new</span> Box(<span class="keyword">new</span> Vector(), <span class="number">1</span>, <span class="number">1</span>).toPolygon();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
               <h2 id="helper-functions">Helper Functions</h2>
 <p>Flattens the specified array of points onto a unit vector axis,
 resulting in a one dimensional range of the minimum and
@@ -854,11 +890,11 @@ maximum value on that axis.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>The magnitude of the projection of the point onto the normal</p>
 
@@ -874,11 +910,11 @@ maximum value on that axis.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Check whether two convex polygons are separated by the specified
 axis (must be a unit vector).</p>
@@ -905,11 +941,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>The magnitude of the offset between the two polygons</p>
 
@@ -921,11 +957,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Project the polygons onto the axis.</p>
 
@@ -937,11 +973,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Move B&#39;s range to its position relative to A.</p>
 
@@ -953,11 +989,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Check if there is a gap. If there is, this is a separating axis and we can stop</p>
 
@@ -973,11 +1009,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>This is not a separating axis. If we&#39;re calculating a response, calculate the overlap.</p>
 
@@ -989,11 +1025,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>A starts further left than B</p>
 
@@ -1005,11 +1041,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>A ends before B does. We have to pull A out of B</p>
 
@@ -1022,11 +1058,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>B is fully inside A.  Pick the shortest way out.</p>
 
@@ -1041,11 +1077,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-44">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>B starts further left than A</p>
 
@@ -1057,11 +1093,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-45">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>B ends before A ends. We have to push A out of B</p>
 
@@ -1074,11 +1110,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-46">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>A is fully inside B.  Pick the shortest way out.</p>
 
@@ -1094,11 +1130,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>If this is the smallest amount of overlap we&#39;ve seen so far, set it as the minimum overlap.</p>
 
@@ -1122,18 +1158,18 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>Calculates which Vornoi region a point is on a line segment.
 It is assumed that both the line and the point are relative to <code>(0,0)</code></p>
 <pre><code>       |       (0)      |
 (-1)  [S]--------------[E]  (1)
-       |       (0)      |</code></pre>
-
+       |       (0)      |
+</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="comment">/**
@@ -1150,11 +1186,11 @@ It is assumed that both the line and the point are relative to <code>(0,0)</code
         </li>
         
         
-        <li id="section-49">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>If the point is beyond the start of the line, it is in the
 left vornoi region.</p>
@@ -1166,11 +1202,11 @@ left vornoi region.</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>If the point is beyond the end of the line, it is in the
 right vornoi region.</p>
@@ -1182,11 +1218,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>Otherwise, it&#39;s in the middle one.</p>
 
@@ -1198,11 +1234,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-52">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Constants for Vornoi regions</p>
 
@@ -1224,14 +1260,83 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-53">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <h2 id="collision-tests">Collision Tests</h2>
-<p>Check if two circles collide.</p>
+<p>Check if a point is inside a circle.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} p The point to test.
+   * @param {Circle} c The circle to test.
+   * @return {boolean} true if the point is inside the circle, false if it is not.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">pointInCircle</span><span class="params">(p, c)</span> {</span>
+    <span class="keyword">var</span> differenceV = T_VECTORS.pop().copy(p).sub(c[<span class="string">'pos'</span>]);
+    <span class="keyword">var</span> radiusSq = c[<span class="string">'r'</span>] * c[<span class="string">'r'</span>];
+    <span class="keyword">var</span> distanceSq = differenceV.len2();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>If the distance between is smaller than the radius then the point is inside the circle.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">return</span> distanceSq &lt;= radiusSq;
+  }
+  SAT[<span class="string">'pointInCircle'</span>] = pointInCircle;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Check if a point is inside a convex polygon.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="comment">/**
+   * @param {Vector} p The point to test.
+   * @param {Polygon} poly The polygon to test.
+   * @return {boolean} true if the point is inside the polygon, false if it is not.
+   */</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">pointInPolygon</span><span class="params">(p, poly)</span> {</span>
+    UNIT_SQUARE[<span class="string">'pos'</span>].copy(p);
+    T_RESPONSE.clear();
+    <span class="keyword">var</span> result = testPolygonPolygon(UNIT_SQUARE, poly, T_RESPONSE);
+    <span class="keyword">if</span> (result) {
+      result = T_RESPONSE[<span class="string">'aInB'</span>];
+    }
+    <span class="keyword">return</span> result;
+  }
+  SAT[<span class="string">'pointInPolygon'</span>] = pointInPolygon;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>Check if two circles collide.</p>
 
             </div>
             
@@ -1247,11 +1352,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-54">
+        <li id="section-59">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
               <p>Check if the distance between the centers of the two
 circles is greater than their combined radius.</p>
@@ -1266,11 +1371,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-55">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
               <p>If the distance is bigger than the combined radius, they don&#39;t intersect.</p>
 
@@ -1284,11 +1389,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-56">
+        <li id="section-61">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
+                <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
               <p>They intersect.  If we&#39;re calculating a response, calculate the overlap.</p>
 
@@ -1312,11 +1417,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-57">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <p>Check if a polygon and a circle collide.</p>
 
@@ -1334,11 +1439,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-58">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>Get the position of the circle relative to the polygon.</p>
 
@@ -1355,11 +1460,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-59">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>For each edge in the polygon:</p>
 
@@ -1374,11 +1479,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-60">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-60">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>Get the edge.</p>
 
@@ -1389,11 +1494,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-61">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-61">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>Calculate the center of the circle relative to the starting point of the edge.</p>
 
@@ -1404,11 +1509,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-62">
+        <li id="section-67">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-67">&#182;</a>
               </div>
               <p>If the distance between the center of the circle and the point
 is bigger than the radius, the polygon is definitely not fully in
@@ -1423,11 +1528,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-63">
+        <li id="section-68">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-68">&#182;</a>
               </div>
               <p>Calculate which Vornoi region the center of the circle is in.</p>
 
@@ -1438,11 +1543,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-64">
+        <li id="section-69">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
+                <a class="pilcrow" href="#section-69">&#182;</a>
               </div>
               <p>If it&#39;s the left region:</p>
 
@@ -1453,11 +1558,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-65">
+        <li id="section-70">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-65">&#182;</a>
+                <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
               <p>We need to make sure we&#39;re in the RIGHT_VORNOI_REGION of the previous edge.</p>
 
@@ -1468,11 +1573,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-66">
+        <li id="section-71">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-71">&#182;</a>
               </div>
               <p>Calculate the center of the circle relative the starting point of the previous edge</p>
 
@@ -1485,11 +1590,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-67">
+        <li id="section-72">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-72">&#182;</a>
               </div>
               <p>It&#39;s in the region we want.  Check if the circle intersects the point.</p>
 
@@ -1501,11 +1606,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-68">
+        <li id="section-73">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
               <p>No intersection</p>
 
@@ -1521,11 +1626,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-69">
+        <li id="section-74">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
+                <a class="pilcrow" href="#section-74">&#182;</a>
               </div>
               <p>It intersects, calculate the overlap.</p>
 
@@ -1541,11 +1646,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-70">
+        <li id="section-75">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-70">&#182;</a>
+                <a class="pilcrow" href="#section-75">&#182;</a>
               </div>
               <p>If it&#39;s the right region:</p>
 
@@ -1556,11 +1661,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-71">
+        <li id="section-76">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-71">&#182;</a>
+                <a class="pilcrow" href="#section-76">&#182;</a>
               </div>
               <p>We need to make sure we&#39;re in the left region on the next edge</p>
 
@@ -1571,11 +1676,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-72">
+        <li id="section-77">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-72">&#182;</a>
+                <a class="pilcrow" href="#section-77">&#182;</a>
               </div>
               <p>Calculate the center of the circle relative to the starting point of the next edge.</p>
 
@@ -1588,11 +1693,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-73">
+        <li id="section-78">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-73">&#182;</a>
+                <a class="pilcrow" href="#section-78">&#182;</a>
               </div>
               <p>It&#39;s in the region we want.  Check if the circle intersects the point.</p>
 
@@ -1604,11 +1709,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-74">
+        <li id="section-79">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-74">&#182;</a>
+                <a class="pilcrow" href="#section-79">&#182;</a>
               </div>
               <p>No intersection</p>
 
@@ -1623,11 +1728,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-75">
+        <li id="section-80">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-75">&#182;</a>
+                <a class="pilcrow" href="#section-80">&#182;</a>
               </div>
               <p>It intersects, calculate the overlap.</p>
 
@@ -1642,11 +1747,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-76">
+        <li id="section-81">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-76">&#182;</a>
+                <a class="pilcrow" href="#section-81">&#182;</a>
               </div>
               <p>Otherwise, it&#39;s the middle region:</p>
 
@@ -1657,11 +1762,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-77">
+        <li id="section-82">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-77">&#182;</a>
+                <a class="pilcrow" href="#section-82">&#182;</a>
               </div>
               <p>Need to check if the circle is intersecting the edge,
 Change the edge into its &quot;edge normal&quot;.</p>
@@ -1673,11 +1778,11 @@ Change the edge into its &quot;edge normal&quot;.</p>
         </li>
         
         
-        <li id="section-78">
+        <li id="section-83">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-78">&#182;</a>
+                <a class="pilcrow" href="#section-83">&#182;</a>
               </div>
               <p>Find the perpendicular distance between the center of the 
 circle and the edge.</p>
@@ -1690,11 +1795,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-79">
+        <li id="section-84">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-79">&#182;</a>
+                <a class="pilcrow" href="#section-84">&#182;</a>
               </div>
               <p>If the circle is on the outside of the edge, there is no intersection.</p>
 
@@ -1705,11 +1810,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-80">
+        <li id="section-85">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-80">&#182;</a>
+                <a class="pilcrow" href="#section-85">&#182;</a>
               </div>
               <p>No intersection</p>
 
@@ -1724,11 +1829,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-81">
+        <li id="section-86">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-81">&#182;</a>
+                <a class="pilcrow" href="#section-86">&#182;</a>
               </div>
               <p>It intersects, calculate the overlap.</p>
 
@@ -1740,11 +1845,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-82">
+        <li id="section-87">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-82">&#182;</a>
+                <a class="pilcrow" href="#section-87">&#182;</a>
               </div>
               <p>If the center of the circle is on the outside of the edge, or part of the
 circle is on the outside, the circle is not fully inside the polygon.</p>
@@ -1760,11 +1865,11 @@ circle is on the outside, the circle is not fully inside the polygon.</p>
         </li>
         
         
-        <li id="section-83">
+        <li id="section-88">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-83">&#182;</a>
+                <a class="pilcrow" href="#section-88">&#182;</a>
               </div>
               <p>If this is the smallest overlap we&#39;ve seen, keep it. 
 (overlapN may be null if the circle was in the wrong Vornoi region).</p>
@@ -1780,11 +1885,11 @@ circle is on the outside, the circle is not fully inside the polygon.</p>
         </li>
         
         
-        <li id="section-84">
+        <li id="section-89">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-84">&#182;</a>
+                <a class="pilcrow" href="#section-89">&#182;</a>
               </div>
               <p>Calculate the final overlap vector - based on the smallest overlap.</p>
 
@@ -1805,11 +1910,11 @@ circle is on the outside, the circle is not fully inside the polygon.</p>
         </li>
         
         
-        <li id="section-85">
+        <li id="section-90">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-85">&#182;</a>
+                <a class="pilcrow" href="#section-90">&#182;</a>
               </div>
               <p>Check if a circle and a polygon collide.</p>
 <p><strong>NOTE:</strong> This is slightly less efficient than polygonCircle as it just
@@ -1829,11 +1934,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-86">
+        <li id="section-91">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-86">&#182;</a>
+                <a class="pilcrow" href="#section-91">&#182;</a>
               </div>
               <p>Test the polygon against the circle.</p>
 
@@ -1845,11 +1950,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-87">
+        <li id="section-92">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-87">&#182;</a>
+                <a class="pilcrow" href="#section-92">&#182;</a>
               </div>
               <p>Swap A and B in the response.</p>
 
@@ -1871,11 +1976,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-88">
+        <li id="section-93">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-88">&#182;</a>
+                <a class="pilcrow" href="#section-93">&#182;</a>
               </div>
               <p>Checks whether polygons collide.</p>
 
@@ -1897,11 +2002,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-89">
+        <li id="section-94">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-89">&#182;</a>
+                <a class="pilcrow" href="#section-94">&#182;</a>
               </div>
               <p>If any of the edge normals of A is a separating axis, no intersection.</p>
 
@@ -1916,11 +2021,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-90">
+        <li id="section-95">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-90">&#182;</a>
+                <a class="pilcrow" href="#section-95">&#182;</a>
               </div>
               <p>If any of the edge normals of B is a separating axis, no intersection.</p>
 
@@ -1935,11 +2040,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-91">
+        <li id="section-96">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-91">&#182;</a>
+                <a class="pilcrow" href="#section-96">&#182;</a>
               </div>
               <p>Since none of the edge normals of A or B are a separating axis, there is an intersection
 and we&#39;ve already calculated the smallest overlap (in isSeparatingAxis).  Calculate the
