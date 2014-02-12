@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3 (Feb 11, 2014)
+
+ - Add `pointInCircle` and `pointInPolygon` functions for performing "hit tests" (Fixes #2)
+
 ## 0.2 (Dec 8, 2013)
 
  - Reformat comments so that they can be run through `docco` to create an annotated source file.

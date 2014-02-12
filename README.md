@@ -18,7 +18,7 @@ It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
 Current version: `0.2`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
 
-Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 5KB (1.8KB gzipped)
+Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (1.9KB gzipped)
  
 <a name="classes"></a>
 Classes
@@ -221,6 +221,7 @@ Test two polygons
     
 No collision between two Boxes
 
+    var V = SAT.Vector;
     var B = SAT.Box;
     
     var box1 = new B(new V(0,0), 20, 20).toPolygon();
@@ -228,3 +229,19 @@ No collision between two Boxes
     var collided = SAT.testPolygonPolygon(box1, box2);
     
     // collided => false
+
+Hit testing a circle and polygon
+
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+    var P = SAT.Polygon;
+
+    var triangle = new P(new V(30,0), [
+      new V(0,0), new V(30, 0), new V(0, 30)
+    ]);
+    var circle = new C(new V(100,100), 20);
+
+    SAT.pointInPolygon(new V(0,0), triangle); // false
+    SAT.pointInPolygon(new V(35, 5), triangle); // true
+    SAT.pointInCircle(new V(0,0), circle); // false
+    SAT.pointInCircle(new V(110,110), circle); // true
