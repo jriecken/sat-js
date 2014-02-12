@@ -52,7 +52,7 @@
 
 <p>Current version: <code>0.2</code>. <a href="http://jriecken.github.io/sat-js/docs/SAT.html">Annotated source code</a> is available.</p>
 
-<p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 5KB (1.8KB gzipped)</p>
+<p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 6KB (1.9KB gzipped)</p>
 
 <p><a name="classes"></a></p>
 
@@ -314,13 +314,31 @@ var collided = SAT.testPolygonPolygon(polygon1, polygon2, response);
 
 <p>No collision between two Boxes</p>
 
-<pre><code>var B = SAT.Box;
+<pre><code>var V = SAT.Vector;
+var B = SAT.Box;
 
 var box1 = new B(new V(0,0), 20, 20).toPolygon();
 var box2 = new B(new V(100,100), 20, 20).toPolygon();
 var collided = SAT.testPolygonPolygon(box1, box2);
 
 // collided =&gt; false
+</code></pre>
+
+<p>Hit testing a circle and polygon</p>
+
+<pre><code>var V = SAT.Vector;
+var C = SAT.Circle;
+var P = SAT.Polygon;
+
+var triangle = new P(new V(30,0), [
+  new V(0,0), new V(30, 0), new V(0, 30)
+]);
+var circle = new C(new V(100,100), 20);
+
+SAT.pointInPolygon(new V(0,0), triangle); // false
+SAT.pointInPolygon(new V(35, 5), triangle); // true
+SAT.pointInCircle(new V(0,0), circle); // false
+SAT.pointInCircle(new V(110,110), circle); // true
 </code></pre>
       </section>
     </div>
