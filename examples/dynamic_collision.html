@@ -21,7 +21,7 @@
       var poly2 = world.addEntity(P(V(10,10), [V(0,0), V(30, 0), V(30, 30), V(0, 30)]), { solid: true, draggable: true });
       var circle1 = world.addEntity(C(V(50, 200), 30), { solid: true, heavy: true, draggable: true });
       function doRotate() {
-        poly.data.rotate(Math.PI / 60); // Assuming 60fps this will take ~2 seconds for a full rotation
+        poly.data.setAngle(poly.data.angle + (Math.PI / 60)); // Assuming 60fps this will take ~2 seconds for a full rotation
         world.simulate();
         window.requestAnimationFrame(doRotate);
       }

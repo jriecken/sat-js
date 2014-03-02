@@ -7,7 +7,7 @@ var B = function (pos, w, h) { return new SAT.Box(pos, w, h); };
 // Converts a SAT.Polygon into a SVG path string.
 function poly2path(polygon) {
   var pos = polygon.pos;
-  var points = polygon.points;
+  var points = polygon.calcPoints;
   var result = 'M' + pos.x + ' ' + pos.y;
   result += 'M' + (pos.x + points[0].x) + ' ' + (pos.y + points[0].y);
   for (var i = 1; i < points.length; i++) {
