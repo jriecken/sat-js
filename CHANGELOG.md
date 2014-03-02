@@ -2,8 +2,10 @@
 
 ## 0.4 (Mar 2, 2014)
 
- - Add `angle` and `offset` to `Polygon` (Fixes #3, Fixes #4)
+ - Add `clone` method to `Vector` that returns a new vector with the same coordinates.
+ - Add `angle` and `offset` to `Polygon` that are used to modify the computed collision polygon (Fixes #3, Fixes #4)
    - The `rotate` and `translate` methods still exist on `Polygon` but they modify the original `points` of the polygon, wheras `angle` and `offset` do not modify the original points, and are instead applied as computed values.
+ - Add `setPoints`, `setAngle`, and `setOffset` methods to `Polygon`
 
 ## 0.3 (Feb 11, 2014)
 
