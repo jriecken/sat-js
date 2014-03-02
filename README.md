@@ -18,9 +18,9 @@ It also supports checking whether a point is inside a circle or polygon.
 
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
-Current version: `0.3`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
+Current version: `0.4`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
 
-Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (1.9KB gzipped)
+Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (2KB gzipped)
  
 <a name="classes"></a>
 Classes
@@ -43,6 +43,7 @@ It has the following properties:
 It contains the following methods:
 
  - `copy(other)` - Copy the value of another Vector to this one.
+ - `clone()` - Return a new vector with the same coordinates as this one.
  - `perp()` - Change this vector to be perpendicular to what it was before.
  - `rotate(angle)` - Rotate this vector counter-clockwise by the specified number of radians.
  - `reverse()` - Reverse this Vector.
@@ -85,15 +86,21 @@ This is a **convex** polygon, whose points are specified in a counter-clockwise 
 It has the following properties:
 
  - `pos` - The position of the polygon (all points are relative to this).
- - `points` - Array of vectors representing the points of the polygon.
- - `edges` - Array of Vectors representing the edges of the polygon
- - `normals` - Array of Vectors representing the edge normals of the polygon (perpendiculars)
+ - `points` - Array of vectors representing the original points of the polygon.
+ - `angle` - Angle to rotate the polgon (affects `calcPoints`)
+ - `offset` - Translation to apply to the polygon before the `angle` rotation (affects `calcPoints`)
+ - `calcPoints` - The "calculated" collision polygon - effectively `points` with `angle` and `offset` applied.
+ - `edges` - Array of Vectors representing the edges of the calculated polygon
+ - `normals` - Array of Vectors representing the edge normals of the calculated polygon (perpendiculars)
 
 It has the following methods:
 
- - `recalc()` - Call this method to recalculate the edges and normals when any of the points change.
- - `rotate(angle)` - Rotate this polygon counter-clockwise (around its local coordinate system) by the specified number of radians.
- - `translate(x, y)` - Translate the points of this polygin (relative to the local coordinate system) by the specified amounts. Most useful for changing the "center" of the polygon.
+ - `setPoints(points)` - Set the original points (calls `recalc` for you)
+ - `setAngle(angle)` - Set the rotation angle (calls `recalc` for you)
+ - `setOffset(offset)` - Set the offset (calls `recalc` for you)
+ - `recalc()` - Call this method if you manually change `points`, `angle`, or `offset`.
+ - `rotate(angle)` - Rotate the original points of this polygon counter-clockwise (around its local coordinate system) by the specified number of radians. The `angle` rotation will be applied on top of this rotation.
+ - `translate(x, y)` - Translate the original points of this polygin (relative to the local coordinate system) by the specified amounts. The `offset` translation will be applied on top of this translation.
  
 ### SAT.Box
 
