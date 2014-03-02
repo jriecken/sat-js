@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4 (Mar 2, 2014)
+
+ - Add `angle` and `offset` to `Polygon` (Fixes #3, Fixes #4)
+   - The `rotate` and `translate` methods still exist on `Polygon` but they modify the original `points` of the polygon, wheras `angle` and `offset` do not modify the original points, and are instead applied as computed values.
+
 ## 0.3 (Feb 11, 2014)
 
  - Add `pointInCircle` and `pointInPolygon` functions for performing "hit tests" (Fixes #2)
