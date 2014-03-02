@@ -52,9 +52,9 @@
 
 <p>It's released under the <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a> license.</p>
 
-<p>Current version: <code>0.3</code>. <a href="http://jriecken.github.io/sat-js/docs/SAT.html">Annotated source code</a> is available.</p>
+<p>Current version: <code>0.4</code>. <a href="http://jriecken.github.io/sat-js/docs/SAT.html">Annotated source code</a> is available.</p>
 
-<p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 6KB (1.9KB gzipped)</p>
+<p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 6KB (2KB gzipped)</p>
 
 <p><a name="classes"></a></p>
 
@@ -84,6 +84,8 @@ var v = new SAT.Vector(10, 10)
 <ul>
 <li>
 <code>copy(other)</code> - Copy the value of another Vector to this one.</li>
+<li>
+<code>clone()</code> - Return a new vector with the same coordinates as this one.</li>
 <li>
 <code>perp()</code> - Change this vector to be perpendicular to what it was before.</li>
 <li>
@@ -147,20 +149,32 @@ var p = new SAT.Polygon(new SAT.Vector(), [
 <li>
 <code>pos</code> - The position of the polygon (all points are relative to this).</li>
 <li>
-<code>points</code> - Array of vectors representing the points of the polygon.</li>
+<code>points</code> - Array of vectors representing the original points of the polygon.</li>
 <li>
-<code>edges</code> - Array of Vectors representing the edges of the polygon</li>
+<code>angle</code> - Angle to rotate the polgon (affects <code>calcPoints</code>)</li>
 <li>
-<code>normals</code> - Array of Vectors representing the edge normals of the polygon (perpendiculars)</li>
+<code>offset</code> - Translation to apply to the polygon before the <code>angle</code> rotation (affects <code>calcPoints</code>)</li>
+<li>
+<code>calcPoints</code> - The "calculated" collision polygon - effectively <code>points</code> with <code>angle</code> and <code>offset</code> applied.</li>
+<li>
+<code>edges</code> - Array of Vectors representing the edges of the calculated polygon</li>
+<li>
+<code>normals</code> - Array of Vectors representing the edge normals of the calculated polygon (perpendiculars)</li>
 </ul><p>It has the following methods:</p>
 
 <ul>
 <li>
-<code>recalc()</code> - Call this method to recalculate the edges and normals when any of the points change.</li>
+<code>setPoints(points)</code> - Set the original points (calls <code>recalc</code> for you)</li>
 <li>
-<code>rotate(angle)</code> - Rotate this polygon counter-clockwise (around its local coordinate system) by the specified number of radians.</li>
+<code>setAngle(angle)</code> - Set the rotation angle (calls <code>recalc</code> for you)</li>
 <li>
-<code>translate(x, y)</code> - Translate the points of this polygin (relative to the local coordinate system) by the specified amounts. Most useful for changing the "center" of the polygon.</li>
+<code>setOffset(offset)</code> - Set the offset (calls <code>recalc</code> for you)</li>
+<li>
+<code>recalc()</code> - Call this method if you manually change <code>points</code>, <code>angle</code>, or <code>offset</code>.</li>
+<li>
+<code>rotate(angle)</code> - Rotate the original points of this polygon counter-clockwise (around its local coordinate system) by the specified number of radians. The <code>angle</code> rotation will be applied on top of this rotation.</li>
+<li>
+<code>translate(x, y)</code> - Translate the original points of this polygin (relative to the local coordinate system) by the specified amounts. The <code>offset</code> translation will be applied on top of this translation.</li>
 </ul><h3>
 <a name="satbox" class="anchor" href="#satbox"><span class="octicon octicon-link"></span></a>SAT.Box</h3>
 
