@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 (Mar 23, 2014)
+
+ - Fix missing `T_VECTORS.push()` (thanks shakiba!) - Fixes #8
+
 ## 0.4 (Mar 2, 2014)
 
  - Add `clone` method to `Vector` that returns a new vector with the same coordinates.
