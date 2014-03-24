@@ -669,6 +669,7 @@
     var differenceV = T_VECTORS.pop().copy(p).sub(c['pos']);
     var radiusSq = c['r'] * c['r'];
     var distanceSq = differenceV.len2();
+    T_VECTORS.push(differenceV);
     // If the distance between is smaller than the radius then the point is inside the circle.
     return distanceSq <= radiusSq;
   }
