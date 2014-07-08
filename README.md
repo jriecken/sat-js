@@ -21,6 +21,8 @@ It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 Current version: `0.4.1`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
 
 Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (2KB gzipped)
+
+To use it in node.js, you can run `npm install sat` and then use it with `var SAT = require('sat');`
  
 <a name="classes"></a>
 Classes
