@@ -117,7 +117,7 @@ var b = new SAT.Box(new SAT.Vector(10,10), 20, 40);
 
 It has the following properties:
 
- - `pos` - The top-left coordinate of the box.
+ - `pos` - The bottom-left coordinate of the box.
  - `w` - The width of the box.
  - `h` - The height of the box.
  
