@@ -262,12 +262,12 @@
   
   // Compute the axis-aligned bounding box (AABB).
   /**
-   * @return {Box} The AABB
+   * @return {Polygon} The AABB
    */
   Circle.prototype['getAABB'] = Circle.prototype.getAABB = function() {
     var r = this.r;
-    var corner = this.pos.clone().sub(new Vector(r, r));
-    return new Box(corner, r*2, r*2);
+    var corner = this["pos"].clone().sub(new Vector(r, r));
+    return new Box(corner, r*2, r*2).toPolygon();
   }
 
   // ## Polygon
@@ -428,31 +428,31 @@
   
   // Compute the axis-aligned bounding box
   /**
-   * @return {Box} The AABB
+   * @return {Polygon} The AABB
    */
   Polygon.prototype["getAABB"] = Polygon.prototype.getAABB = function() {
-    var points = this["points"];
+    var points = this["calcPoints"];
     var len = points.length;
     var Xmin = points[0]["x"];
     var Ymin = points[0]["y"];
     var Xmax = points[0]["x"];
     var Ymax = points[0]["y"];
-    for(var i = 1; i < len; i++) {
+    for (var i = 1; i < len; i++) {
       var point = points[i];
-      if(point["x"] < Xmin) {
+      if (point["x"] < Xmin) {
         Xmin = point["x"];
       }
-      else if(point["x"] > Xmax) {
+      else if (point["x"] > Xmax) {
         Xmax = point["x"];
       }
-      if(point["y"] < Ymin) {
+      if (point["y"] < Ymin) {
         Ymin = point["y"];
       }
-      else if(point["y"] > Ymax) {
+      else if (point["y"] > Ymax) {
         Ymax = point["y"];
       }
     }
-    return new Box(this["pos"].clone().add(new Vector(Xmin, Ymin)), Xmax - Xmin, Ymax - Ymin);
+    return new Box(this["pos"].clone().add(new Vector(Xmin, Ymin)), Xmax - Xmin, Ymax - Ymin).toPolygon();
   }
   
 
