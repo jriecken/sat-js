@@ -94,16 +94,17 @@ It has the following properties:
  - `points` - Array of vectors representing the original points of the polygon.
  - `angle` - Angle to rotate the polgon (affects `calcPoints`)
  - `offset` - Translation to apply to the polygon before the `angle` rotation (affects `calcPoints`)
- - `calcPoints` - The "calculated" collision polygon - effectively `points` with `angle` and `offset` applied.
- - `edges` - Array of Vectors representing the edges of the calculated polygon
- - `normals` - Array of Vectors representing the edge normals of the calculated polygon (perpendiculars)
+ - `calcPoints` - (Calculated) The collision polygon - effectively `points` with `angle` and `offset` applied.
+ - `edges` - (Calculated) Array of Vectors representing the edges of the calculated polygon
+ - `normals` - (Calculated) Array of Vectors representing the edge normals of the calculated polygon (perpendiculars)
+
+You should _not_ manually change any of the properties except `pos` - use the `setPoints`, `setAngle`, and `setOffset` methods to ensure that the calculated properties are updated correctly.
 
 It has the following methods:
 
- - `setPoints(points)` - Set the original points (calls `recalc` for you)
- - `setAngle(angle)` - Set the rotation angle (calls `recalc` for you)
- - `setOffset(offset)` - Set the offset (calls `recalc` for you)
- - `recalc()` - Call this method if you manually change `points`, `angle`, or `offset`.
+ - `setPoints(points)` - Set the original points
+ - `setAngle(angle)` - Set the current rotation angle (in radians)
+ - `setOffset(offset)` - Set the current offset
  - `rotate(angle)` - Rotate the original points of this polygon counter-clockwise (around its local coordinate system) by the specified number of radians. The `angle` rotation will be applied on top of this rotation.
  - `translate(x, y)` - Translate the original points of this polygin (relative to the local coordinate system) by the specified amounts. The `offset` translation will be applied on top of this translation.
  
