@@ -1,8 +1,13 @@
 # Changelog
 
+## In development
+
+ - Add `getAABB` to `Polygon` and `Circle` that calculate Axis-Aligned Bounding Boxes - thanks @TuurDutoit! (Fixes #17)
+
 ## 0.4.1 (Mar 23, 2014)
 
- - Fix missing `T_VECTORS.push()` (thanks shakiba!) - Fixes #8
+ - Fix missing `T_VECTORS.push()` - thanks @shakiba! (Fixes #8)
+ - Add `package.json` - released as `npm` module (Fixes #11, Fixes #12)
 
 ## 0.4 (Mar 2, 2014)
 
@@ -29,4 +34,4 @@
 
 ## 0.1
 
-Initial release
+ - Initial release
