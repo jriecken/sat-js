@@ -260,12 +260,14 @@
   }
   SAT['Circle'] = Circle;
   
-  // Compute the axis-aligned bounding box (AABB).
+  // Compute the axis-aligned bounding box (AABB) of this Circle.
+  //
+  // Note: Returns a _new_ `Polygon` each time you call this.
   /**
    * @return {Polygon} The AABB
    */
   Circle.prototype['getAABB'] = Circle.prototype.getAABB = function() {
-    var r = this.r;
+    var r = this['r'];
     var corner = this["pos"].clone().sub(new Vector(r, r));
     return new Box(corner, r*2, r*2).toPolygon();
   }
@@ -426,33 +428,36 @@
   };
   
   
-  // Compute the axis-aligned bounding box
+  // Compute the axis-aligned bounding box. Any current state
+  // (translations/rotations) will be applied before constructing the AABB.
+  //
+  // Note: Returns a _new_ `Polygon` each time you call this.
   /**
    * @return {Polygon} The AABB
    */
   Polygon.prototype["getAABB"] = Polygon.prototype.getAABB = function() {
     var points = this["calcPoints"];
     var len = points.length;
-    var Xmin = points[0]["x"];
-    var Ymin = points[0]["y"];
-    var Xmax = points[0]["x"];
-    var Ymax = points[0]["y"];
+    var xMin = points[0]["x"];
+    var yMin = points[0]["y"];
+    var xMax = points[0]["x"];
+    var yMax = points[0]["y"];
     for (var i = 1; i < len; i++) {
       var point = points[i];
-      if (point["x"] < Xmin) {
-        Xmin = point["x"];
+      if (point["x"] < xMin) {
+        xMin = point["x"];
       }
-      else if (point["x"] > Xmax) {
-        Xmax = point["x"];
+      else if (point["x"] > xMax) {
+        xMax = point["x"];
       }
-      if (point["y"] < Ymin) {
-        Ymin = point["y"];
+      if (point["y"] < yMin) {
+        yMin = point["y"];
       }
-      else if (point["y"] > Ymax) {
-        Ymax = point["y"];
+      else if (point["y"] > yMax) {
+        yMax = point["y"];
       }
     }
-    return new Box(this["pos"].clone().add(new Vector(Xmin, Ymin)), Xmax - Xmin, Ymax - Ymin).toPolygon();
+    return new Box(this["pos"].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
   }
   
 
