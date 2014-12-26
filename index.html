@@ -2,9 +2,9 @@
 <html>
 
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Sat-js : A simple JavaScript library for performing 2D collision detection" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Sat-js : A simple JavaScript library for performing 2D collision detection">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -32,14 +32,16 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a name="satjs" class="anchor" href="#satjs"><span class="octicon octicon-link"></span></a>SAT.js</h1>
+<a id="satjs" class="anchor" href="#satjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>SAT.js</h1>
 
 <ul>
 <li><a href="#classes">Classes</a></li>
 <li><a href="#tests">Collision Tests</a></li>
 <li><a href="#examples">Examples</a></li>
-</ul><h2>
-<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
+</ul>
+
+<h2>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
 
 <p>SAT.js is a simple JavaScript library for performing collision detection (and projection-based collision response) of simple 2D shapes.  It uses the <a href="http://en.wikipedia.org/wiki/Hyperplane_separation_theorem">Separating Axis Theorem</a> (hence the name)</p>
 
@@ -48,29 +50,32 @@
 <ul>
 <li>Circles (using Vornoi Regions.)</li>
 <li>Convex Polygons (and simple Axis-Aligned Boxes, which are of course, convex polygons.)</li>
-</ul><p>It also supports checking whether a point is inside a circle or polygon.</p>
+</ul>
+
+<p>It also supports checking whether a point is inside a circle or polygon.</p>
 
 <p>It's released under the <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a> license.</p>
 
-<p>Current version: <code>0.4</code>. <a href="http://jriecken.github.io/sat-js/docs/SAT.html">Annotated source code</a> is available.</p>
+<p>Current version: <code>0.5.0</code>. <a href="http://jriecken.github.io/sat-js/docs/SAT.html">Annotated source code</a> is available.</p>
 
 <p>Nicely compresses with the <a href="https://developers.google.com/closure/compiler/">Google Closure Compiler</a> in <strong>Advanced</strong> mode to about 6KB (2KB gzipped)</p>
+
+<p>To use it in node.js, you can run <code>npm install sat</code> and then use it with <code>var SAT = require('sat');</code></p>
 
 <p><a name="classes"></a></p>
 
 <h2>
-<a name="classes" class="anchor" href="#classes"><span class="octicon octicon-link"></span></a>Classes</h2>
+<a id="classes" class="anchor" href="#classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classes</h2>
 
 <p>SAT.js contains the following JavaScript classes:</p>
 
 <h3>
-<a name="satvector-aliased-as-satv" class="anchor" href="#satvector-aliased-as-satv"><span class="octicon octicon-link"></span></a>SAT.Vector (aliased as SAT.V)</h3>
+<a id="satvector-aliased-as-satv" class="anchor" href="#satvector-aliased-as-satv" aria-hidden="true"><span class="octicon octicon-link"></span></a>SAT.Vector (aliased as SAT.V)</h3>
 
 <p>This is a simple 2D vector/point class.  It is created by calling:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="c1">// Create the vector (10,10) - If (x,y) not specified, defaults to (0,0).</span>
-<span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> 
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// Create the vector (10,10) - If (x,y) not specified, defaults to (0,0).</span>
+<span class="pl-s">var</span> v <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SAT.Vector</span>(<span class="pl-c1">10</span>, <span class="pl-c1">10</span>) </pre></div>
 
 <p>It has the following properties:</p>
 
@@ -79,7 +84,9 @@
 <code>x</code> - The x-coordinate of the Vector.</li>
 <li>
 <code>y</code> - The y-coordinate of the Vector.</li>
-</ul><p>It contains the following methods:</p>
+</ul>
+
+<p>It contains the following methods:</p>
 
 <ul>
 <li>
@@ -114,14 +121,15 @@
 <code>len2()</code> - Get the length squared of this Vector.</li>
 <li>
 <code>len()</code> - Get the length of this Vector</li>
-</ul><h3>
-<a name="satcircle" class="anchor" href="#satcircle"><span class="octicon octicon-link"></span></a>SAT.Circle</h3>
+</ul>
+
+<h3>
+<a id="satcircle" class="anchor" href="#satcircle" aria-hidden="true"><span class="octicon octicon-link"></span></a>SAT.Circle</h3>
 
 <p>This is a simple circle with a center position and a radius.  It is created by calling:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="c1">// Create a circle whose center is (10,10) with radius of 20</span>
-<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Circle</span><span class="p">(</span><span class="k">new</span> <span class="nx">Sat</span><span class="p">.</span><span class="nx">Vector</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="mi">20</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// Create a circle whose center is (10,10) with radius of 20</span>
+<span class="pl-s">var</span> c <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SAT.Circle</span>(<span class="pl-k">new</span> <span class="pl-en">Sat.Vector</span>(<span class="pl-c1">10</span>,<span class="pl-c1">10</span>), <span class="pl-c1">20</span>);</pre></div>
 
 <p>It has the following properties:</p>
 
@@ -130,18 +138,19 @@
 <code>pos</code> - A Vector representing the center of the circle.</li>
 <li>
 <code>r</code> - The radius of the circle</li>
-</ul><h3>
-<a name="satpolygon" class="anchor" href="#satpolygon"><span class="octicon octicon-link"></span></a>SAT.Polygon</h3>
+</ul>
+
+<h3>
+<a id="satpolygon" class="anchor" href="#satpolygon" aria-hidden="true"><span class="octicon octicon-link"></span></a>SAT.Polygon</h3>
 
 <p>This is a <strong>convex</strong> polygon, whose points are specified in a counter-clockwise fashion.  It is created by calling:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="c1">// Create a triangle at (0,0)</span>
-<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">(</span><span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">(),</span> <span class="p">[</span>
-  <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">(),</span>
-  <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
-  <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">75</span><span class="p">)</span>
-<span class="p">]);</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// Create a triangle at (0,0)</span>
+<span class="pl-s">var</span> p <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SAT.Polygon</span>(<span class="pl-k">new</span> <span class="pl-en">SAT.Vector</span>(), [
+  <span class="pl-k">new</span> <span class="pl-en">SAT.Vector</span>(),
+  <span class="pl-k">new</span> <span class="pl-en">SAT.Vector</span>(<span class="pl-c1">100</span>,<span class="pl-c1">0</span>),
+  <span class="pl-k">new</span> <span class="pl-en">SAT.Vector</span>(<span class="pl-c1">50</span>,<span class="pl-c1">75</span>)
+]);</pre></div>
 
 <p>It has the following properties:</p>
 
@@ -155,51 +164,58 @@
 <li>
 <code>offset</code> - Translation to apply to the polygon before the <code>angle</code> rotation (affects <code>calcPoints</code>)</li>
 <li>
-<code>calcPoints</code> - The "calculated" collision polygon - effectively <code>points</code> with <code>angle</code> and <code>offset</code> applied.</li>
+<code>calcPoints</code> - (Calculated) The collision polygon - effectively <code>points</code> with <code>angle</code> and <code>offset</code> applied.</li>
 <li>
-<code>edges</code> - Array of Vectors representing the edges of the calculated polygon</li>
+<code>edges</code> - (Calculated) Array of Vectors representing the edges of the calculated polygon</li>
 <li>
-<code>normals</code> - Array of Vectors representing the edge normals of the calculated polygon (perpendiculars)</li>
-</ul><p>It has the following methods:</p>
+<code>normals</code> - (Calculated) Array of Vectors representing the edge normals of the calculated polygon (perpendiculars)</li>
+</ul>
+
+<p>You should <em>not</em> manually change any of the properties except <code>pos</code> - use the <code>setPoints</code>, <code>setAngle</code>, and <code>setOffset</code> methods to ensure that the calculated properties are updated correctly.</p>
+
+<p>It has the following methods:</p>
 
 <ul>
 <li>
-<code>setPoints(points)</code> - Set the original points (calls <code>recalc</code> for you)</li>
+<code>setPoints(points)</code> - Set the original points</li>
 <li>
-<code>setAngle(angle)</code> - Set the rotation angle (calls <code>recalc</code> for you)</li>
+<code>setAngle(angle)</code> - Set the current rotation angle (in radians)</li>
 <li>
-<code>setOffset(offset)</code> - Set the offset (calls <code>recalc</code> for you)</li>
-<li>
-<code>recalc()</code> - Call this method if you manually change <code>points</code>, <code>angle</code>, or <code>offset</code>.</li>
+<code>setOffset(offset)</code> - Set the current offset</li>
 <li>
 <code>rotate(angle)</code> - Rotate the original points of this polygon counter-clockwise (around its local coordinate system) by the specified number of radians. The <code>angle</code> rotation will be applied on top of this rotation.</li>
 <li>
 <code>translate(x, y)</code> - Translate the original points of this polygin (relative to the local coordinate system) by the specified amounts. The <code>offset</code> translation will be applied on top of this translation.</li>
-</ul><h3>
-<a name="satbox" class="anchor" href="#satbox"><span class="octicon octicon-link"></span></a>SAT.Box</h3>
+</ul>
+
+<h3>
+<a id="satbox" class="anchor" href="#satbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>SAT.Box</h3>
 
 <p>This is a simple Box with a position, width, and height.  It is created by calling:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="c1">// Create a box at (10,10) with width 20 and height 40.</span>
-<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Box</span><span class="p">(</span><span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// Create a box at (10,10) with width 20 and height 40.</span>
+<span class="pl-s">var</span> b <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SAT.Box</span>(<span class="pl-k">new</span> <span class="pl-en">SAT.Vector</span>(<span class="pl-c1">10</span>,<span class="pl-c1">10</span>), <span class="pl-c1">20</span>, <span class="pl-c1">40</span>);</pre></div>
 
 <p>It has the following properties:</p>
 
 <ul>
 <li>
-<code>pos</code> - The top-left coordinate of the box.</li>
+<code>pos</code> - The bottom-left coordinate of the box.</li>
 <li>
 <code>w</code> - The width of the box.</li>
 <li>
 <code>h</code> - The height of the box.</li>
-</ul><p>It has the following methods:</p>
+</ul>
+
+<p>It has the following methods:</p>
 
 <ul>
 <li>
 <code>toPolygon()</code> - Returns a new Polygon whose edges are the edges of the box.</li>
-</ul><h3>
-<a name="satresponse" class="anchor" href="#satresponse"><span class="octicon octicon-link"></span></a>SAT.Response</h3>
+</ul>
+
+<h3>
+<a id="satresponse" class="anchor" href="#satresponse" aria-hidden="true"><span class="octicon octicon-link"></span></a>SAT.Response</h3>
 
 <p>This is the object representing the result of a collision between two objects.  It just has a simple <code>new Response()</code> constructor.</p>
 
@@ -220,32 +236,36 @@
 <code>aInB</code> - Whether the first object is completely inside the second.</li>
 <li>
 <code>bInA</code> - Whether the second object is completely inside the first.</li>
-</ul><p>It has the following methods:</p>
+</ul>
+
+<p>It has the following methods:</p>
 
 <ul>
 <li>
 <code>clear()</code> - Clear the response so that it is ready to be reused for another collision test.</li>
-</ul><p><a name="tests"></a></p>
+</ul>
+
+<p><a name="tests"></a></p>
 
 <h2>
-<a name="collision-tests" class="anchor" href="#collision-tests"><span class="octicon octicon-link"></span></a>Collision Tests</h2>
+<a id="collision-tests" class="anchor" href="#collision-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collision Tests</h2>
 
 <p>SAT.js contains the following collision tests:</p>
 
 <h3>
-<a name="satpointincirclep-c" class="anchor" href="#satpointincirclep-c"><span class="octicon octicon-link"></span></a><code>SAT.pointInCircle(p, c)</code>
+<a id="satpointincirclep-c" class="anchor" href="#satpointincirclep-c" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SAT.pointInCircle(p, c)</code>
 </h3>
 
 <p>Checks whether a given point is inside the specified circle.</p>
 
 <h3>
-<a name="satpointinpolygonp-poly" class="anchor" href="#satpointinpolygonp-poly"><span class="octicon octicon-link"></span></a><code>SAT.pointInPolygon(p, poly)</code>
+<a id="satpointinpolygonp-poly" class="anchor" href="#satpointinpolygonp-poly" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SAT.pointInPolygon(p, poly)</code>
 </h3>
 
 <p>Checks whether a given point is inside a specified convex polygon.</p>
 
 <h3>
-<a name="sattestcirclecirclea-b-response" class="anchor" href="#sattestcirclecirclea-b-response"><span class="octicon octicon-link"></span></a><code>SAT.testCircleCircle(a, b, response)</code>
+<a id="sattestcirclecirclea-b-response" class="anchor" href="#sattestcirclecirclea-b-response" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SAT.testCircleCircle(a, b, response)</code>
 </h3>
 
 <p>Tests for a collision between two <code>Circle</code>s, <code>a</code>, and <code>b</code>.  If a response is to be calculated in the event of collision, pass in a cleared <code>Response</code> object.</p>
@@ -253,7 +273,7 @@
 <p>Returns <code>true</code> if the circles collide, <code>false</code> otherwise.</p>
 
 <h3>
-<a name="sattestpolygoncirclepolygon-circle-response" class="anchor" href="#sattestpolygoncirclepolygon-circle-response"><span class="octicon octicon-link"></span></a><code>SAT.testPolygonCircle(polygon, circle, response)</code>
+<a id="sattestpolygoncirclepolygon-circle-response" class="anchor" href="#sattestpolygoncirclepolygon-circle-response" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SAT.testPolygonCircle(polygon, circle, response)</code>
 </h3>
 
 <p>Tests for a collision between a <code>Polygon</code> and a <code>Circle</code>.  If a response is to be calculated in the event of a collision, pass in a cleared <code>Response</code> object.</p>
@@ -261,7 +281,7 @@
 <p>Returns <code>true</code> if there is a collision, <code>false</code> otherwise.</p>
 
 <h3>
-<a name="sattestcirclepolygoncircle-polygon-response" class="anchor" href="#sattestcirclepolygoncircle-polygon-response"><span class="octicon octicon-link"></span></a><code>SAT.testCirclePolygon(circle, polygon, response)</code>
+<a id="sattestcirclepolygoncircle-polygon-response" class="anchor" href="#sattestcirclepolygoncircle-polygon-response" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SAT.testCirclePolygon(circle, polygon, response)</code>
 </h3>
 
 <p>The same thing as <code>SAT.testPolygonCircle</code>, but in the other direction.</p>
@@ -271,7 +291,7 @@
 <p><em>NOTE: This is slightly slower than <code>SAT.testPolygonCircle</code> as it just calls that and reverses the result</em></p>
 
 <h3>
-<a name="sattestpolygonpolygona-b-response" class="anchor" href="#sattestpolygonpolygona-b-response"><span class="octicon octicon-link"></span></a><code>SAT.testPolygonPolygon(a, b, response)</code>
+<a id="sattestpolygonpolygona-b-response" class="anchor" href="#sattestpolygonpolygona-b-response" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SAT.testPolygonPolygon(a, b, response)</code>
 </h3>
 
 <p>Tests whether two polygons <code>a</code> and <code>b</code> collide. If a response is to be calculated in the event of collision, pass in a cleared <code>Response</code> object.</p>
@@ -283,91 +303,86 @@
 <p><a name="examples"></a></p>
 
 <h2>
-<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
 
 <p>Test two circles</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">V</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">C</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Circle</span><span class="p">;</span>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> V <span class="pl-k">=</span> SAT.Vector;
+<span class="pl-s">var</span> C <span class="pl-k">=</span> SAT.Circle;
 
-<span class="kd">var</span> <span class="nx">circle1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">C</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">20</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">circle2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">C</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">20</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Response</span><span class="p">();</span>
-<span class="kd">var</span> <span class="nx">collided</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">testCircleCircle</span><span class="p">(</span><span class="nx">circle1</span><span class="p">,</span> <span class="nx">circle2</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+<span class="pl-s">var</span> circle1 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">C</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), <span class="pl-c1">20</span>);
+<span class="pl-s">var</span> circle2 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">C</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">30</span>,<span class="pl-c1">0</span>), <span class="pl-c1">20</span>);
+<span class="pl-s">var</span> response <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SAT.Response</span>();
+<span class="pl-s">var</span> collided <span class="pl-k">=</span> SAT.testCircleCircle(circle1, circle2, response);
 
-<span class="c1">// collided =&gt; true</span>
-<span class="c1">// response.overlap =&gt; 10</span>
-<span class="c1">// response.overlapV =&gt; (10, 0)</span>
-</pre></div>
+<span class="pl-c">// collided =&gt; true</span>
+<span class="pl-c">// response.overlap =&gt; 10</span>
+<span class="pl-c">// response.overlapV =&gt; (10, 0)</span></pre></div>
 
 <p>Test a circle and a polygon</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">V</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">C</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Circle</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">;</span>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> V <span class="pl-k">=</span> SAT.Vector;
+<span class="pl-s">var</span> C <span class="pl-k">=</span> SAT.Circle;
+<span class="pl-s">var</span> P <span class="pl-k">=</span> SAT.Polygon;
 
-<span class="kd">var</span> <span class="nx">circle</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">C</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="mi">20</span><span class="p">);</span>
-<span class="c1">// A square</span>
-<span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">P</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">[</span>
-  <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">)</span>
-<span class="p">]);</span>
-<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Response</span><span class="p">();</span>
-<span class="kd">var</span> <span class="nx">collided</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">testPolygonCircle</span><span class="p">(</span><span class="nx">polygon</span><span class="p">,</span> <span class="nx">circle</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+<span class="pl-s">var</span> circle <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">C</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">50</span>,<span class="pl-c1">50</span>), <span class="pl-c1">20</span>);
+<span class="pl-c">// A square</span>
+<span class="pl-s">var</span> polygon <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">P</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), [
+  <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">40</span>,<span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">40</span>,<span class="pl-c1">40</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">40</span>)
+]);
+<span class="pl-s">var</span> response <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SAT.Response</span>();
+<span class="pl-s">var</span> collided <span class="pl-k">=</span> SAT.testPolygonCircle(polygon, circle, response);
 
-<span class="c1">// collided =&gt; true</span>
-<span class="c1">// response.overlap ~&gt; 5.86</span>
-<span class="c1">// response.overlapV ~&gt; (4.14, 4.14) - i.e. on a diagonal</span>
-</pre></div>
+<span class="pl-c">// collided =&gt; true</span>
+<span class="pl-c">// response.overlap ~&gt; 5.86</span>
+<span class="pl-c">// response.overlapV ~&gt; (4.14, 4.14) - i.e. on a diagonal</span></pre></div>
 
 <p>Test two polygons</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">V</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">;</span>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> V <span class="pl-k">=</span> SAT.Vector;
+<span class="pl-s">var</span> P <span class="pl-k">=</span> SAT.Polygon;
 
-<span class="c1">// A square</span>
-<span class="kd">var</span> <span class="nx">polygon1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">P</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">[</span>
-  <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">)</span>
-<span class="p">]);</span>
-<span class="c1">// A triangle</span>
-<span class="kd">var</span> <span class="nx">polygon2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">P</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">[</span>
-  <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="p">]);</span>
-<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Response</span><span class="p">();</span>
-<span class="kd">var</span> <span class="nx">collided</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">testPolygonPolygon</span><span class="p">(</span><span class="nx">polygon1</span><span class="p">,</span> <span class="nx">polygon2</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+<span class="pl-c">// A square</span>
+<span class="pl-s">var</span> polygon1 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">P</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), [
+  <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">40</span>,<span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">40</span>,<span class="pl-c1">40</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">40</span>)
+]);
+<span class="pl-c">// A triangle</span>
+<span class="pl-s">var</span> polygon2 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">P</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">30</span>,<span class="pl-c1">0</span>), [
+  <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">30</span>, <span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>, <span class="pl-c1">30</span>)
+]);
+<span class="pl-s">var</span> response <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SAT.Response</span>();
+<span class="pl-s">var</span> collided <span class="pl-k">=</span> SAT.testPolygonPolygon(polygon1, polygon2, response);
 
-<span class="c1">// collided =&gt; true</span>
-<span class="c1">// response.overlap =&gt; 10</span>
-<span class="c1">// response.overlapV =&gt; (10, 0)</span>
-</pre></div>
+<span class="pl-c">// collided =&gt; true</span>
+<span class="pl-c">// response.overlap =&gt; 10</span>
+<span class="pl-c">// response.overlapV =&gt; (10, 0)</span></pre></div>
 
 <p>No collision between two Boxes</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">V</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">B</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Box</span><span class="p">;</span>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> V <span class="pl-k">=</span> SAT.Vector;
+<span class="pl-s">var</span> B <span class="pl-k">=</span> SAT.Box;
 
-<span class="kd">var</span> <span class="nx">box1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">B</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">).</span><span class="nx">toPolygon</span><span class="p">();</span>
-<span class="kd">var</span> <span class="nx">box2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">B</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">).</span><span class="nx">toPolygon</span><span class="p">();</span>
-<span class="kd">var</span> <span class="nx">collided</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">testPolygonPolygon</span><span class="p">(</span><span class="nx">box1</span><span class="p">,</span> <span class="nx">box2</span><span class="p">);</span>
+<span class="pl-s">var</span> box1 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">B</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), <span class="pl-c1">20</span>, <span class="pl-c1">20</span>).toPolygon();
+<span class="pl-s">var</span> box2 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">B</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">100</span>,<span class="pl-c1">100</span>), <span class="pl-c1">20</span>, <span class="pl-c1">20</span>).toPolygon();
+<span class="pl-s">var</span> collided <span class="pl-k">=</span> SAT.testPolygonPolygon(box1, box2);
 
-<span class="c1">// collided =&gt; false</span>
-</pre></div>
+<span class="pl-c">// collided =&gt; false</span></pre></div>
 
 <p>Hit testing a circle and polygon</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">V</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Vector</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">C</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Circle</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">SAT</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">;</span>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> V <span class="pl-k">=</span> SAT.Vector;
+<span class="pl-s">var</span> C <span class="pl-k">=</span> SAT.Circle;
+<span class="pl-s">var</span> P <span class="pl-k">=</span> SAT.Polygon;
 
-<span class="kd">var</span> <span class="nx">triangle</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">P</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">[</span>
-  <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="p">]);</span>
-<span class="kd">var</span> <span class="nx">circle</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">C</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="mi">20</span><span class="p">);</span>
+<span class="pl-s">var</span> triangle <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">P</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">30</span>,<span class="pl-c1">0</span>), [
+  <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">30</span>, <span class="pl-c1">0</span>), <span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>, <span class="pl-c1">30</span>)
+]);
+<span class="pl-s">var</span> circle <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">C</span>(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">100</span>,<span class="pl-c1">100</span>), <span class="pl-c1">20</span>);
 
-<span class="nx">SAT</span><span class="p">.</span><span class="nx">pointInPolygon</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="nx">triangle</span><span class="p">);</span> <span class="c1">// false</span>
-<span class="nx">SAT</span><span class="p">.</span><span class="nx">pointInPolygon</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="nx">triangle</span><span class="p">);</span> <span class="c1">// true</span>
-<span class="nx">SAT</span><span class="p">.</span><span class="nx">pointInCircle</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="nx">circle</span><span class="p">);</span> <span class="c1">// false</span>
-<span class="nx">SAT</span><span class="p">.</span><span class="nx">pointInCircle</span><span class="p">(</span><span class="k">new</span> <span class="nx">V</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span><span class="mi">110</span><span class="p">),</span> <span class="nx">circle</span><span class="p">);</span> <span class="c1">// true</span>
-</pre></div>
+SAT.pointInPolygon(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), triangle); <span class="pl-c">// false</span>
+SAT.pointInPolygon(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">35</span>, <span class="pl-c1">5</span>), triangle); <span class="pl-c">// true</span>
+SAT.pointInCircle(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>), circle); <span class="pl-c">// false</span>
+SAT.pointInCircle(<span class="pl-k">new</span> <span class="pl-en">V</span>(<span class="pl-c1">110</span>,<span class="pl-c1">110</span>), circle); <span class="pl-c">// true</span></pre></div>
       </section>
     </div>
 
