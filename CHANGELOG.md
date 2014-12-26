@@ -2,6 +2,8 @@
 
 ## In development
 
+## 0.5.0 (Dec 26, 2014)
+
  - **(POTENTIALLY BREAKING CHANGE)** Make `recalc` on `Polygon` more memory efficient. It no longer does any allocations. The `calcPoints`,`edges` and `normals` vector arrays are reused and only created in `setPoints` when the number of new points is different than the current ones. (Fixes #15)
    - `points`, `angle` and `offset` can no longer be manually changed. The `setPoints`, `setAngle`, and `setOffset` methods **must** be used.
    - As a result of this, the `recalc` method is no longer part of the API.
