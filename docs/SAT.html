@@ -27,14 +27,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Version 0.4.1 - Copyright 2014 -  Jim Riecken <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#106;&#105;&#109;&#114;&#64;&#x6a;&#105;&#x6d;&#114;&#46;&#x63;&#97;">&#106;&#105;&#109;&#114;&#64;&#x6a;&#105;&#x6d;&#114;&#46;&#x63;&#97;</a></p>
+              <p>Version 0.5.0 - Copyright 2012 - 2015 -  Jim Riecken <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#106;&#105;&#109;&#x72;&#x40;&#x6a;&#x69;&#109;&#x72;&#x2e;&#99;&#x61;">&#106;&#105;&#109;&#x72;&#x40;&#x6a;&#x69;&#109;&#x72;&#x2e;&#99;&#x61;</a></p>
 <p>Released under the MIT License - <a href="https://github.com/jriecken/sat-js">https://github.com/jriecken/sat-js</a></p>
 <p>A simple library for determining intersections of circles and
 polygons using the Separating Axis Theorem.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/** @preserve SAT.js - Version 0.4.1 - Copyright 2014 - Jim Riecken &lt;jimr@jimr.ca&gt; - released under the MIT License. https://github.com/jriecken/sat-js */</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/** @preserve SAT.js - Version 0.5.0 - Copyright 2012 - 2015 - Jim Riecken &lt;jimr@jimr.ca&gt; - released under the MIT License. https://github.com/jriecken/sat-js */</span>
 
 <span class="hljs-comment">/*global define: false, module: false*/</span>
 <span class="hljs-comment">/*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
@@ -65,16 +65,16 @@ does not mangle the exposed API in advanced mode.</p>
  * @param {*} root - The global scope
  * @param {Function} factory - Factory that creates SAT module
  */</span>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(root, factory)</span> {</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(root, factory)</span> </span>{
 <span class="hljs-pi">  "use strict"</span>;
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> define === <span class="hljs-string">'function'</span> &amp;&amp; define[<span class="hljs-string">'amd'</span>]) {
     define(factory);
   } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> exports === <span class="hljs-string">'object'</span>) {
-    module[<span class="hljs-string">'exports'</span>] = factory();
+    <span class="hljs-built_in">module</span>[<span class="hljs-string">'exports'</span>] = factory();
   } <span class="hljs-keyword">else</span> {
     root[<span class="hljs-string">'SAT'</span>] = factory();
   }
-}(<span class="hljs-keyword">this</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+}(<span class="hljs-keyword">this</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
 <span class="hljs-pi">  "use strict"</span>;
 
   <span class="hljs-keyword">var</span> SAT = {};</pre></div></div>
@@ -112,7 +112,7 @@ a coordinate is not specified, it will be set to <code>0</code></p>
    * @param {?number=} y The y position.
    * @constructor
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Vector</span><span class="hljs-params">(x, y)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Vector</span><span class="hljs-params">(x, y)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = x || <span class="hljs-number">0</span>;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] = y || <span class="hljs-number">0</span>;
   }
@@ -150,7 +150,7 @@ a coordinate is not specified, it will be set to <code>0</code></p>
    * @param {Vector} other The other Vector.
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'copy'</span>] = Vector.prototype.copy = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'copy'</span>] = Vector.prototype.copy = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = other[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] = other[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
@@ -172,7 +172,7 @@ a coordinate is not specified, it will be set to <code>0</code></p>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {Vector} The new cloned vector
    */</span>
-  Vector.prototype[<span class="hljs-string">'clone'</span>] = Vector.prototype.clone = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Vector.prototype[<span class="hljs-string">'clone'</span>] = Vector.prototype.clone = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Vector(<span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>], <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>]);
   };</pre></div></div>
             
@@ -193,7 +193,7 @@ roatates it 90 degrees in a clockwise direction)</p>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'perp'</span>] = Vector.prototype.perp = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Vector.prototype[<span class="hljs-string">'perp'</span>] = Vector.prototype.perp = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> x = <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] = -x;
@@ -217,7 +217,7 @@ roatates it 90 degrees in a clockwise direction)</p>
    * @param {number} angle The angle to rotate (in radians)
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'rotate'</span>] = Vector.prototype.rotate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(angle)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'rotate'</span>] = Vector.prototype.rotate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(angle)</span> </span>{
     <span class="hljs-keyword">var</span> x = <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">var</span> y = <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = x * <span class="hljs-built_in">Math</span>.cos(angle) - y * <span class="hljs-built_in">Math</span>.sin(angle);
@@ -241,7 +241,7 @@ roatates it 90 degrees in a clockwise direction)</p>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'reverse'</span>] = Vector.prototype.reverse = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Vector.prototype[<span class="hljs-string">'reverse'</span>] = Vector.prototype.reverse = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = -<span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] = -<span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
@@ -263,7 +263,7 @@ roatates it 90 degrees in a clockwise direction)</p>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'normalize'</span>] = Vector.prototype.normalize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Vector.prototype[<span class="hljs-string">'normalize'</span>] = Vector.prototype.normalize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> d = <span class="hljs-keyword">this</span>.len();
     <span class="hljs-keyword">if</span>(d &gt; <span class="hljs-number">0</span>) {
       <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] / d;
@@ -289,7 +289,7 @@ roatates it 90 degrees in a clockwise direction)</p>
    * @param {Vector} other The other Vector.
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'add'</span>] = Vector.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'add'</span>] = Vector.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] += other[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] += other[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
@@ -312,7 +312,7 @@ roatates it 90 degrees in a clockwise direction)</p>
    * @param {Vector} other The other Vector.
    * @return {Vector} This for chaiing.
    */</span>
-  Vector.prototype[<span class="hljs-string">'sub'</span>] = Vector.prototype.sub = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'sub'</span>] = Vector.prototype.sub = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] -= other[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] -= other[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
@@ -338,7 +338,7 @@ for each axis, or a single scaling factor that will scale both <code>x</code> an
    *   is not specified, the x scaling factor will be used.
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'scale'</span>] = Vector.prototype.scale = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x,y)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'scale'</span>] = Vector.prototype.scale = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x,y)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] *= x;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] *= y || x;
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; 
@@ -361,7 +361,7 @@ for each axis, or a single scaling factor that will scale both <code>x</code> an
    * @param {Vector} other The vector to project onto.
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'project'</span>] = Vector.prototype.project = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'project'</span>] = Vector.prototype.project = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> </span>{
     <span class="hljs-keyword">var</span> amt = <span class="hljs-keyword">this</span>.dot(other) / other.len2();
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = amt * other[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] = amt * other[<span class="hljs-string">'y'</span>];
@@ -386,7 +386,7 @@ than <code>project</code> when dealing with unit vectors.</p>
    * @param {Vector} other The unit vector to project onto.
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'projectN'</span>] = Vector.prototype.projectN = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'projectN'</span>] = Vector.prototype.projectN = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> </span>{
     <span class="hljs-keyword">var</span> amt = <span class="hljs-keyword">this</span>.dot(other);
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] = amt * other[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] = amt * other[<span class="hljs-string">'y'</span>];
@@ -410,7 +410,7 @@ than <code>project</code> when dealing with unit vectors.</p>
    * @param {Vector} axis The vector representing the axis.
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'reflect'</span>] = Vector.prototype.reflect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(axis)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'reflect'</span>] = Vector.prototype.reflect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(axis)</span> </span>{
     <span class="hljs-keyword">var</span> x = <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">var</span> y = <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">this</span>.project(axis).scale(<span class="hljs-number">2</span>);
@@ -437,7 +437,7 @@ slightly more efficient than <code>reflect</code> when dealing with an axis that
    * @param {Vector} axis The unit vector representing the axis.
    * @return {Vector} This for chaining.
    */</span>
-  Vector.prototype[<span class="hljs-string">'reflectN'</span>] = Vector.prototype.reflectN = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(axis)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'reflectN'</span>] = Vector.prototype.reflectN = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(axis)</span> </span>{
     <span class="hljs-keyword">var</span> x = <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>];
     <span class="hljs-keyword">var</span> y = <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>];
     <span class="hljs-keyword">this</span>.projectN(axis).scale(<span class="hljs-number">2</span>);
@@ -463,7 +463,7 @@ slightly more efficient than <code>reflect</code> when dealing with an axis that
    * @param {Vector}  other The vector to dot this one against.
    * @return {number} The dot product.
    */</span>
-  Vector.prototype[<span class="hljs-string">'dot'</span>] = Vector.prototype.dot = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> {</span>
+  Vector.prototype[<span class="hljs-string">'dot'</span>] = Vector.prototype.dot = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(other)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>[<span class="hljs-string">'x'</span>] * other[<span class="hljs-string">'x'</span>] + <span class="hljs-keyword">this</span>[<span class="hljs-string">'y'</span>] * other[<span class="hljs-string">'y'</span>];
   };</pre></div></div>
             
@@ -483,7 +483,7 @@ slightly more efficient than <code>reflect</code> when dealing with an axis that
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {number} The length^2 of this vector.
    */</span>
-  Vector.prototype[<span class="hljs-string">'len2'</span>] = Vector.prototype.len2 = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Vector.prototype[<span class="hljs-string">'len2'</span>] = Vector.prototype.len2 = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.dot(<span class="hljs-keyword">this</span>);
   };</pre></div></div>
             
@@ -503,7 +503,7 @@ slightly more efficient than <code>reflect</code> when dealing with an axis that
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {number} The length of this vector.
    */</span>
-  Vector.prototype[<span class="hljs-string">'len'</span>] = Vector.prototype.len = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Vector.prototype[<span class="hljs-string">'len'</span>] = Vector.prototype.len = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.sqrt(<span class="hljs-keyword">this</span>.len2());
   };</pre></div></div>
             
@@ -541,7 +541,7 @@ have a radius of <code>0</code>.</p>
    * @param {?number=} r The radius of the circle
    * @constructor
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Circle</span><span class="hljs-params">(pos, r)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Circle</span><span class="hljs-params">(pos, r)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'pos'</span>] = pos || <span class="hljs-keyword">new</span> Vector();
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'r'</span>] = r || <span class="hljs-number">0</span>;
   }
@@ -556,12 +556,19 @@ have a radius of <code>0</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
-              <h2 id="polygon">Polygon</h2>
-<p>Represents a <em>convex</em> polygon with any number of points (specified in counter-clockwise order)</p>
-<p>Note: If you manually change the <code>points</code>, <code>angle</code>, or <code>offset</code> properties, you <strong>must</strong> call <code>recalc</code>
-afterwards so that the changes get applied correctly.</p>
+              <p>Compute the axis-aligned bounding box (AABB) of this Circle.</p>
+<p>Note: Returns a <em>new</em> <code>Polygon</code> each time you call this.</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * @return {Polygon} The AABB
+   */</span>
+  Circle.prototype[<span class="hljs-string">'getAABB'</span>] = Circle.prototype.getAABB = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> r = <span class="hljs-keyword">this</span>[<span class="hljs-string">'r'</span>];
+    <span class="hljs-keyword">var</span> corner = <span class="hljs-keyword">this</span>[<span class="hljs-string">"pos"</span>].clone().sub(<span class="hljs-keyword">new</span> Vector(r, r));
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Box(corner, r*<span class="hljs-number">2</span>, r*<span class="hljs-number">2</span>).toPolygon();
+  };</pre></div></div>
             
         </li>
         
@@ -571,6 +578,23 @@ afterwards so that the changes get applied correctly.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <h2 id="polygon">Polygon</h2>
+<p>Represents a <em>convex</em> polygon with any number of points (specified in counter-clockwise order)</p>
+<p>Note: Do <em>not</em> manually change the <code>points</code>, <code>angle</code>, or <code>offset</code> properties. Use the
+provided setters. Otherwise the calculated properties will not be updated correctly.</p>
+<p><code>pos</code> can be changed directly.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Create a new polygon, passing in a position vector, and an array of points (represented
 by vectors relative to the position vector). If no position is passed in, the position
@@ -585,39 +609,13 @@ of the polygon will be <code>(0,0)</code>.</p>
    *   in counter-clockwise order.
    * @constructor
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Polygon</span><span class="hljs-params">(pos, points)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Polygon</span><span class="hljs-params">(pos, points)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'pos'</span>] = pos || <span class="hljs-keyword">new</span> Vector();
-    <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>] = points || [];
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'angle'</span>] = <span class="hljs-number">0</span>;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'offset'</span>] = <span class="hljs-keyword">new</span> Vector();
-    <span class="hljs-keyword">this</span>.recalc();
+    <span class="hljs-keyword">this</span>.setPoints(points || []);
   }
   SAT[<span class="hljs-string">'Polygon'</span>] = Polygon;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-26">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
-              </div>
-              <p>Set the points of the polygon.</p>
-<p>Note: This calls <code>recalc</code> for you.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
-   * @param {Array.&lt;Vector&gt;=} points An array of vectors representing the points in the polygon,
-   *   in counter-clockwise order.
-   * @return {Polygon} This for chaining.
-   */</span>
-  Polygon.prototype[<span class="hljs-string">'setPoints'</span>] = Polygon.prototype.setPoints = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(points)</span> {</span>
-    <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>] = points;
-    <span class="hljs-keyword">this</span>.recalc();
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-  };</pre></div></div>
             
         </li>
         
@@ -628,20 +626,16 @@ of the polygon will be <code>(0,0)</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>Set the current rotation angle of the polygon.</p>
-<p>Note: This calls <code>recalc</code> for you.</p>
+              <p>Set the points of the polygon.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
-   * @param {number} angle The current rotation angle (in radians).
+   * @param {Array.&lt;Vector&gt;=} points An array of vectors representing the points in the polygon,
+   *   in counter-clockwise order.
    * @return {Polygon} This for chaining.
    */</span>
-  Polygon.prototype[<span class="hljs-string">'setAngle'</span>] = Polygon.prototype.setAngle = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(angle)</span> {</span>
-    <span class="hljs-keyword">this</span>[<span class="hljs-string">'angle'</span>] = angle;
-    <span class="hljs-keyword">this</span>.recalc();
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-  };</pre></div></div>
+  Polygon.prototype[<span class="hljs-string">'setPoints'</span>] = Polygon.prototype.setPoints = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(points)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -652,20 +646,16 @@ of the polygon will be <code>(0,0)</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>Set the current offset to apply to the <code>points</code> before applying the <code>angle</code> rotation.</p>
-<p>Note: This calls <code>recalc</code> for you.</p>
+              <p>Only re-allocate if this is a new polygon or the number of points has changed.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
-   * @param {Vector} offset The new offset vector.
-   * @return {Polygon} This for chaining.
-   */</span>
-  Polygon.prototype[<span class="hljs-string">'setOffset'</span>] = Polygon.prototype.setOffset = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(offset)</span> {</span>
-    <span class="hljs-keyword">this</span>[<span class="hljs-string">'offset'</span>] = offset;
-    <span class="hljs-keyword">this</span>.recalc();
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-  };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> lengthChanged = !<span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>] || <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>].length !== points.length;
+    <span class="hljs-keyword">if</span> (lengthChanged) {
+      <span class="hljs-keyword">var</span> i;
+      <span class="hljs-keyword">var</span> calcPoints = <span class="hljs-keyword">this</span>[<span class="hljs-string">'calcPoints'</span>] = [];
+      <span class="hljs-keyword">var</span> edges = <span class="hljs-keyword">this</span>[<span class="hljs-string">'edges'</span>] = [];
+      <span class="hljs-keyword">var</span> normals = <span class="hljs-keyword">this</span>[<span class="hljs-string">'normals'</span>] = [];</pre></div></div>
             
         </li>
         
@@ -676,23 +666,18 @@ of the polygon will be <code>(0,0)</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
-              <p>Rotates this polygon counter-clockwise around the origin of <em>its local coordinate system</em> (i.e. <code>pos</code>).</p>
-<p>Note: This changes the <strong>original</strong> points (so any <code>angle</code> will be applied on top of this rotation)
-Note: This calls <code>recalc</code> for you.</p>
+              <p>Allocate the vector arrays for the calculated properties</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
-   * @param {number} angle The angle to rotate (in radians)
-   * @return {Polygon} This for chaining.
-   */</span>
-  Polygon.prototype[<span class="hljs-string">'rotate'</span>] = Polygon.prototype.rotate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(angle)</span> {</span>
-    <span class="hljs-keyword">var</span> points = <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>];
-    <span class="hljs-keyword">var</span> len = points.length;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) {
-      points[i].rotate(angle);
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; points.length; i++) {
+        calcPoints.push(<span class="hljs-keyword">new</span> Vector());
+        edges.push(<span class="hljs-keyword">new</span> Vector());
+        normals.push(<span class="hljs-keyword">new</span> Vector());
+      }
     }
-    <span class="hljs-keyword">this</span>.recalc();
+    <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>] = points;
+    <span class="hljs-keyword">this</span>._recalc();
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
   };</pre></div></div>
             
@@ -705,28 +690,17 @@ Note: This calls <code>recalc</code> for you.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>Translates the points of this polygon by a specified amount relative to the origin of <em>its own coordinate
-system</em> (i.e. <code>pos</code>).</p>
-<p>This is most useful to change the “center point” of a polygon. If you just want to move the whole polygon, change
-the coordinates of <code>pos</code>.</p>
-<p>Note: This changes the <strong>original</strong> points (so any <code>offset</code> will be applied on top of this translation)
-Note: This calls <code>recalc</code> for you.</p>
+              <p>Set the current rotation angle of the polygon.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
-   * @param {number} x The horizontal amount to translate.
-   * @param {number} y The vertical amount to translate.
+   * @param {number} angle The current rotation angle (in radians).
    * @return {Polygon} This for chaining.
    */</span>
-  Polygon.prototype[<span class="hljs-string">'translate'</span>] = Polygon.prototype.translate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x, y)</span> {</span>
-    <span class="hljs-keyword">var</span> points = <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>];
-    <span class="hljs-keyword">var</span> len = points.length;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) {
-      points[i].x += x;
-      points[i].y += y;
-    }
-    <span class="hljs-keyword">this</span>.recalc();
+  Polygon.prototype[<span class="hljs-string">'setAngle'</span>] = Polygon.prototype.setAngle = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(angle)</span> </span>{
+    <span class="hljs-keyword">this</span>[<span class="hljs-string">'angle'</span>] = angle;
+    <span class="hljs-keyword">this</span>._recalc();
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
   };</pre></div></div>
             
@@ -739,17 +713,19 @@ Note: This calls <code>recalc</code> for you.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>Computes the calculated collision polygon. Applies the <code>angle</code> and <code>offset</code> to the original points then recalculates the
-edges and normals of the collision polygon.</p>
-<p>This <strong>must</strong> be called if the <code>points</code> array, <code>angle</code>, or <code>offset</code> is modified manualy.</p>
+              <p>Set the current offset to apply to the <code>points</code> before applying the <code>angle</code> rotation.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * @param {Vector} offset The new offset vector.
    * @return {Polygon} This for chaining.
    */</span>
-  Polygon.prototype[<span class="hljs-string">'recalc'</span>] = Polygon.prototype.recalc = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    <span class="hljs-keyword">var</span> i;</pre></div></div>
+  Polygon.prototype[<span class="hljs-string">'setOffset'</span>] = Polygon.prototype.setOffset = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(offset)</span> </span>{
+    <span class="hljs-keyword">this</span>[<span class="hljs-string">'offset'</span>] = offset;
+    <span class="hljs-keyword">this</span>._recalc();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+  };</pre></div></div>
             
         </li>
         
@@ -760,12 +736,24 @@ edges and normals of the collision polygon.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>Calculated points - this is what is used for underlying collisions and takes into account
-the angle/offset set on the polygon.</p>
+              <p>Rotates this polygon counter-clockwise around the origin of <em>its local coordinate system</em> (i.e. <code>pos</code>).</p>
+<p>Note: This changes the <strong>original</strong> points (so any <code>angle</code> will be applied on top of this rotation).</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> calcPoints = <span class="hljs-keyword">this</span>[<span class="hljs-string">'calcPoints'</span>] = [];</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Polygon} This for chaining.
+   */</span>
+  Polygon.prototype[<span class="hljs-string">'rotate'</span>] = Polygon.prototype.rotate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(angle)</span> </span>{
+    <span class="hljs-keyword">var</span> points = <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>];
+    <span class="hljs-keyword">var</span> len = points.length;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) {
+      points[i].rotate(angle);
+    }
+    <span class="hljs-keyword">this</span>._recalc();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+  };</pre></div></div>
             
         </li>
         
@@ -776,13 +764,29 @@ the angle/offset set on the polygon.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
-              <p>The edges here are the direction of the <code>n</code>th edge of the polygon, relative to
-the <code>n</code>th point. If you want to draw a given edge from the edge value, you must
-first translate to the position of the starting point.</p>
+              <p>Translates the points of this polygon by a specified amount relative to the origin of <em>its own coordinate
+system</em> (i.e. <code>pos</code>).</p>
+<p>This is most useful to change the “center point” of a polygon. If you just want to move the whole polygon, change
+the coordinates of <code>pos</code>.</p>
+<p>Note: This changes the <strong>original</strong> points (so any <code>offset</code> will be applied on top of this translation)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> edges = <span class="hljs-keyword">this</span>[<span class="hljs-string">'edges'</span>] = [];</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * @param {number} x The horizontal amount to translate.
+   * @param {number} y The vertical amount to translate.
+   * @return {Polygon} This for chaining.
+   */</span>
+  Polygon.prototype[<span class="hljs-string">'translate'</span>] = Polygon.prototype.translate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x, y)</span> </span>{
+    <span class="hljs-keyword">var</span> points = <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>];
+    <span class="hljs-keyword">var</span> len = points.length;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) {
+      points[i].x += x;
+      points[i].y += y;
+    }
+    <span class="hljs-keyword">this</span>._recalc();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+  };</pre></div></div>
             
         </li>
         
@@ -793,13 +797,15 @@ first translate to the position of the starting point.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <p>The normals here are the direction of the normal for the <code>n</code>th edge of the polygon, relative
-to the position of the <code>n</code>th point. If you want to draw an edge normal, you must first
-translate to the position of the starting point.</p>
+              <p>Computes the calculated collision polygon. Applies the <code>angle</code> and <code>offset</code> to the original points then recalculates the
+edges and normals of the collision polygon.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> normals = <span class="hljs-keyword">this</span>[<span class="hljs-string">'normals'</span>] = [];</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * @return {Polygon} This for chaining.
+   */</span>
+  Polygon.prototype._recalc = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -810,23 +816,12 @@ translate to the position of the starting point.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>Copy the original points array and apply the offset/angle</p>
+              <p>Calculated points - this is what is used for underlying collisions and takes into account
+the angle/offset set on the polygon.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> points = <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>];
-    <span class="hljs-keyword">var</span> offset = <span class="hljs-keyword">this</span>[<span class="hljs-string">'offset'</span>];
-    <span class="hljs-keyword">var</span> angle = <span class="hljs-keyword">this</span>[<span class="hljs-string">'angle'</span>];
-    <span class="hljs-keyword">var</span> len = points.length;
-    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; len; i++) {
-      <span class="hljs-keyword">var</span> calcPoint = points[i].clone();
-      calcPoints.push(calcPoint);
-      calcPoint.x += offset.x;
-      calcPoint.y += offset.y;
-      <span class="hljs-keyword">if</span> (angle !== <span class="hljs-number">0</span>) {
-        calcPoint.rotate(angle);
-      }
-    }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> calcPoints = <span class="hljs-keyword">this</span>[<span class="hljs-string">'calcPoints'</span>];</pre></div></div>
             
         </li>
         
@@ -837,20 +832,13 @@ translate to the position of the starting point.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
-              <p>Calculate the edges/normals</p>
+              <p>The edges here are the direction of the <code>n</code>th edge of the polygon, relative to
+the <code>n</code>th point. If you want to draw a given edge from the edge value, you must
+first translate to the position of the starting point.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; len; i++) {
-      <span class="hljs-keyword">var</span> p1 = calcPoints[i];
-      <span class="hljs-keyword">var</span> p2 = i &lt; len - <span class="hljs-number">1</span> ? calcPoints[i + <span class="hljs-number">1</span>] : calcPoints[<span class="hljs-number">0</span>];
-      <span class="hljs-keyword">var</span> e = <span class="hljs-keyword">new</span> Vector().copy(p2).sub(p1);
-      <span class="hljs-keyword">var</span> n = <span class="hljs-keyword">new</span> Vector().copy(e).perp().normalize();
-      edges.push(e);
-      normals.push(n);
-    }
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-  };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> edges = <span class="hljs-keyword">this</span>[<span class="hljs-string">'edges'</span>];</pre></div></div>
             
         </li>
         
@@ -861,10 +849,13 @@ translate to the position of the starting point.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
-              <h2 id="box">Box</h2>
-<p>Represents an axis-aligned box, with a width and height.</p>
+              <p>The normals here are the direction of the normal for the <code>n</code>th edge of the polygon, relative
+to the position of the <code>n</code>th point. If you want to draw an edge normal, you must first
+translate to the position of the starting point.</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> normals = <span class="hljs-keyword">this</span>[<span class="hljs-string">'normals'</span>];</pre></div></div>
             
         </li>
         
@@ -874,6 +865,112 @@ translate to the position of the starting point.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Copy the original points array and apply the offset/angle</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> points = <span class="hljs-keyword">this</span>[<span class="hljs-string">'points'</span>];
+    <span class="hljs-keyword">var</span> offset = <span class="hljs-keyword">this</span>[<span class="hljs-string">'offset'</span>];
+    <span class="hljs-keyword">var</span> angle = <span class="hljs-keyword">this</span>[<span class="hljs-string">'angle'</span>];
+    <span class="hljs-keyword">var</span> len = points.length;
+    <span class="hljs-keyword">var</span> i;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; len; i++) {
+      <span class="hljs-keyword">var</span> calcPoint = calcPoints[i].copy(points[i]);
+      calcPoint.x += offset.x;
+      calcPoint.y += offset.y;
+      <span class="hljs-keyword">if</span> (angle !== <span class="hljs-number">0</span>) {
+        calcPoint.rotate(angle);
+      }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Calculate the edges/normals</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; len; i++) {
+      <span class="hljs-keyword">var</span> p1 = calcPoints[i];
+      <span class="hljs-keyword">var</span> p2 = i &lt; len - <span class="hljs-number">1</span> ? calcPoints[i + <span class="hljs-number">1</span>] : calcPoints[<span class="hljs-number">0</span>];
+      <span class="hljs-keyword">var</span> e = edges[i].copy(p2).sub(p1);
+      normals[i].copy(e).perp().normalize();
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Compute the axis-aligned bounding box. Any current state
+(translations/rotations) will be applied before constructing the AABB.</p>
+<p>Note: Returns a <em>new</em> <code>Polygon</code> each time you call this.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * @return {Polygon} The AABB
+   */</span>
+  Polygon.prototype[<span class="hljs-string">"getAABB"</span>] = Polygon.prototype.getAABB = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> points = <span class="hljs-keyword">this</span>[<span class="hljs-string">"calcPoints"</span>];
+    <span class="hljs-keyword">var</span> len = points.length;
+    <span class="hljs-keyword">var</span> xMin = points[<span class="hljs-number">0</span>][<span class="hljs-string">"x"</span>];
+    <span class="hljs-keyword">var</span> yMin = points[<span class="hljs-number">0</span>][<span class="hljs-string">"y"</span>];
+    <span class="hljs-keyword">var</span> xMax = points[<span class="hljs-number">0</span>][<span class="hljs-string">"x"</span>];
+    <span class="hljs-keyword">var</span> yMax = points[<span class="hljs-number">0</span>][<span class="hljs-string">"y"</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt; len; i++) {
+      <span class="hljs-keyword">var</span> point = points[i];
+      <span class="hljs-keyword">if</span> (point[<span class="hljs-string">"x"</span>] &lt; xMin) {
+        xMin = point[<span class="hljs-string">"x"</span>];
+      }
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (point[<span class="hljs-string">"x"</span>] &gt; xMax) {
+        xMax = point[<span class="hljs-string">"x"</span>];
+      }
+      <span class="hljs-keyword">if</span> (point[<span class="hljs-string">"y"</span>] &lt; yMin) {
+        yMin = point[<span class="hljs-string">"y"</span>];
+      }
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (point[<span class="hljs-string">"y"</span>] &gt; yMax) {
+        yMax = point[<span class="hljs-string">"y"</span>];
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Box(<span class="hljs-keyword">this</span>[<span class="hljs-string">"pos"</span>].clone().add(<span class="hljs-keyword">new</span> Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <h2 id="box">Box</h2>
+<p>Represents an axis-aligned box, with a width and height.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Create a new box, with the specified position, width, and height. If no position
 is given, the position will be <code>(0,0)</code>. If no width or height are given, they will
@@ -887,7 +984,7 @@ be set to <code>0</code>.</p>
    * @param {?number=} h The height of the box.
    * @constructor
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Box</span><span class="hljs-params">(pos, w, h)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Box</span><span class="hljs-params">(pos, w, h)</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'pos'</span>] = pos || <span class="hljs-keyword">new</span> Vector();
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'w'</span>] = w || <span class="hljs-number">0</span>;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'h'</span>] = h || <span class="hljs-number">0</span>;
@@ -897,11 +994,11 @@ be set to <code>0</code>.</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Returns a polygon whose edges are the same as this box.</p>
 
@@ -910,7 +1007,7 @@ be set to <code>0</code>.</p>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {Polygon} A new Polygon that represents this box.
    */</span>
-  Box.prototype[<span class="hljs-string">'toPolygon'</span>] = Box.prototype.toPolygon = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Box.prototype[<span class="hljs-string">'toPolygon'</span>] = Box.prototype.toPolygon = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> pos = <span class="hljs-keyword">this</span>[<span class="hljs-string">'pos'</span>];
     <span class="hljs-keyword">var</span> w = <span class="hljs-keyword">this</span>[<span class="hljs-string">'w'</span>];
     <span class="hljs-keyword">var</span> h = <span class="hljs-keyword">this</span>[<span class="hljs-string">'h'</span>];
@@ -923,11 +1020,11 @@ be set to <code>0</code>.</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <h2 id="response">Response</h2>
 <p>An object representing the result of an intersection. Contains:</p>
@@ -944,7 +1041,7 @@ of the overlap)</li>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @constructor
    */</span>  
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Response</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Response</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'a'</span>] = <span class="hljs-literal">null</span>;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'b'</span>] = <span class="hljs-literal">null</span>;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'overlapN'</span>] = <span class="hljs-keyword">new</span> Vector();
@@ -956,11 +1053,11 @@ of the overlap)</li>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Set some values of the response back to their defaults.  Call this between tests if
 you are going to reuse a single Response object for multiple intersection tests (recommented
@@ -971,7 +1068,7 @@ as it will avoid allcating extra memory)</p>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @return {Response} This for chaining
    */</span>
-  Response.prototype[<span class="hljs-string">'clear'</span>] = Response.prototype.clear = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  Response.prototype[<span class="hljs-string">'clear'</span>] = Response.prototype.clear = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'aInB'</span>] = <span class="hljs-literal">true</span>;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'bInA'</span>] = <span class="hljs-literal">true</span>;
     <span class="hljs-keyword">this</span>[<span class="hljs-string">'overlap'</span>] = <span class="hljs-built_in">Number</span>.MAX_VALUE;
@@ -981,11 +1078,11 @@ as it will avoid allcating extra memory)</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <h2 id="object-pools">Object Pools</h2>
 
@@ -994,11 +1091,11 @@ as it will avoid allcating extra memory)</p>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>A pool of <code>Vector</code> objects that are used in calculations to avoid
 allocating memory.</p>
@@ -1014,11 +1111,11 @@ allocating memory.</p>
         </li>
         
         
-        <li id="section-44">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>A pool of arrays of numbers used in calculations to avoid allocating
 memory.</p>
@@ -1034,11 +1131,11 @@ memory.</p>
         </li>
         
         
-        <li id="section-45">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Temporary response used for polygon hit detection.</p>
 
@@ -1052,11 +1149,11 @@ memory.</p>
         </li>
         
         
-        <li id="section-46">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>Unit square polygon used for polygon hit detection.</p>
 
@@ -1070,11 +1167,11 @@ memory.</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <h2 id="helper-functions">Helper Functions</h2>
 
@@ -1083,11 +1180,11 @@ memory.</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>Flattens the specified array of points onto a unit vector axis,
 resulting in a one dimensional range of the minimum and
@@ -1102,7 +1199,7 @@ maximum value on that axis.</p>
    *   result[0] will be the minimum value,
    *   result[1] will be the maximum value.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">flattenPointsOn</span><span class="hljs-params">(points, normal, result)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">flattenPointsOn</span><span class="hljs-params">(points, normal, result)</span> </span>{
     <span class="hljs-keyword">var</span> min = <span class="hljs-built_in">Number</span>.MAX_VALUE;
     <span class="hljs-keyword">var</span> max = -<span class="hljs-built_in">Number</span>.MAX_VALUE;
     <span class="hljs-keyword">var</span> len = points.length;
@@ -1111,11 +1208,11 @@ maximum value on that axis.</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>The magnitude of the projection of the point onto the normal</p>
 
@@ -1131,11 +1228,11 @@ maximum value on that axis.</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Check whether two convex polygons are separated by the specified
 axis (must be a unit vector).</p>
@@ -1155,18 +1252,18 @@ axis (must be a unit vector).</p>
    *   and a response is passed in, information about how much overlap and
    *   the direction of the overlap will be populated.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSeparatingAxis</span><span class="hljs-params">(aPos, bPos, aPoints, bPoints, axis, response)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSeparatingAxis</span><span class="hljs-params">(aPos, bPos, aPoints, bPoints, axis, response)</span> </span>{
     <span class="hljs-keyword">var</span> rangeA = T_ARRAYS.pop();
     <span class="hljs-keyword">var</span> rangeB = T_ARRAYS.pop();</pre></div></div>
             
         </li>
         
         
-        <li id="section-51">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <p>The magnitude of the offset between the two polygons</p>
 
@@ -1178,11 +1275,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-52">
+        <li id="section-56">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
               <p>Project the polygons onto the axis.</p>
 
@@ -1194,11 +1291,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-53">
+        <li id="section-57">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-57">&#182;</a>
               </div>
               <p>Move B’s range to its position relative to A.</p>
 
@@ -1210,11 +1307,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-54">
+        <li id="section-58">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-58">&#182;</a>
               </div>
               <p>Check if there is a gap. If there is, this is a separating axis and we can stop</p>
 
@@ -1230,11 +1327,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-55">
+        <li id="section-59">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
               <p>This is not a separating axis. If we’re calculating a response, calculate the overlap.</p>
 
@@ -1246,11 +1343,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-56">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
               <p>A starts further left than B</p>
 
@@ -1262,11 +1359,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-57">
+        <li id="section-61">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
               <p>A ends before B does. We have to pull A out of B</p>
 
@@ -1279,11 +1376,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-58">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <p>B is fully inside A.  Pick the shortest way out.</p>
 
@@ -1298,11 +1395,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-59">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>B starts further left than A</p>
 
@@ -1314,11 +1411,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-60">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-60">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>B ends before A ends. We have to push A out of B</p>
 
@@ -1331,11 +1428,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-61">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-61">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>A is fully inside B.  Pick the shortest way out.</p>
 
@@ -1351,11 +1448,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-62">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>If this is the smallest amount of overlap we’ve seen so far, set it as the minimum overlap.</p>
 
@@ -1379,11 +1476,11 @@ axis (must be a unit vector).</p>
         </li>
         
         
-        <li id="section-63">
+        <li id="section-67">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-67">&#182;</a>
               </div>
               <p>Calculates which Vornoi region a point is on a line segment.
 It is assumed that both the line and the point are relative to <code>(0,0)</code></p>
@@ -1400,18 +1497,18 @@ It is assumed that both the line and the point are relative to <code>(0,0)</code
    *          MIDDLE_VORNOI_REGION (0) if it is the middle region, 
    *          RIGHT_VORNOI_REGION (1) if it is the right region.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">vornoiRegion</span><span class="hljs-params">(line, point)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">vornoiRegion</span><span class="hljs-params">(line, point)</span> </span>{
     <span class="hljs-keyword">var</span> len2 = line.len2();
     <span class="hljs-keyword">var</span> dp = point.dot(line);</pre></div></div>
             
         </li>
         
         
-        <li id="section-64">
+        <li id="section-68">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
+                <a class="pilcrow" href="#section-68">&#182;</a>
               </div>
               <p>If the point is beyond the start of the line, it is in the
 left vornoi region.</p>
@@ -1423,11 +1520,11 @@ left vornoi region.</p>
         </li>
         
         
-        <li id="section-65">
+        <li id="section-69">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-65">&#182;</a>
+                <a class="pilcrow" href="#section-69">&#182;</a>
               </div>
               <p>If the point is beyond the end of the line, it is in the
 right vornoi region.</p>
@@ -1439,11 +1536,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-66">
+        <li id="section-70">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
               <p>Otherwise, it’s in the middle one.</p>
 
@@ -1455,11 +1552,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-67">
+        <li id="section-71">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-71">&#182;</a>
               </div>
               <p>Constants for Vornoi regions</p>
 
@@ -1481,11 +1578,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-68">
+        <li id="section-72">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-72">&#182;</a>
               </div>
               <h2 id="collision-tests">Collision Tests</h2>
 
@@ -1494,11 +1591,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-69">
+        <li id="section-73">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
+                <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
               <p>Check if a point is inside a circle.</p>
 
@@ -1509,7 +1606,7 @@ right vornoi region.</p>
    * @param {Circle} c The circle to test.
    * @return {boolean} true if the point is inside the circle, false if it is not.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointInCircle</span><span class="hljs-params">(p, c)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointInCircle</span><span class="hljs-params">(p, c)</span> </span>{
     <span class="hljs-keyword">var</span> differenceV = T_VECTORS.pop().copy(p).sub(c[<span class="hljs-string">'pos'</span>]);
     <span class="hljs-keyword">var</span> radiusSq = c[<span class="hljs-string">'r'</span>] * c[<span class="hljs-string">'r'</span>];
     <span class="hljs-keyword">var</span> distanceSq = differenceV.len2();
@@ -1518,11 +1615,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-70">
+        <li id="section-74">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-70">&#182;</a>
+                <a class="pilcrow" href="#section-74">&#182;</a>
               </div>
               <p>If the distance between is smaller than the radius then the point is inside the circle.</p>
 
@@ -1535,11 +1632,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-71">
+        <li id="section-75">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-71">&#182;</a>
+                <a class="pilcrow" href="#section-75">&#182;</a>
               </div>
               <p>Check if a point is inside a convex polygon.</p>
 
@@ -1550,7 +1647,7 @@ right vornoi region.</p>
    * @param {Polygon} poly The polygon to test.
    * @return {boolean} true if the point is inside the polygon, false if it is not.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointInPolygon</span><span class="hljs-params">(p, poly)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointInPolygon</span><span class="hljs-params">(p, poly)</span> </span>{
     UNIT_SQUARE[<span class="hljs-string">'pos'</span>].copy(p);
     T_RESPONSE.clear();
     <span class="hljs-keyword">var</span> result = testPolygonPolygon(UNIT_SQUARE, poly, T_RESPONSE);
@@ -1564,11 +1661,11 @@ right vornoi region.</p>
         </li>
         
         
-        <li id="section-72">
+        <li id="section-76">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-72">&#182;</a>
+                <a class="pilcrow" href="#section-76">&#182;</a>
               </div>
               <p>Check if two circles collide.</p>
 
@@ -1581,16 +1678,16 @@ right vornoi region.</p>
    *   the circles intersect.
    * @return {boolean} true if the circles intersect, false if they don't. 
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testCircleCircle</span><span class="hljs-params">(a, b, response)</span> {</span></pre></div></div>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testCircleCircle</span><span class="hljs-params">(a, b, response)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-73">
+        <li id="section-77">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-73">&#182;</a>
+                <a class="pilcrow" href="#section-77">&#182;</a>
               </div>
               <p>Check if the distance between the centers of the two
 circles is greater than their combined radius.</p>
@@ -1605,11 +1702,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-74">
+        <li id="section-78">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-74">&#182;</a>
+                <a class="pilcrow" href="#section-78">&#182;</a>
               </div>
               <p>If the distance is bigger than the combined radius, they don’t intersect.</p>
 
@@ -1623,11 +1720,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-75">
+        <li id="section-79">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-75">&#182;</a>
+                <a class="pilcrow" href="#section-79">&#182;</a>
               </div>
               <p>They intersect.  If we’re calculating a response, calculate the overlap.</p>
 
@@ -1651,11 +1748,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-76">
+        <li id="section-80">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-76">&#182;</a>
+                <a class="pilcrow" href="#section-80">&#182;</a>
               </div>
               <p>Check if a polygon and a circle collide.</p>
 
@@ -1668,16 +1765,16 @@ circles is greater than their combined radius.</p>
    *   they interset.
    * @return {boolean} true if they intersect, false if they don't.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testPolygonCircle</span><span class="hljs-params">(polygon, circle, response)</span> {</span></pre></div></div>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testPolygonCircle</span><span class="hljs-params">(polygon, circle, response)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-77">
+        <li id="section-81">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-77">&#182;</a>
+                <a class="pilcrow" href="#section-81">&#182;</a>
               </div>
               <p>Get the position of the circle relative to the polygon.</p>
 
@@ -1694,11 +1791,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-78">
+        <li id="section-82">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-78">&#182;</a>
+                <a class="pilcrow" href="#section-82">&#182;</a>
               </div>
               <p>For each edge in the polygon:</p>
 
@@ -1713,11 +1810,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-79">
+        <li id="section-83">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-79">&#182;</a>
+                <a class="pilcrow" href="#section-83">&#182;</a>
               </div>
               <p>Get the edge.</p>
 
@@ -1728,11 +1825,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-80">
+        <li id="section-84">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-80">&#182;</a>
+                <a class="pilcrow" href="#section-84">&#182;</a>
               </div>
               <p>Calculate the center of the circle relative to the starting point of the edge.</p>
 
@@ -1743,11 +1840,11 @@ circles is greater than their combined radius.</p>
         </li>
         
         
-        <li id="section-81">
+        <li id="section-85">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-81">&#182;</a>
+                <a class="pilcrow" href="#section-85">&#182;</a>
               </div>
               <p>If the distance between the center of the circle and the point
 is bigger than the radius, the polygon is definitely not fully in
@@ -1762,11 +1859,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-82">
+        <li id="section-86">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-82">&#182;</a>
+                <a class="pilcrow" href="#section-86">&#182;</a>
               </div>
               <p>Calculate which Vornoi region the center of the circle is in.</p>
 
@@ -1777,11 +1874,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-83">
+        <li id="section-87">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-83">&#182;</a>
+                <a class="pilcrow" href="#section-87">&#182;</a>
               </div>
               <p>If it’s the left region:</p>
 
@@ -1792,11 +1889,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-84">
+        <li id="section-88">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-84">&#182;</a>
+                <a class="pilcrow" href="#section-88">&#182;</a>
               </div>
               <p>We need to make sure we’re in the RIGHT_VORNOI_REGION of the previous edge.</p>
 
@@ -1807,11 +1904,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-85">
+        <li id="section-89">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-85">&#182;</a>
+                <a class="pilcrow" href="#section-89">&#182;</a>
               </div>
               <p>Calculate the center of the circle relative the starting point of the previous edge</p>
 
@@ -1824,11 +1921,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-86">
+        <li id="section-90">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-86">&#182;</a>
+                <a class="pilcrow" href="#section-90">&#182;</a>
               </div>
               <p>It’s in the region we want.  Check if the circle intersects the point.</p>
 
@@ -1840,11 +1937,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-87">
+        <li id="section-91">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-87">&#182;</a>
+                <a class="pilcrow" href="#section-91">&#182;</a>
               </div>
               <p>No intersection</p>
 
@@ -1860,11 +1957,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-88">
+        <li id="section-92">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-88">&#182;</a>
+                <a class="pilcrow" href="#section-92">&#182;</a>
               </div>
               <p>It intersects, calculate the overlap.</p>
 
@@ -1880,11 +1977,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-89">
+        <li id="section-93">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-89">&#182;</a>
+                <a class="pilcrow" href="#section-93">&#182;</a>
               </div>
               <p>If it’s the right region:</p>
 
@@ -1895,11 +1992,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-90">
+        <li id="section-94">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-90">&#182;</a>
+                <a class="pilcrow" href="#section-94">&#182;</a>
               </div>
               <p>We need to make sure we’re in the left region on the next edge</p>
 
@@ -1910,11 +2007,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-91">
+        <li id="section-95">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-91">&#182;</a>
+                <a class="pilcrow" href="#section-95">&#182;</a>
               </div>
               <p>Calculate the center of the circle relative to the starting point of the next edge.</p>
 
@@ -1927,11 +2024,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-92">
+        <li id="section-96">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-92">&#182;</a>
+                <a class="pilcrow" href="#section-96">&#182;</a>
               </div>
               <p>It’s in the region we want.  Check if the circle intersects the point.</p>
 
@@ -1943,11 +2040,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-93">
+        <li id="section-97">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-93">&#182;</a>
+                <a class="pilcrow" href="#section-97">&#182;</a>
               </div>
               <p>No intersection</p>
 
@@ -1962,11 +2059,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-94">
+        <li id="section-98">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-94">&#182;</a>
+                <a class="pilcrow" href="#section-98">&#182;</a>
               </div>
               <p>It intersects, calculate the overlap.</p>
 
@@ -1981,11 +2078,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-95">
+        <li id="section-99">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-95">&#182;</a>
+                <a class="pilcrow" href="#section-99">&#182;</a>
               </div>
               <p>Otherwise, it’s the middle region:</p>
 
@@ -1996,11 +2093,11 @@ the circle.</p>
         </li>
         
         
-        <li id="section-96">
+        <li id="section-100">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-96">&#182;</a>
+                <a class="pilcrow" href="#section-100">&#182;</a>
               </div>
               <p>Need to check if the circle is intersecting the edge,
 Change the edge into its “edge normal”.</p>
@@ -2012,11 +2109,11 @@ Change the edge into its “edge normal”.</p>
         </li>
         
         
-        <li id="section-97">
+        <li id="section-101">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-97">&#182;</a>
+                <a class="pilcrow" href="#section-101">&#182;</a>
               </div>
               <p>Find the perpendicular distance between the center of the 
 circle and the edge.</p>
@@ -2029,11 +2126,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-98">
+        <li id="section-102">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-98">&#182;</a>
+                <a class="pilcrow" href="#section-102">&#182;</a>
               </div>
               <p>If the circle is on the outside of the edge, there is no intersection.</p>
 
@@ -2044,11 +2141,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-99">
+        <li id="section-103">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-99">&#182;</a>
+                <a class="pilcrow" href="#section-103">&#182;</a>
               </div>
               <p>No intersection</p>
 
@@ -2063,11 +2160,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-100">
+        <li id="section-104">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-100">&#182;</a>
+                <a class="pilcrow" href="#section-104">&#182;</a>
               </div>
               <p>It intersects, calculate the overlap.</p>
 
@@ -2079,11 +2176,11 @@ circle and the edge.</p>
         </li>
         
         
-        <li id="section-101">
+        <li id="section-105">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-101">&#182;</a>
+                <a class="pilcrow" href="#section-105">&#182;</a>
               </div>
               <p>If the center of the circle is on the outside of the edge, or part of the
 circle is on the outside, the circle is not fully inside the polygon.</p>
@@ -2099,11 +2196,11 @@ circle is on the outside, the circle is not fully inside the polygon.</p>
         </li>
         
         
-        <li id="section-102">
+        <li id="section-106">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-102">&#182;</a>
+                <a class="pilcrow" href="#section-106">&#182;</a>
               </div>
               <p>If this is the smallest overlap we’ve seen, keep it. 
 (overlapN may be null if the circle was in the wrong Vornoi region).</p>
@@ -2119,11 +2216,11 @@ circle is on the outside, the circle is not fully inside the polygon.</p>
         </li>
         
         
-        <li id="section-103">
+        <li id="section-107">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-103">&#182;</a>
+                <a class="pilcrow" href="#section-107">&#182;</a>
               </div>
               <p>Calculate the final overlap vector - based on the smallest overlap.</p>
 
@@ -2144,11 +2241,11 @@ circle is on the outside, the circle is not fully inside the polygon.</p>
         </li>
         
         
-        <li id="section-104">
+        <li id="section-108">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-104">&#182;</a>
+                <a class="pilcrow" href="#section-108">&#182;</a>
               </div>
               <p>Check if a circle and a polygon collide.</p>
 <p><strong>NOTE:</strong> This is slightly less efficient than polygonCircle as it just
@@ -2163,16 +2260,16 @@ runs polygonCircle and reverses everything at the end.</p>
    *   they interset.
    * @return {boolean} true if they intersect, false if they don't.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testCirclePolygon</span><span class="hljs-params">(circle, polygon, response)</span> {</span></pre></div></div>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testCirclePolygon</span><span class="hljs-params">(circle, polygon, response)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-105">
+        <li id="section-109">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-105">&#182;</a>
+                <a class="pilcrow" href="#section-109">&#182;</a>
               </div>
               <p>Test the polygon against the circle.</p>
 
@@ -2184,11 +2281,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-106">
+        <li id="section-110">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-106">&#182;</a>
+                <a class="pilcrow" href="#section-110">&#182;</a>
               </div>
               <p>Swap A and B in the response.</p>
 
@@ -2210,11 +2307,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-107">
+        <li id="section-111">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-107">&#182;</a>
+                <a class="pilcrow" href="#section-111">&#182;</a>
               </div>
               <p>Checks whether polygons collide.</p>
 
@@ -2227,7 +2324,7 @@ runs polygonCircle and reverses everything at the end.</p>
    *   they interset.
    * @return {boolean} true if they intersect, false if they don't.
    */</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testPolygonPolygon</span><span class="hljs-params">(a, b, response)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testPolygonPolygon</span><span class="hljs-params">(a, b, response)</span> </span>{
     <span class="hljs-keyword">var</span> aPoints = a[<span class="hljs-string">'calcPoints'</span>];
     <span class="hljs-keyword">var</span> aLen = aPoints.length;
     <span class="hljs-keyword">var</span> bPoints = b[<span class="hljs-string">'calcPoints'</span>];
@@ -2236,11 +2333,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-108">
+        <li id="section-112">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-108">&#182;</a>
+                <a class="pilcrow" href="#section-112">&#182;</a>
               </div>
               <p>If any of the edge normals of A is a separating axis, no intersection.</p>
 
@@ -2255,11 +2352,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-109">
+        <li id="section-113">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-109">&#182;</a>
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               <p>If any of the edge normals of B is a separating axis, no intersection.</p>
 
@@ -2274,11 +2371,11 @@ runs polygonCircle and reverses everything at the end.</p>
         </li>
         
         
-        <li id="section-110">
+        <li id="section-114">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-110">&#182;</a>
+                <a class="pilcrow" href="#section-114">&#182;</a>
               </div>
               <p>Since none of the edge normals of A or B are a separating axis, there is an intersection
 and we’ve already calculated the smallest overlap (in isSeparatingAxis).  Calculate the
