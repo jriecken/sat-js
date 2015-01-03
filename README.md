@@ -88,6 +88,8 @@ var p = new SAT.Polygon(new SAT.Vector(), [
 ]);
 ```
 
+You can create a line segment by creating a `Polygon` that contains only 2 ppoints.
+
 It has the following properties:
 
  - `pos` - The position of the polygon (all points are relative to this).
