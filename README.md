@@ -276,6 +276,8 @@ SAT.pointInPolygon(new V(35, 5), triangle); // true
 SAT.pointInCircle(new V(0,0), circle); // false
 SAT.pointInCircle(new V(110,110), circle); // true
 
+```
+
 Tests
 -----
 
