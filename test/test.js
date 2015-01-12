@@ -1,5 +1,5 @@
-var SAT = require('..')
-var assert = require('assert')
+var SAT = require('..');
+var assert = require('assert');
 
 describe("collision of", function(){
   it("two circles", function(){
@@ -11,10 +11,10 @@ describe("collision of", function(){
     var response = new SAT.Response();
     var collided = SAT.testCircleCircle(circle1, circle2, response);
 
-    assert( collided )
-    assert( response.overlap == 10 )
-    assert( response.overlapV.x == 10 && response.overlapV.y == 0)
-  })
+    assert( collided );
+    assert( response.overlap == 10 );
+    assert( response.overlapV.x == 10 && response.overlapV.y === 0);
+  });
 
   it("circle and polygon", function(){
 
@@ -30,13 +30,13 @@ describe("collision of", function(){
     var response = new SAT.Response();
     var collided = SAT.testPolygonCircle(polygon, circle, response);
 
-    assert(collided)
-    assert(response.overlap.toFixed(2) == "5.86")
+    assert(collided);
+    assert(response.overlap.toFixed(2) == "5.86");
     assert(
       response.overlapV.x.toFixed(2) == "4.14" &&
       response.overlapV.y.toFixed(2) == "4.14"
-    )
-  })
+    );
+  });
 
   it("polygon and polygon", function(){
     var V = SAT.Vector;
@@ -53,11 +53,11 @@ describe("collision of", function(){
     var response = new SAT.Response();
     var collided = SAT.testPolygonPolygon(polygon1, polygon2, response);
 
-    assert( collided )
-    assert( response.overlap == 10 )
-    assert( response.overlapV.x == 10 && response.overlapV.y == 0)
-  })
-})
+    assert( collided );
+    assert( response.overlap == 10 );
+    assert( response.overlapV.x == 10 && response.overlapV.y === 0);
+  });
+});
 
 describe("No collision between", function(){
   it("two boxes", function(){
@@ -67,8 +67,8 @@ describe("No collision between", function(){
     var box1 = new B(new V(0,0), 20, 20).toPolygon();
     var box2 = new B(new V(100,100), 20, 20).toPolygon();
     var collided = SAT.testPolygonPolygon(box1, box2);
-  })
-})
+  });
+});
 
 describe("Hit testing", function(){
   it("a circle", function(){
@@ -77,9 +77,9 @@ describe("Hit testing", function(){
 
     var circle = new C(new V(100,100), 20);
 
-    SAT.pointInCircle(new V(0,0), circle); // false
-    SAT.pointInCircle(new V(110,110), circle); // true
-  })
+    assert(!SAT.pointInCircle(new V(0,0), circle)); // false
+    assert(SAT.pointInCircle(new V(110,110), circle)); // true
+  });
   it("a polygon", function(){
     var V = SAT.Vector;
     var C = SAT.Circle;
@@ -88,7 +88,7 @@ describe("Hit testing", function(){
     var triangle = new P(new V(30,0), [
     new V(0,0), new V(30, 0), new V(0, 30)
     ]);
-    SAT.pointInPolygon(new V(0,0), triangle); // false
-    SAT.pointInPolygon(new V(35, 5), triangle); // true
-  })
-})
+    assert(!SAT.pointInPolygon(new V(0,0), triangle)); // false
+    assert(SAT.pointInPolygon(new V(35, 5), triangle)); // true
+  });
+});

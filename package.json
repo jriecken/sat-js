@@ -19,6 +19,9 @@
   "bugs": {
     "url": "http://github.com/jriecken/sat-js/issues"
   },
+  "scripts":{
+  	"test": "mocha"
+  },
   "main": "SAT.js",
   "devDependencies": {
     "mocha": "^2.1.0"
