@@ -4,7 +4,7 @@ SAT.js
  - [Classes](#classes)
  - [Collision Tests](#tests)
  - [Examples](#examples)
- 
+
 About
 -----
 
@@ -23,7 +23,7 @@ Current version: `0.5.0`. [Annotated source code](http://jriecken.github.io/sat-
 Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (2KB gzipped)
 
 To use it in node.js, you can run `npm install sat` and then use it with `var SAT = require('sat');`
- 
+
 <a name="classes"></a>
 Classes
 --------
@@ -35,7 +35,7 @@ SAT.js contains the following JavaScript classes:
 This is a simple 2D vector/point class.  It is created by calling:
 ```javascript
 // Create the vector (10,10) - If (x,y) not specified, defaults to (0,0).
-var v = new SAT.Vector(10, 10) 
+var v = new SAT.Vector(10, 10)
 ```
 
 It has the following properties:
@@ -61,7 +61,7 @@ It contains the following methods:
  - `dot(other)` - Get the dot product of this Vector and another.
  - `len2()` - Get the length squared of this Vector.
  - `len()` - Get the length of this Vector
- 
+
 ### SAT.Circle
 
 This is a simple circle with a center position and a radius.  It is created by calling:
@@ -109,7 +109,7 @@ It has the following methods:
  - `setOffset(offset)` - Set the current offset
  - `rotate(angle)` - Rotate the original points of this polygon counter-clockwise (around its local coordinate system) by the specified number of radians. The `angle` rotation will be applied on top of this rotation.
  - `translate(x, y)` - Translate the original points of this polygin (relative to the local coordinate system) by the specified amounts. The `offset` translation will be applied on top of this translation.
- 
+
 ### SAT.Box
 
 This is a simple Box with a position, width, and height.  It is created by calling:
@@ -123,7 +123,7 @@ It has the following properties:
  - `pos` - The bottom-left coordinate of the box.
  - `w` - The width of the box.
  - `h` - The height of the box.
- 
+
 It has the following methods:
 
  - `toPolygon()` - Returns a new Polygon whose edges are the edges of the box.
@@ -141,12 +141,12 @@ It has the following properties:
  - `overlapV` - The overlap vector (i.e. `overlapN.scale(overlap, overlap)`).  If this vector is subtracted from the position of `a`, `a` and `b` will no longer be colliding.
  - `aInB` - Whether the first object is completely inside the second.
  - `bInA` - Whether the second object is completely inside the first.
- 
+
 It has the following methods:
 
 - `clear()` - Clear the response so that it is ready to be reused for another collision test.
 
- 
+
 <a name="tests"></a>
 Collision Tests
 ---------------
@@ -275,4 +275,16 @@ SAT.pointInPolygon(new V(0,0), triangle); // false
 SAT.pointInPolygon(new V(35, 5), triangle); // true
 SAT.pointInCircle(new V(0,0), circle); // false
 SAT.pointInCircle(new V(110,110), circle); // true
+
 ```
+
+Tests
+-----
+
+To run the tests from your console:
+
+```
+mocha
+```
+
+To install `mocha` you will need to have run `npm install` after cloning the repo.
