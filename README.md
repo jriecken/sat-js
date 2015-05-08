@@ -88,6 +88,8 @@ var p = new SAT.Polygon(new SAT.Vector(), [
 ]);
 ```
 
+Note: The points are counter-clockwise *with respect to the coordinate system*. If you directly draw the points on a screen that has the origin at the top-left corner it will _appear_ visually that the points are being specified clockwise. This is just because of the inversion of the Y-axis when being displayed.
+
 You can create a line segment by creating a `Polygon` that contains only 2 ppoints.
 
 It has the following properties:
