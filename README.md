@@ -67,7 +67,7 @@ It contains the following methods:
 This is a simple circle with a center position and a radius.  It is created by calling:
 ```javascript
 // Create a circle whose center is (10,10) with radius of 20
-var c = new SAT.Circle(new Sat.Vector(10,10), 20);
+var c = new SAT.Circle(new SAT.Vector(10,10), 20);
 ```
 
 It has the following properties:
