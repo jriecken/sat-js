@@ -300,6 +300,11 @@
   SAT['Polygon'] = Polygon;
   
   // Set the points of the polygon.
+  //
+  // Note: The points are counter-clockwise *with respect to the coordinate system*.
+  // If you directly draw the points on a screen that has the origin at the top-left corner
+  // it will _appear_ visually that the points are being specified clockwise. This is just
+  // because of the inversion of the Y-axis when being displayed.
   /**
    * @param {Array.<Vector>=} points An array of vectors representing the points in the polygon,
    *   in counter-clockwise order.
@@ -472,7 +477,7 @@
   // is given, the position will be `(0,0)`. If no width or height are given, they will
   // be set to `0`.
   /**
-   * @param {Vector=} pos A vector representing the top-left of the box.
+   * @param {Vector=} pos A vector representing the bottom-left of the box (i.e. the smallest x and smallest y value).
    * @param {?number=} w The width of the box.
    * @param {?number=} h The height of the box.
    * @constructor

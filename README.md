@@ -110,7 +110,7 @@ It has the following methods:
  - `setAngle(angle)` - Set the current rotation angle (in radians)
  - `setOffset(offset)` - Set the current offset
  - `rotate(angle)` - Rotate the original points of this polygon counter-clockwise (around its local coordinate system) by the specified number of radians. The `angle` rotation will be applied on top of this rotation.
- - `translate(x, y)` - Translate the original points of this polygin (relative to the local coordinate system) by the specified amounts. The `offset` translation will be applied on top of this translation.
+ - `translate(x, y)` - Translate the original points of this polygon (relative to the local coordinate system) by the specified amounts. The `offset` translation will be applied on top of this translation.
 
 ### SAT.Box
 
@@ -122,7 +122,7 @@ var b = new SAT.Box(new SAT.Vector(10,10), 20, 40);
 
 It has the following properties:
 
- - `pos` - The bottom-left coordinate of the box.
+ - `pos` - The bottom-left coordinate of the box (i.e the smallest `x` value and the smallest `y` value).
  - `w` - The width of the box.
  - `h` - The height of the box.
 
