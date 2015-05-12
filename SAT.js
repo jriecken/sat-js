@@ -671,7 +671,7 @@
     return false;
   }
   
-  // Calculates which Vornoi region a point is on a line segment.
+  // Calculates which Voronoi region a point is on a line segment.
   // It is assumed that both the line and the point are relative to `(0,0)`
   //
   //            |       (0)      |
@@ -680,35 +680,35 @@
   /**
    * @param {Vector} line The line segment.
    * @param {Vector} point The point.
-   * @return  {number} LEFT_VORNOI_REGION (-1) if it is the left region, 
-   *          MIDDLE_VORNOI_REGION (0) if it is the middle region, 
-   *          RIGHT_VORNOI_REGION (1) if it is the right region.
+   * @return  {number} LEFT_VORONOI_REGION (-1) if it is the left region,
+   *          MIDDLE_VORONOI_REGION (0) if it is the middle region,
+   *          RIGHT_VORONOI_REGION (1) if it is the right region.
    */
-  function vornoiRegion(line, point) {
+  function voronoiRegion(line, point) {
     var len2 = line.len2();
     var dp = point.dot(line);
     // If the point is beyond the start of the line, it is in the
-    // left vornoi region.
-    if (dp < 0) { return LEFT_VORNOI_REGION; }
+    // left voronoi region.
+    if (dp < 0) { return LEFT_VORONOI_REGION; }
     // If the point is beyond the end of the line, it is in the
-    // right vornoi region.
-    else if (dp > len2) { return RIGHT_VORNOI_REGION; }
+    // right voronoi region.
+    else if (dp > len2) { return RIGHT_VORONOI_REGION; }
     // Otherwise, it's in the middle one.
-    else { return MIDDLE_VORNOI_REGION; }
+    else { return MIDDLE_VORONOI_REGION; }
   }
-  // Constants for Vornoi regions
+  // Constants for Voronoi regions
   /**
    * @const
    */
-  var LEFT_VORNOI_REGION = -1;
+  var LEFT_VORONOI_REGION = -1;
   /**
    * @const
    */
-  var MIDDLE_VORNOI_REGION = 0;
+  var MIDDLE_VORONOI_REGION = 0;
   /**
    * @const
    */
-  var RIGHT_VORNOI_REGION = 1;
+  var RIGHT_VORONOI_REGION = 1;
   
   // ## Collision Tests
 
@@ -818,16 +818,16 @@
         response['aInB'] = false;
       }
       
-      // Calculate which Vornoi region the center of the circle is in.
-      var region = vornoiRegion(edge, point);
+      // Calculate which Voornoi region the center of the circle is in.
+      var region = voronoiRegion(edge, point);
       // If it's the left region:
-      if (region === LEFT_VORNOI_REGION) { 
-        // We need to make sure we're in the RIGHT_VORNOI_REGION of the previous edge.
+      if (region === LEFT_VORONOI_REGION) {
+        // We need to make sure we're in the RIGHT_VORONOI_REGION of the previous edge.
         edge.copy(polygon['edges'][prev]);
         // Calculate the center of the circle relative the starting point of the previous edge
         var point2 = T_VECTORS.pop().copy(circlePos).sub(points[prev]);
-        region = vornoiRegion(edge, point2);
-        if (region === RIGHT_VORNOI_REGION) {
+        region = voronoiRegion(edge, point2);
+        if (region === RIGHT_VORONOI_REGION) {
           // It's in the region we want.  Check if the circle intersects the point.
           var dist = point.len();
           if (dist > radius) {
@@ -846,13 +846,13 @@
         }
         T_VECTORS.push(point2);
       // If it's the right region:
-      } else if (region === RIGHT_VORNOI_REGION) {
+      } else if (region === RIGHT_VORONOI_REGION) {
         // We need to make sure we're in the left region on the next edge
         edge.copy(polygon['edges'][next]);
         // Calculate the center of the circle relative to the starting point of the next edge.
         point.copy(circlePos).sub(points[next]);
-        region = vornoiRegion(edge, point);
-        if (region === LEFT_VORNOI_REGION) {
+        region = voronoiRegion(edge, point);
+        if (region === LEFT_VORONOI_REGION) {
           // It's in the region we want.  Check if the circle intersects the point.
           var dist = point.len();
           if (dist > radius) {
@@ -897,7 +897,7 @@
       }
       
       // If this is the smallest overlap we've seen, keep it. 
-      // (overlapN may be null if the circle was in the wrong Vornoi region).
+      // (overlapN may be null if the circle was in the wrong Voronoi region).
       if (overlapN && response && Math.abs(overlap) < Math.abs(response['overlap'])) {
         response['overlap'] = overlap;
         response['overlapN'].copy(overlapN);

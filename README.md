@@ -11,7 +11,7 @@ About
 SAT.js is a simple JavaScript library for performing collision detection (and projection-based collision response) of simple 2D shapes.  It uses the [Separating Axis Theorem](http://en.wikipedia.org/wiki/Hyperplane_separation_theorem) (hence the name)
 
 It supports detecting collisions between:
- - Circles (using Vornoi Regions.)
+ - Circles (using Voronoi Regions.)
  - Convex Polygons (and simple Axis-Aligned Boxes, which are of course, convex polygons.)
 
 It also supports checking whether a point is inside a circle or polygon.

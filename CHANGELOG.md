@@ -2,6 +2,8 @@
 
 ## In development
 
+ - Fix "Vornoi" -> "Voronoi" everywhere. Changes are all in private code, no functional changes. (Fixes #27)
+
 ## 0.5.0 (Dec 26, 2014)
 
  - **(POTENTIALLY BREAKING CHANGE)** Make `recalc` on `Polygon` more memory efficient. It no longer does any allocations. The `calcPoints`,`edges` and `normals` vector arrays are reused and only created in `setPoints` when the number of new points is different than the current ones. (Fixes #15)
