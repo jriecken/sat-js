@@ -818,7 +818,7 @@
         response['aInB'] = false;
       }
       
-      // Calculate which Voornoi region the center of the circle is in.
+      // Calculate which Voronoi region the center of the circle is in.
       var region = voronoiRegion(edge, point);
       // If it's the left region:
       if (region === LEFT_VORONOI_REGION) {
