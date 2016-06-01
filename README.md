@@ -2,7 +2,7 @@ SAT.js
 ======
 
  - [Classes](#classes)
- - [Collision Tests](#tests)
+ - [Collision Tests](#collision-tests)
  - [Examples](#examples)
 
 About
