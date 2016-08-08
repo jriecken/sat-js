@@ -670,6 +670,7 @@
     T_ARRAYS.push(rangeB);
     return false;
   }
+  SAT['isSeparatingAxis'] = isSeparatingAxis;
   
   // Calculates which Voronoi region a point is on a line segment.
   // It is assumed that both the line and the point are relative to `(0,0)`
