@@ -560,11 +560,11 @@
    */
   var T_RESPONSE = new Response();
 
-  // Unit square polygon used for polygon hit detection.
+  // Tiny "point" polygon used for polygon hit detection.
   /**
    * @type {Polygon}
    */
-  var UNIT_SQUARE = new Box(new Vector(), 1, 1).toPolygon();
+  var TEST_POINT = new Box(new Vector(), 0.000001, 0.000001).toPolygon();
 
   // ## Helper Functions
 
@@ -736,9 +736,9 @@
    * @return {boolean} true if the point is inside the polygon, false if it is not.
    */
   function pointInPolygon(p, poly) {
-    UNIT_SQUARE['pos'].copy(p);
+    TEST_POINT['pos'].copy(p);
     T_RESPONSE.clear();
-    var result = testPolygonPolygon(UNIT_SQUARE, poly, T_RESPONSE);
+    var result = testPolygonPolygon(TEST_POINT, poly, T_RESPONSE);
     if (result) {
       result = T_RESPONSE['aInB'];
     }

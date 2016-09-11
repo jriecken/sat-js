@@ -91,4 +91,13 @@ describe("Hit testing", function(){
     assert(!SAT.pointInPolygon(new V(0,0), triangle)); // false
     assert(SAT.pointInPolygon(new V(35, 5), triangle)); // true
   });
+  it("a small polygon", function () {
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+    var P = SAT.Polygon;
+
+    var v1 = new V(1, 1.1);
+    var p1 = new P(new V(0,0),[new V(2,1), new V(2,2), new V(1,3), new V(0,2),new V(0,1),new V(1,0)]);
+    assert(SAT.pointInPolygon(v1, p1));
+  });
 });
