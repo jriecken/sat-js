@@ -2,7 +2,11 @@
 
 ## In development
 
+## 0.6.0 (Sept 11, 2016)
+
  - Fix "Vornoi" -> "Voronoi" everywhere. Changes are all in private code, no functional changes. (Fixes #27)
+ - Exposed isSeparatingAxis() function - thanks [hexus](https://github.com/hexus)!
+ - Allow pointInPolygon to work with small polygons. (Fixes #41)
 
 ## 0.5.0 (Dec 26, 2014)
 

@@ -18,7 +18,7 @@ It also supports checking whether a point is inside a circle or polygon.
 
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
-Current version: `0.5.0`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
+Current version: `0.6.0`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
 
 Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (2KB gzipped)
 
