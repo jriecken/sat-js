@@ -27,14 +27,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Version 0.5.0 - Copyright 2012 - 2015 -  Jim Riecken <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#x69;&#109;&#x72;&#x40;&#x6a;&#105;&#x6d;&#114;&#46;&#99;&#x61;">&#x6a;&#x69;&#109;&#x72;&#x40;&#x6a;&#105;&#x6d;&#114;&#46;&#99;&#x61;</a></p>
+              <p>Version 0.6.0 - Copyright 2012 - 2016 -  Jim Riecken <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#106;&#105;&#109;&#114;&#64;&#106;&#x69;&#109;&#114;&#x2e;&#99;&#97;">&#106;&#105;&#109;&#114;&#64;&#106;&#x69;&#109;&#114;&#x2e;&#99;&#97;</a></p>
 <p>Released under the MIT License - <a href="https://github.com/jriecken/sat-js">https://github.com/jriecken/sat-js</a></p>
 <p>A simple library for determining intersections of circles and
 polygons using the Separating Axis Theorem.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/** @preserve SAT.js - Version 0.5.0 - Copyright 2012 - 2015 - Jim Riecken &lt;jimr@jimr.ca&gt; - released under the MIT License. https://github.com/jriecken/sat-js */</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/** @preserve SAT.js - Version 0.6.0 - Copyright 2012 - 2016 - Jim Riecken &lt;jimr@jimr.ca&gt; - released under the MIT License. https://github.com/jriecken/sat-js */</span>
 
 <span class="hljs-comment">/*global define: false, module: false*/</span>
 <span class="hljs-comment">/*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
@@ -1159,14 +1159,14 @@ memory.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
-              <p>Unit square polygon used for polygon hit detection.</p>
+              <p>Tiny “point” polygon used for polygon hit detection.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
    * @type {Polygon}
    */</span>
-  <span class="hljs-keyword">var</span> UNIT_SQUARE = <span class="hljs-keyword">new</span> Box(<span class="hljs-keyword">new</span> Vector(), <span class="hljs-number">1</span>, <span class="hljs-number">1</span>).toPolygon();</pre></div></div>
+  <span class="hljs-keyword">var</span> TEST_POINT = <span class="hljs-keyword">new</span> Box(<span class="hljs-keyword">new</span> Vector(), <span class="hljs-number">0.000001</span>, <span class="hljs-number">0.000001</span>).toPolygon();</pre></div></div>
             
         </li>
         
@@ -1475,7 +1475,8 @@ axis (must be a unit vector).</p>
     T_ARRAYS.push(rangeA); 
     T_ARRAYS.push(rangeB);
     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-  }</pre></div></div>
+  }
+  SAT[<span class="hljs-string">'isSeparatingAxis'</span>] = isSeparatingAxis;</pre></div></div>
             
         </li>
         
@@ -1652,9 +1653,9 @@ right voronoi region.</p>
    * @return {boolean} true if the point is inside the polygon, false if it is not.
    */</span>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointInPolygon</span><span class="hljs-params">(p, poly)</span> </span>{
-    UNIT_SQUARE[<span class="hljs-string">'pos'</span>].copy(p);
+    TEST_POINT[<span class="hljs-string">'pos'</span>].copy(p);
     T_RESPONSE.clear();
-    <span class="hljs-keyword">var</span> result = testPolygonPolygon(UNIT_SQUARE, poly, T_RESPONSE);
+    <span class="hljs-keyword">var</span> result = testPolygonPolygon(TEST_POINT, poly, T_RESPONSE);
     <span class="hljs-keyword">if</span> (result) {
       result = T_RESPONSE[<span class="hljs-string">'aInB'</span>];
     }
