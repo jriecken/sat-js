@@ -101,3 +101,53 @@ describe("Hit testing", function(){
     assert(SAT.pointInPolygon(v1, p1));
   });
 });
+describe("Hit testing", function(){
+  it("a circle", function(){
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+
+    var circle = new C(new V(100,100), 20);
+
+    assert(!SAT.pointInCircle(new V(0,0), circle)); // false
+    assert(SAT.pointInCircle(new V(110,110), circle)); // true
+  });
+  it("a polygon", function(){
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+    var P = SAT.Polygon;
+
+    var triangle = new P(new V(30,0), [
+    new V(0,0), new V(30, 0), new V(0, 30)
+    ]);
+    assert(!SAT.pointInPolygon(new V(0,0), triangle)); // false
+    assert(SAT.pointInPolygon(new V(35, 5), triangle)); // true
+  });
+  it("a small polygon", function () {
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+    var P = SAT.Polygon;
+
+    var v1 = new V(1, 1.1);
+    var p1 = new P(new V(0,0),[new V(2,1), new V(2,2), new V(1,3), new V(0,2),new V(0,1),new V(1,0)]);
+    assert(SAT.pointInPolygon(v1, p1));
+  });
+});
+
+describe("Polygon === Box -> Polygon", function () {
+  it("Polygon ouput and box polygon outout must be same", function() {
+    var V = SAT.Vector;
+    var P = SAT.Polygon;
+    var B = SAT.Box;
+
+    var input = new P(new V(1,1), [
+      new V(1,1),
+      new V(2,1),
+      new V(2,2),
+      new V(1,2)
+    ]);
+    var box = new B(new V(1,1), 1, 1); // (pos, w, h)
+    var output = box.toPolygon();
+    assert.deepEqual(input, output);
+  })
+
+});
