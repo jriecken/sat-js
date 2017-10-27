@@ -217,6 +217,17 @@
     return this;
   };
   
+  // Get the product of this vector and another.
+  /**
+   * @param {Vector}  other The vector to multiply with this one.
+   * @return {number} The multiplied vector.
+   */
+  Vector.prototype['mul'] = Vector.prototype.mul = function(other) {
+    this['x'] = this.['x']*other['x'];
+    this.['y'] = this.['y']*other['y'];
+    return this;
+  };
+  
   // Get the dot product of this vector and another.
   /**
    * @param {Vector}  other The vector to dot this one against.
