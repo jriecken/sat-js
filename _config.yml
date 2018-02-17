@@ -1,0 +1,8 @@
+title: Sat-js
+description: A simple JavaScript library for performing 2D collision detection
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-slate
+
+gems:
+  - jekyll-mentions
