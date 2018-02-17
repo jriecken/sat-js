@@ -1,8 +1,36 @@
 var SAT = require('..');
 var assert = require('assert');
 
-describe("collision of", function(){
-  it("two circles", function(){
+describe("Polygon.getCentroid", function() {
+  it("should calculate the correct value for a square", function() {
+    var V = SAT.Vector;
+    var P = SAT.Polygon;
+
+    // A square
+    var polygon = new P(new V(0,0), [
+      new V(0,0), new V(40,0), new V(40,40), new V(0,40)
+    ]);
+    var c = polygon.getCentroid();
+    assert( c.x === 20 );
+    assert( c.y === 20 );
+  });
+
+  it("should calculate the correct value for a triangle", function() {
+    var V = SAT.Vector;
+    var P = SAT.Polygon;
+
+    // A triangle
+    var polygon = new P(new V(0,0), [
+      new V(0,0), new V(100,0), new V(50,99)
+    ]);
+    var c = polygon.getCentroid();
+    assert( c.x === 50 );
+    assert( c.y === 33 );
+  });
+});
+
+describe("Collision", function() {
+  it("testCircleCircle", function() {
     var V = SAT.Vector;
     var C = SAT.Circle;
 
@@ -16,7 +44,7 @@ describe("collision of", function(){
     assert( response.overlapV.x == 10 && response.overlapV.y === 0);
   });
 
-  it("circle and polygon", function(){
+  it("testPolygonCircle", function() {
 
     var V = SAT.Vector;
     var C = SAT.Circle;
@@ -25,7 +53,7 @@ describe("collision of", function(){
     var circle = new C(new V(50,50), 20);
     // A square
     var polygon = new P(new V(0,0), [
-    new V(0,0), new V(40,0), new V(40,40), new V(0,40)
+      new V(0,0), new V(40,0), new V(40,40), new V(0,40)
     ]);
     var response = new SAT.Response();
     var collided = SAT.testPolygonCircle(polygon, circle, response);
@@ -38,17 +66,17 @@ describe("collision of", function(){
     );
   });
 
-  it("polygon and polygon", function(){
+  it("testPolygonPolygon", function() {
     var V = SAT.Vector;
     var P = SAT.Polygon;
 
     // A square
     var polygon1 = new P(new V(0,0), [
-    new V(0,0), new V(40,0), new V(40,40), new V(0,40)
+      new V(0,0), new V(40,0), new V(40,40), new V(0,40)
     ]);
     // A triangle
     var polygon2 = new P(new V(30,0), [
-    new V(0,0), new V(30, 0), new V(0, 30)
+      new V(0,0), new V(30, 0), new V(0, 30)
     ]);
     var response = new SAT.Response();
     var collided = SAT.testPolygonPolygon(polygon1, polygon2, response);
@@ -59,8 +87,8 @@ describe("collision of", function(){
   });
 });
 
-describe("No collision between", function(){
-  it("two boxes", function(){
+describe("No collision", function() {
+  it("testPolygonPolygon", function(){
     var V = SAT.Vector;
     var B = SAT.Box;
 
@@ -70,8 +98,8 @@ describe("No collision between", function(){
   });
 });
 
-describe("Hit testing", function(){
-  it("a circle", function(){
+describe("Point testing", function() {
+  it("pointInCircle", function(){
     var V = SAT.Vector;
     var C = SAT.Circle;
 
@@ -80,18 +108,20 @@ describe("Hit testing", function(){
     assert(!SAT.pointInCircle(new V(0,0), circle)); // false
     assert(SAT.pointInCircle(new V(110,110), circle)); // true
   });
-  it("a polygon", function(){
+
+  it("pointInPolygon", function() {
     var V = SAT.Vector;
     var C = SAT.Circle;
     var P = SAT.Polygon;
 
     var triangle = new P(new V(30,0), [
-    new V(0,0), new V(30, 0), new V(0, 30)
+      new V(0,0), new V(30, 0), new V(0, 30)
     ]);
     assert(!SAT.pointInPolygon(new V(0,0), triangle)); // false
     assert(SAT.pointInPolygon(new V(35, 5), triangle)); // true
   });
-  it("a small polygon", function () {
+
+  it("pointInPolygon (small)", function () {
     var V = SAT.Vector;
     var C = SAT.Circle;
     var P = SAT.Polygon;
