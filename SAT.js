@@ -467,9 +467,15 @@
     return new Box(this["pos"].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
   };
 
-  // Compute the centroid (geometric center) of the polygon
+  // Compute the centroid (geometric center) of the polygon. Any current state
+  // (translations/rotations) will be applied before computing the centroid.
   //
   // See https://en.wikipedia.org/wiki/Centroid#Centroid_of_a_polygon
+  //
+  // Note: Returns a _new_ `Vector` each time you call this.
+  /**
+   * @return {Vector} A Vector that contains the coordinates of the Centroid.
+   */
   Polygon.prototype["getCentroid"] = Polygon.prototype.getCentroid = function() {
     var points = this["calcPoints"];
     var len = points.length;
@@ -484,7 +490,7 @@
       cy += (p1["y"] + p2["y"]) * a;
       ar += a;
     }
-    ar = ar * 3; // we want 1 / 6 the area and we currently hae 2*area
+    ar = ar * 3; // we want 1 / 6 the area and we currently have 2*area
     cx = cx / ar;
     cy = cy / ar;
     return new Vector(cx, cy);
