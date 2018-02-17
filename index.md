@@ -22,8 +22,6 @@ Nicely compresses with the [Google Closure Compiler](https://developers.google.c
 
 To use it in node.js, you can run `npm install sat` and then use it with `var SAT = require('sat');`
 
-<a name="classes"></a>
-
 ## Classes
 
 SAT.js contains the following JavaScript classes:
@@ -146,10 +144,7 @@ It has the following methods:
 
 - `clear()` - Clear the response so that it is ready to be reused for another collision test.
 
-
-<a name="tests"></a>
-Collision Tests
----------------
+## Collision Tests
 
 SAT.js contains the following collision tests:
 
@@ -189,9 +184,7 @@ Returns `true` if there is a collision, `false` otherwise.
 
 *NOTE: If you want to detect a collision between `Box`es, use the `toPolygon()` method*
 
-<a name="examples"></a>
-Examples
---------
+## Examples
 
 Test two circles
 ```javascript
