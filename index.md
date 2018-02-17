@@ -1,12 +1,10 @@
-SAT.js
-======
+# SAT.js
 
  - [Classes](#classes)
  - [Collision Tests](#collision-tests)
  - [Examples](#examples)
 
-About
------
+## About
 
 SAT.js is a simple JavaScript library for performing collision detection (and projection-based collision response) of simple 2D shapes.  It uses the [Separating Axis Theorem](http://en.wikipedia.org/wiki/Hyperplane_separation_theorem) (hence the name)
 
@@ -25,8 +23,8 @@ Nicely compresses with the [Google Closure Compiler](https://developers.google.c
 To use it in node.js, you can run `npm install sat` and then use it with `var SAT = require('sat');`
 
 <a name="classes"></a>
-Classes
---------
+
+## Classes
 
 SAT.js contains the following JavaScript classes:
 
