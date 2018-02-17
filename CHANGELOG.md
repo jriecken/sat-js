@@ -1,6 +1,9 @@
 # Changelog
 
-## In development
+## O.7.0 (Feb 17, 2018)
+
+- Add `getCentroid` method to `Polygon` that computes the [centroid](https://en.wikipedia.org/wiki/Centroid#Centroid_of_a_polygon). (Fixes #50)
+  - Useful for computing the center of a polygon if you want to rotate around it.
 
 ## 0.6.0 (Sept 11, 2016)
 
