@@ -1,6 +1,24 @@
 var SAT = require('..');
 var assert = require('assert');
 
+describe('Vector.scale', function() {
+  it('should scale by zero properly', function() {
+    var V = SAT.Vector;
+    var v1 = new V(5, 5);
+    v1.scale(10, 10);
+    assert(v1.x === 50);
+    assert(v1.y === 50);
+
+    v1.scale(0, 1);
+    assert(v1.x === 0);
+    assert(v1.y === 50);
+
+    v1.scale(1, 0);
+    assert(v1.x === 0);
+    assert(v1.y === 0);
+  });
+});
+
 describe("Polygon.getCentroid", function() {
   it("should calculate the correct value for a square", function() {
     var V = SAT.Vector;

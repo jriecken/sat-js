@@ -159,7 +159,7 @@
    */
   Vector.prototype['scale'] = Vector.prototype.scale = function(x,y) {
     this['x'] *= x;
-    this['y'] *= y || x;
+    this['y'] *= typeof y != 'undefined' ? y : x;
     return this;
   };
 
