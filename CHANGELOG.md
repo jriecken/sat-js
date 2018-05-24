@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1 (May 23, 2018)
+
+- Check explicitly for `undefined` `y` param when scaling vectors. (Fixes #52)
+
 ## O.7.0 (Feb 17, 2018)
 
 - Add `getCentroid` method to `Polygon` that computes the [centroid](https://en.wikipedia.org/wiki/Centroid#Centroid_of_a_polygon). (Fixes #50)
