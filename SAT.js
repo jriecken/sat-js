@@ -149,7 +149,7 @@
     return this;
   };
 
-  // Scale this vector. An independant scaling factor can be provided
+  // Scale this vector. An independent scaling factor can be provided
   // for each axis, or a single scaling factor that will scale both `x` and `y`.
   /**
    * @param {number} x The scaling factor in the x direction.
@@ -287,7 +287,7 @@
   /**
    * @param {Vector=} pos A vector representing the origin of the polygon. (all other
    *   points are relative to this one)
-   * @param {Array.<Vector>=} points An array of vectors representing the points in the polygon,
+   * @param {Array<Vector>=} points An array of vectors representing the points in the polygon,
    *   in counter-clockwise order.
    * @constructor
    */
@@ -306,7 +306,7 @@
   // it will _appear_ visually that the points are being specified clockwise. This is just
   // because of the inversion of the Y-axis when being displayed.
   /**
-   * @param {Array.<Vector>=} points An array of vectors representing the points in the polygon,
+   * @param {Array<Vector>=} points An array of vectors representing the points in the polygon,
    *   in counter-clockwise order.
    * @return {Polygon} This for chaining.
    */
@@ -570,7 +570,7 @@
   // A pool of `Vector` objects that are used in calculations to avoid
   // allocating memory.
   /**
-   * @type {Array.<Vector>}
+   * @type {Array<Vector>}
    */
   var T_VECTORS = [];
   for (var i = 0; i < 10; i++) { T_VECTORS.push(new Vector()); }
@@ -578,7 +578,7 @@
   // A pool of arrays of numbers used in calculations to avoid allocating
   // memory.
   /**
-   * @type {Array.<Array.<number>>}
+   * @type {Array<Array<number>>}
    */
   var T_ARRAYS = [];
   for (var i = 0; i < 5; i++) { T_ARRAYS.push([]); }
@@ -601,9 +601,9 @@
   // resulting in a one dimensional range of the minimum and
   // maximum value on that axis.
   /**
-   * @param {Array.<Vector>} points The points to flatten.
+   * @param {Array<Vector>} points The points to flatten.
    * @param {Vector} normal The unit vector axis to flatten on.
-   * @param {Array.<number>} result An array.  After calling this function,
+   * @param {Array<number>} result An array.  After calling this function,
    *   result[0] will be the minimum value,
    *   result[1] will be the maximum value.
    */
@@ -625,8 +625,8 @@
   /**
    * @param {Vector} aPos The position of the first polygon.
    * @param {Vector} bPos The position of the second polygon.
-   * @param {Array.<Vector>} aPoints The points in the first polygon.
-   * @param {Array.<Vector>} bPoints The points in the second polygon.
+   * @param {Array<Vector>} aPoints The points in the first polygon.
+   * @param {Array<Vector>} bPoints The points in the second polygon.
    * @param {Vector} axis The axis (unit sized) to test against.  The points of both polygons
    *   will be projected onto this axis.
    * @param {Response=} response A Response object (optional) which will be populated
