@@ -70,6 +70,7 @@ It has the following properties:
 
  - `pos` - A Vector representing the center of the circle.
  - `r` - The radius of the circle
+ - `offset` - Offset of center of circle from `pos`.
 
 ### SAT.Polygon
 
