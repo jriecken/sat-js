@@ -273,6 +273,16 @@
     return new Box(corner, r*2, r*2).toPolygon();
   };
 
+  // Set the current offset to apply to the radius.
+  /**
+   * @param {Vector} offset The new offset vector.
+   * @return {Circle} This for chaining.
+   */
+  Circle.prototype['setOffset'] = Circle.prototype.setOffset = function(offset) {
+    this['offset'] = offset;
+    return this;
+  };
+
   // ## Polygon
   //
   // Represents a *convex* polygon with any number of points (specified in counter-clockwise order)

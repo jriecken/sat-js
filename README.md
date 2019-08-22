@@ -72,6 +72,10 @@ It has the following properties:
  - `r` - The radius of the circle
  - `offset` - Offset of center of circle from `pos`.
 
+ It has the following methods:
+
+ - `setOffset(offset)` - Set the current offset
+
 ### SAT.Polygon
 
 This is a **convex** polygon, whose points are specified in a counter-clockwise fashion.  It is created by calling:
