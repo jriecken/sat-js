@@ -60,6 +60,10 @@ describe("Collision", function() {
     assert( collided );
     assert( response.overlap == 10 );
     assert( response.overlapV.x == 10 && response.overlapV.y === 0);
+
+    circle1.offset = new V(-10, -10);
+    collided = SAT.testCircleCircle(circle1, circle2, response);
+    assert( !collided );
   });
 
   it("testPolygonCircle", function() {
@@ -82,6 +86,10 @@ describe("Collision", function() {
       response.overlapV.x.toFixed(2) == "4.14" &&
       response.overlapV.y.toFixed(2) == "4.14"
     );
+
+    circle.offset = new V(10, 10);
+    collided = SAT.testPolygonCircle(polygon, circle, response);
+    assert(!collided);
   });
 
   it("testPolygonPolygon", function() {
@@ -125,6 +133,9 @@ describe("Point testing", function() {
 
     assert(!SAT.pointInCircle(new V(0,0), circle)); // false
     assert(SAT.pointInCircle(new V(110,110), circle)); // true
+
+    circle.offset = new V(-10, -10);
+    assert(!SAT.pointInCircle(new V(110,110), circle)); // false
   });
 
   it("pointInPolygon", function() {
