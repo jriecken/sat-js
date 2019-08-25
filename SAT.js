@@ -257,6 +257,7 @@
   function Circle(pos, r) {
     this['pos'] = pos || new Vector();
     this['r'] = r || 0;
+    this['offset'] = new Vector();
   }
   SAT['Circle'] = Circle;
 
@@ -268,8 +269,18 @@
    */
   Circle.prototype['getAABB'] = Circle.prototype.getAABB = function() {
     var r = this['r'];
-    var corner = this["pos"].clone().sub(new Vector(r, r));
+    var corner = this['pos'].clone().add(this['offset']).sub(new Vector(r, r));
     return new Box(corner, r*2, r*2).toPolygon();
+  };
+
+  // Set the current offset to apply to the radius.
+  /**
+   * @param {Vector} offset The new offset vector.
+   * @return {Circle} This for chaining.
+   */
+  Circle.prototype['setOffset'] = Circle.prototype.setOffset = function(offset) {
+    this['offset'] = offset;
+    return this;
   };
 
   // ## Polygon
@@ -464,7 +475,7 @@
         yMax = point["y"];
       }
     }
-    return new Box(this["pos"].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
+    return new Box(this['pos'].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
   };
 
   // Compute the centroid (geometric center) of the polygon. Any current state
@@ -749,7 +760,7 @@
    * @return {boolean} true if the point is inside the circle, false if it is not.
    */
   function pointInCircle(p, c) {
-    var differenceV = T_VECTORS.pop().copy(p).sub(c['pos']);
+    var differenceV = T_VECTORS.pop().copy(p).sub(c['pos']).sub(c['offset']);
     var radiusSq = c['r'] * c['r'];
     var distanceSq = differenceV.len2();
     T_VECTORS.push(differenceV);
@@ -786,7 +797,7 @@
   function testCircleCircle(a, b, response) {
     // Check if the distance between the centers of the two
     // circles is greater than their combined radius.
-    var differenceV = T_VECTORS.pop().copy(b['pos']).sub(a['pos']);
+    var differenceV = T_VECTORS.pop().copy(b['pos']).add(b['offset']).sub(a['pos']).sub(a['offset']);
     var totalRadius = a['r'] + b['r'];
     var totalRadiusSq = totalRadius * totalRadius;
     var distanceSq = differenceV.len2();
@@ -821,7 +832,7 @@
    */
   function testPolygonCircle(polygon, circle, response) {
     // Get the position of the circle relative to the polygon.
-    var circlePos = T_VECTORS.pop().copy(circle['pos']).sub(polygon['pos']);
+    var circlePos = T_VECTORS.pop().copy(circle['pos']).add(circle['offset']).sub(polygon['pos']);
     var radius = circle['r'];
     var radius2 = radius * radius;
     var points = polygon['calcPoints'];

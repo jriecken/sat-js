@@ -70,6 +70,11 @@ It has the following properties:
 
  - `pos` - A Vector representing the center of the circle.
  - `r` - The radius of the circle
+ - `offset` - Offset of center of circle from `pos`.
+
+ It has the following methods:
+
+ - `setOffset(offset)` - Set the current offset
 
 ### SAT.Polygon
 
