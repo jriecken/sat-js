@@ -8,10 +8,7 @@
     "sat",
     "game"
   ],
-  "license": {
-    "type": "MIT",
-    "url": "http://github.com/jriecken/sat-js/raw/master/LICENSE"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/jriecken/sat-js.git"
