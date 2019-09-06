@@ -92,6 +92,32 @@ describe("Collision", function() {
     assert(!collided);
   });
 
+  it('testPolygonCircle - line - not collide', function () {
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+    var B = SAT.Box;
+
+    var circle = new C(new V(50,50), 20);
+    var polygon = new B(new V(1000,1000), 100, 0).toPolygon();
+    var response = new SAT.Response();
+    var collided = SAT.testPolygonCircle(polygon, circle, response);
+    assert(!collided);
+  })
+
+  it('testPolygonCircle - line - collide', function () {
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+    var B = SAT.Box;
+
+    var circle = new C(new V(50,50), 20);
+    var polygon = new B(new V(50,50), 100, 0).toPolygon();
+    var response = new SAT.Response();
+    var collided = SAT.testPolygonCircle(polygon, circle, response);
+
+    assert(collided);
+    assert(response.overlap.toFixed(2) == "20.00");
+  })
+
   it("testPolygonPolygon", function() {
     var V = SAT.Vector;
     var P = SAT.Polygon;

@@ -310,7 +310,7 @@
   }
   SAT['Polygon'] = Polygon;
 
-  // Set the points of the polygon.
+  // Set the points of the polygon. Any consecutive duplicate points will be combined.
   //
   // Note: The points are counter-clockwise *with respect to the coordinate system*.
   // If you directly draw the points on a screen that has the origin at the top-left corner
@@ -331,6 +331,14 @@
       var normals = this['normals'] = [];
       // Allocate the vector arrays for the calculated properties
       for (i = 0; i < points.length; i++) {
+        // Remove consecutive duplicate points
+        var p1 = points[i];
+        var p2 = i < points.length - 1 ? points[i + 1] : points[0];
+        if (p1 !== p2 && p1.x === p2.x && p1.y === p2.y) {
+          points.splice(i, 1);
+          i -= 1;
+          continue;
+        }
         calcPoints.push(new Vector());
         edges.push(new Vector());
         normals.push(new Vector());
