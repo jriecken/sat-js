@@ -16,7 +16,7 @@ It also supports checking whether a point is inside a circle or polygon.
 
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
-Current version: `0.7.0`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
+Current version: `0.8.0`.
 
 Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (2KB gzipped)
 
@@ -70,6 +70,11 @@ It has the following properties:
 
  - `pos` - A Vector representing the center of the circle.
  - `r` - The radius of the circle
+ - `offset` - Offset of center of circle from `pos`.
+
+ It has the following methods:
+
+ - `setOffset(offset)` - Set the current offset
 
 ### SAT.Polygon
 
@@ -85,7 +90,9 @@ var p = new SAT.Polygon(new SAT.Vector(), [
 
 Note: The points are counter-clockwise *with respect to the coordinate system*. If you directly draw the points on a screen that has the origin at the top-left corner it will _appear_ visually that the points are being specified clockwise. This is just because of the inversion of the Y-axis when being displayed.
 
-You can create a line segment by creating a `Polygon` that contains only 2 ppoints.
+You can create a line segment by creating a `Polygon` that contains only 2 points.
+
+Any identical consecutive points will be combined. (this can happen if you convert a `Box` with zero width or height into a `Polygon`)
 
 It has the following properties:
 
@@ -145,6 +152,22 @@ It has the following methods:
 
 - `clear()` - Clear the response so that it is ready to be reused for another collision test.
 
+Note: The `clear`ed value for a `Response` has what may seem to be strange looking values:
+
+```javascript
+{
+  a: null,
+  b: null,
+  overlap: 1.7976931348623157e+308,
+  overlapV: Vector(0, 0),
+  overlapN: Vector(0, 0),
+  aInB: true,
+  bInA: true
+}
+```
+
+These just make calculating the response simpler in the collision tests. If the collision test functions return `false` the values that are in the response should not be examined, and `clear()` should be called before using it for another collision test.
+
 ## Collision Tests
 
 SAT.js contains the following collision tests:
@@ -159,15 +182,19 @@ Checks whether a given point is inside a specified convex polygon.
 
 ### `SAT.testCircleCircle(a, b, response)`
 
-Tests for a collision between two `Circle`s, `a`, and `b`.  If a response is to be calculated in the event of collision, pass in a cleared `Response` object.
+Tests for a collision between two `Circle`s, `a`, and `b`.  If a response is to be calculated in the event of collision, pass in a `clear`ed `Response` object.
 
 Returns `true` if the circles collide, `false` otherwise.
 
+If it returns `false` you should not use any values that are in the `response` (if one is passed in)
+
 ### `SAT.testPolygonCircle(polygon, circle, response)`
 
-Tests for a collision between a `Polygon` and a `Circle`.  If a response is to be calculated in the event of a collision, pass in a cleared `Response` object.
+Tests for a collision between a `Polygon` and a `Circle`.  If a response is to be calculated in the event of a collision, pass in a `clear`ed `Response` object.
 
 Returns `true` if there is a collision, `false` otherwise.
+
+If it returns `false` you should not use any values that are in the `response` (if one is passed in)
 
 ### `SAT.testCirclePolygon(circle, polygon, response)`
 
@@ -175,15 +202,19 @@ The same thing as `SAT.testPolygonCircle`, but in the other direction.
 
 Returns `true` if there is a collision, `false` otherwise.
 
-*NOTE: This is slightly slower than `SAT.testPolygonCircle` as it just calls that and reverses the result*
+If it returns `false` you should not use any values that are in the `response` (if one is passed in)
+
+*Note: This is slightly slower than `SAT.testPolygonCircle` as it just calls that and reverses the result*
 
 ### `SAT.testPolygonPolygon(a, b, response)`
 
-Tests whether two polygons `a` and `b` collide. If a response is to be calculated in the event of collision, pass in a cleared `Response` object.
+Tests whether two polygons `a` and `b` collide. If a response is to be calculated in the event of collision, pass in a `clear`ed `Response` object.
 
 Returns `true` if there is a collision, `false` otherwise.
 
-*NOTE: If you want to detect a collision between `Box`es, use the `toPolygon()` method*
+If it returns `false` you should not use any values that are in the `response` (if one is passed in)
+
+*Note: If you want to detect a collision between `Box`es, use the `toPolygon()` method*
 
 ## Examples
 
@@ -269,16 +300,13 @@ SAT.pointInPolygon(new V(0,0), triangle); // false
 SAT.pointInPolygon(new V(35, 5), triangle); // true
 SAT.pointInCircle(new V(0,0), circle); // false
 SAT.pointInCircle(new V(110,110), circle); // true
-
 ```
 
-Tests
------
+## Tests
 
 To run the tests from your console:
 
 ```
-mocha
+npm install
+npm run test
 ```
-
-To install `mocha` you will need to have run `npm install` after cloning the repo.
