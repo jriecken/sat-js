@@ -16,7 +16,7 @@ It also supports checking whether a point is inside a circle or polygon.
 
 It's released under the [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
-Current version: `0.7.1`. [Annotated source code](http://jriecken.github.io/sat-js/docs/SAT.html) is available.
+Current version: `0.8.0`.
 
 Nicely compresses with the [Google Closure Compiler](https://developers.google.com/closure/compiler/) in **Advanced** mode to about 6KB (2KB gzipped)
 
@@ -90,7 +90,9 @@ var p = new SAT.Polygon(new SAT.Vector(), [
 
 Note: The points are counter-clockwise *with respect to the coordinate system*. If you directly draw the points on a screen that has the origin at the top-left corner it will _appear_ visually that the points are being specified clockwise. This is just because of the inversion of the Y-axis when being displayed.
 
-You can create a line segment by creating a `Polygon` that contains only 2 ppoints.
+You can create a line segment by creating a `Polygon` that contains only 2 points.
+
+Any identical consecutive points will be combined. (this can happen if you convert a `Box` with zero width or height into a `Polygon`)
 
 It has the following properties:
 
@@ -298,16 +300,13 @@ SAT.pointInPolygon(new V(0,0), triangle); // false
 SAT.pointInPolygon(new V(35, 5), triangle); // true
 SAT.pointInCircle(new V(0,0), circle); // false
 SAT.pointInCircle(new V(110,110), circle); // true
-
 ```
 
-Tests
------
+## Tests
 
 To run the tests from your console:
 
 ```
-mocha
+npm install
+npm run test
 ```
-
-To install `mocha` you will need to have run `npm install` after cloning the repo.

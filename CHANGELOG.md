@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0 (Sept 7, 2019)
+
+- Combine consecutive duplicate points in polygons to remove zero-length edges. (Fixes #55)
+- Add the ability to set an offset for circles - thanks [funnisimo](https://github.com/funnisimo)!
+
 ## 0.7.1 (May 23, 2018)
 
 - Check explicitly for `undefined` `y` param when scaling vectors. (Fixes #52)
