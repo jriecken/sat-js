@@ -17,10 +17,16 @@
     "url": "http://github.com/jriecken/sat-js/issues"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "bundle": "rollup -c",
+    "bundle:watch": "rollup -c --watch"
   },
   "main": "SAT.js",
   "devDependencies": {
-    "mocha": "^2.1.0"
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "mocha": "^2.1.0",
+    "rollup": "^1.27.14",
+    "rollup-plugin-babel": "^4.3.3"
   }
 }
