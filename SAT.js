@@ -270,7 +270,7 @@
   Circle.prototype['getAABB'] = Circle.prototype.getAABB = function() {
     var r = this['r'];
     var corner = this['pos'].clone().add(this['offset']).sub(new Vector(r, r));
-    return new Box(corner, r*2, r*2).toPolygon();
+    return new Box(corner, r*2, r*2);
   };
 
   // Set the current offset to apply to the radius.
@@ -483,7 +483,7 @@
         yMax = point["y"];
       }
     }
-    return new Box(this['pos'].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
+    return new Box(this['pos'].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin);
   };
 
   // Compute the centroid (geometric center) of the polygon. Any current state
