@@ -75,7 +75,8 @@ It has the following properties:
  It has the following methods:
 
  - `setOffset(offset)` - Set the current offset
- - `getAABB()` - Compute the axis-aligned bounding box. Returns a new Box every time it is called.
+ - `getAABB()` - Compute the axis-aligned bounding box. Returns a new Polygon every time it is called.
+ - `getAABBAsBox()` - Compute the axis-aligned bounding box. Returns a new Box every time it is called.
 
 ### SAT.Polygon
 
@@ -114,7 +115,8 @@ It has the following methods:
  - `setOffset(offset)` - Set the current offset
  - `rotate(angle)` - Rotate the original points of this polygon counter-clockwise (around its local coordinate system) by the specified number of radians. The `angle` rotation will be applied on top of this rotation.
  - `translate(x, y)` - Translate the original points of this polygon (relative to the local coordinate system) by the specified amounts. The `offset` translation will be applied on top of this translation.
- - `getAABB()` - Compute the axis-aligned bounding box. Returns a new Box every time it is called. Is performed based on the `calcPoints`.
+ - `getAABB()` - Compute the axis-aligned bounding box. Returns a new Polygon every time it is called. Is performed based on the `calcPoints`.
+ - `getAABBAsBox()` - Compute the axis-aligned bounding box. Returns a new Box every time it is called. Is performed based on the `calcPoints`.
  - `getCentroid()` - Compute the [Centroid](https://en.wikipedia.org/wiki/Centroid#Centroid_of_a_polygon) of the polygon. Is performed based on the `calcPoints`.
 
 ### SAT.Box
