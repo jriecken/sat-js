@@ -263,14 +263,24 @@
 
   // Compute the axis-aligned bounding box (AABB) of this Circle.
   //
+  // Note: Returns a _new_ `Box` each time you call this.
+  /**
+   * @return {Polygon} The AABB
+   */
+  Circle.prototype['getAABBAsBox'] = Circle.prototype.getAABBAsBox = function() {
+    var r = this['r'];
+    var corner = this['pos'].clone().add(this['offset']).sub(new Vector(r, r));
+    return new Box(corner, r*2, r*2);
+  };
+
+  // Compute the axis-aligned bounding box (AABB) of this Circle.
+  //
   // Note: Returns a _new_ `Polygon` each time you call this.
   /**
    * @return {Polygon} The AABB
    */
   Circle.prototype['getAABB'] = Circle.prototype.getAABB = function() {
-    var r = this['r'];
-    var corner = this['pos'].clone().add(this['offset']).sub(new Vector(r, r));
-    return new Box(corner, r*2, r*2).toPolygon();
+    return this.getAABBAsBox().toPolygon();
   };
 
   // Set the current offset to apply to the radius.
@@ -457,11 +467,11 @@
   // Compute the axis-aligned bounding box. Any current state
   // (translations/rotations) will be applied before constructing the AABB.
   //
-  // Note: Returns a _new_ `Polygon` each time you call this.
+  // Note: Returns a _new_ `Box` each time you call this.
   /**
    * @return {Polygon} The AABB
    */
-  Polygon.prototype["getAABB"] = Polygon.prototype.getAABB = function() {
+  Polygon.prototype["getAABBAsBox"] = Polygon.prototype.getAABBAsBox = function() {
     var points = this["calcPoints"];
     var len = points.length;
     var xMin = points[0]["x"];
@@ -483,7 +493,19 @@
         yMax = point["y"];
       }
     }
-    return new Box(this['pos'].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
+    return new Box(this['pos'].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin);
+  };
+
+
+  // Compute the axis-aligned bounding box. Any current state
+  // (translations/rotations) will be applied before constructing the AABB.
+  //
+  // Note: Returns a _new_ `Polygon` each time you call this.
+  /**
+   * @return {Polygon} The AABB
+   */
+  Polygon.prototype["getAABB"] = Polygon.prototype.getAABB = function() {
+    return this.getAABBAsBox().toPolygon();
   };
 
   // Compute the centroid (geometric center) of the polygon. Any current state
