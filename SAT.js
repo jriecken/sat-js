@@ -1,10 +1,10 @@
-// Version 0.8.0 - Copyright 2012 - 2018 -  Jim Riecken <jimr@jimr.ca>
+// Version 0.9.0 - Copyright 2012 - 2021 -  Jim Riecken <jimr@jimr.ca>
 //
 // Released under the MIT License - https://github.com/jriecken/sat-js
 //
 // A simple library for determining intersections of circles and
 // polygons using the Separating Axis Theorem.
-/** @preserve SAT.js - Version 0.8.0 - Copyright 2012 - 2018 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. https://github.com/jriecken/sat-js */
+/** @preserve SAT.js - Version 0.9.0 - Copyright 2012 - 2021 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. https://github.com/jriecken/sat-js */
 
 /*global define: false, module: false*/
 /*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true,
@@ -64,7 +64,7 @@
    * @param {Vector} other The other Vector.
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['copy'] = Vector.prototype.copy = function(other) {
+  Vector.prototype['copy'] = Vector.prototype.copy = function (other) {
     this['x'] = other['x'];
     this['y'] = other['y'];
     return this;
@@ -74,7 +74,7 @@
   /**
    * @return {Vector} The new cloned vector
    */
-  Vector.prototype['clone'] = Vector.prototype.clone = function() {
+  Vector.prototype['clone'] = Vector.prototype.clone = function () {
     return new Vector(this['x'], this['y']);
   };
 
@@ -83,7 +83,7 @@
   /**
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['perp'] = Vector.prototype.perp = function() {
+  Vector.prototype['perp'] = Vector.prototype.perp = function () {
     var x = this['x'];
     this['x'] = this['y'];
     this['y'] = -x;
@@ -107,7 +107,7 @@
   /**
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['reverse'] = Vector.prototype.reverse = function() {
+  Vector.prototype['reverse'] = Vector.prototype.reverse = function () {
     this['x'] = -this['x'];
     this['y'] = -this['y'];
     return this;
@@ -118,9 +118,9 @@
   /**
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['normalize'] = Vector.prototype.normalize = function() {
+  Vector.prototype['normalize'] = Vector.prototype.normalize = function () {
     var d = this.len();
-    if(d > 0) {
+    if (d > 0) {
       this['x'] = this['x'] / d;
       this['y'] = this['y'] / d;
     }
@@ -132,7 +132,7 @@
    * @param {Vector} other The other Vector.
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['add'] = Vector.prototype.add = function(other) {
+  Vector.prototype['add'] = Vector.prototype.add = function (other) {
     this['x'] += other['x'];
     this['y'] += other['y'];
     return this;
@@ -143,7 +143,7 @@
    * @param {Vector} other The other Vector.
    * @return {Vector} This for chaiing.
    */
-  Vector.prototype['sub'] = Vector.prototype.sub = function(other) {
+  Vector.prototype['sub'] = Vector.prototype.sub = function (other) {
     this['x'] -= other['x'];
     this['y'] -= other['y'];
     return this;
@@ -157,7 +157,7 @@
    *   is not specified, the x scaling factor will be used.
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['scale'] = Vector.prototype.scale = function(x,y) {
+  Vector.prototype['scale'] = Vector.prototype.scale = function (x, y) {
     this['x'] *= x;
     this['y'] *= typeof y != 'undefined' ? y : x;
     return this;
@@ -168,7 +168,7 @@
    * @param {Vector} other The vector to project onto.
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['project'] = Vector.prototype.project = function(other) {
+  Vector.prototype['project'] = Vector.prototype.project = function (other) {
     var amt = this.dot(other) / other.len2();
     this['x'] = amt * other['x'];
     this['y'] = amt * other['y'];
@@ -181,7 +181,7 @@
    * @param {Vector} other The unit vector to project onto.
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['projectN'] = Vector.prototype.projectN = function(other) {
+  Vector.prototype['projectN'] = Vector.prototype.projectN = function (other) {
     var amt = this.dot(other);
     this['x'] = amt * other['x'];
     this['y'] = amt * other['y'];
@@ -193,7 +193,7 @@
    * @param {Vector} axis The vector representing the axis.
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['reflect'] = Vector.prototype.reflect = function(axis) {
+  Vector.prototype['reflect'] = Vector.prototype.reflect = function (axis) {
     var x = this['x'];
     var y = this['y'];
     this.project(axis).scale(2);
@@ -208,7 +208,7 @@
    * @param {Vector} axis The unit vector representing the axis.
    * @return {Vector} This for chaining.
    */
-  Vector.prototype['reflectN'] = Vector.prototype.reflectN = function(axis) {
+  Vector.prototype['reflectN'] = Vector.prototype.reflectN = function (axis) {
     var x = this['x'];
     var y = this['y'];
     this.projectN(axis).scale(2);
@@ -222,7 +222,7 @@
    * @param {Vector}  other The vector to dot this one against.
    * @return {number} The dot product.
    */
-  Vector.prototype['dot'] = Vector.prototype.dot = function(other) {
+  Vector.prototype['dot'] = Vector.prototype.dot = function (other) {
     return this['x'] * other['x'] + this['y'] * other['y'];
   };
 
@@ -230,7 +230,7 @@
   /**
    * @return {number} The length^2 of this vector.
    */
-  Vector.prototype['len2'] = Vector.prototype.len2 = function() {
+  Vector.prototype['len2'] = Vector.prototype.len2 = function () {
     return this.dot(this);
   };
 
@@ -238,7 +238,7 @@
   /**
    * @return {number} The length of this vector.
    */
-  Vector.prototype['len'] = Vector.prototype.len = function() {
+  Vector.prototype['len'] = Vector.prototype.len = function () {
     return Math.sqrt(this.len2());
   };
 
@@ -267,10 +267,10 @@
   /**
    * @return {Polygon} The AABB
    */
-  Circle.prototype['getAABBAsBox'] = Circle.prototype.getAABBAsBox = function() {
+  Circle.prototype['getAABBAsBox'] = Circle.prototype.getAABBAsBox = function () {
     var r = this['r'];
     var corner = this['pos'].clone().add(this['offset']).sub(new Vector(r, r));
-    return new Box(corner, r*2, r*2);
+    return new Box(corner, r * 2, r * 2);
   };
 
   // Compute the axis-aligned bounding box (AABB) of this Circle.
@@ -279,7 +279,7 @@
   /**
    * @return {Polygon} The AABB
    */
-  Circle.prototype['getAABB'] = Circle.prototype.getAABB = function() {
+  Circle.prototype['getAABB'] = Circle.prototype.getAABB = function () {
     return this.getAABBAsBox().toPolygon();
   };
 
@@ -288,7 +288,7 @@
    * @param {Vector} offset The new offset vector.
    * @return {Circle} This for chaining.
    */
-  Circle.prototype['setOffset'] = Circle.prototype.setOffset = function(offset) {
+  Circle.prototype['setOffset'] = Circle.prototype.setOffset = function (offset) {
     this['offset'] = offset;
     return this;
   };
@@ -331,7 +331,7 @@
    *   in counter-clockwise order.
    * @return {Polygon} This for chaining.
    */
-  Polygon.prototype['setPoints'] = Polygon.prototype.setPoints = function(points) {
+  Polygon.prototype['setPoints'] = Polygon.prototype.setPoints = function (points) {
     // Only re-allocate if this is a new polygon or the number of points has changed.
     var lengthChanged = !this['points'] || this['points'].length !== points.length;
     if (lengthChanged) {
@@ -364,7 +364,7 @@
    * @param {number} angle The current rotation angle (in radians).
    * @return {Polygon} This for chaining.
    */
-  Polygon.prototype['setAngle'] = Polygon.prototype.setAngle = function(angle) {
+  Polygon.prototype['setAngle'] = Polygon.prototype.setAngle = function (angle) {
     this['angle'] = angle;
     this._recalc();
     return this;
@@ -375,7 +375,7 @@
    * @param {Vector} offset The new offset vector.
    * @return {Polygon} This for chaining.
    */
-  Polygon.prototype['setOffset'] = Polygon.prototype.setOffset = function(offset) {
+  Polygon.prototype['setOffset'] = Polygon.prototype.setOffset = function (offset) {
     this['offset'] = offset;
     this._recalc();
     return this;
@@ -388,7 +388,7 @@
    * @param {number} angle The angle to rotate (in radians)
    * @return {Polygon} This for chaining.
    */
-  Polygon.prototype['rotate'] = Polygon.prototype.rotate = function(angle) {
+  Polygon.prototype['rotate'] = Polygon.prototype.rotate = function (angle) {
     var points = this['points'];
     var len = points.length;
     for (var i = 0; i < len; i++) {
@@ -414,8 +414,8 @@
     var points = this['points'];
     var len = points.length;
     for (var i = 0; i < len; i++) {
-      points[i]["x"] += x;
-      points[i]["y"] += y;
+      points[i]['x'] += x;
+      points[i]['y'] += y;
     }
     this._recalc();
     return this;
@@ -427,7 +427,7 @@
   /**
    * @return {Polygon} This for chaining.
    */
-  Polygon.prototype._recalc = function() {
+  Polygon.prototype._recalc = function () {
     // Calculated points - this is what is used for underlying collisions and takes into account
     // the angle/offset set on the polygon.
     var calcPoints = this['calcPoints'];
@@ -447,8 +447,8 @@
     var i;
     for (i = 0; i < len; i++) {
       var calcPoint = calcPoints[i].copy(points[i]);
-      calcPoint["x"] += offset["x"];
-      calcPoint["y"] += offset["y"];
+      calcPoint['x'] += offset['x'];
+      calcPoint['y'] += offset['y'];
       if (angle !== 0) {
         calcPoint.rotate(angle);
       }
@@ -471,26 +471,26 @@
   /**
    * @return {Polygon} The AABB
    */
-  Polygon.prototype["getAABBAsBox"] = Polygon.prototype.getAABBAsBox = function() {
-    var points = this["calcPoints"];
+  Polygon.prototype['getAABBAsBox'] = Polygon.prototype.getAABBAsBox = function () {
+    var points = this['calcPoints'];
     var len = points.length;
-    var xMin = points[0]["x"];
-    var yMin = points[0]["y"];
-    var xMax = points[0]["x"];
-    var yMax = points[0]["y"];
+    var xMin = points[0]['x'];
+    var yMin = points[0]['y'];
+    var xMax = points[0]['x'];
+    var yMax = points[0]['y'];
     for (var i = 1; i < len; i++) {
       var point = points[i];
-      if (point["x"] < xMin) {
-        xMin = point["x"];
+      if (point['x'] < xMin) {
+        xMin = point['x'];
       }
-      else if (point["x"] > xMax) {
-        xMax = point["x"];
+      else if (point['x'] > xMax) {
+        xMax = point['x'];
       }
-      if (point["y"] < yMin) {
-        yMin = point["y"];
+      if (point['y'] < yMin) {
+        yMin = point['y'];
       }
-      else if (point["y"] > yMax) {
-        yMax = point["y"];
+      else if (point['y'] > yMax) {
+        yMax = point['y'];
       }
     }
     return new Box(this['pos'].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin);
@@ -504,7 +504,7 @@
   /**
    * @return {Polygon} The AABB
    */
-  Polygon.prototype["getAABB"] = Polygon.prototype.getAABB = function() {
+  Polygon.prototype['getAABB'] = Polygon.prototype.getAABB = function () {
     return this.getAABBAsBox().toPolygon();
   };
 
@@ -517,18 +517,18 @@
   /**
    * @return {Vector} A Vector that contains the coordinates of the Centroid.
    */
-  Polygon.prototype["getCentroid"] = Polygon.prototype.getCentroid = function() {
-    var points = this["calcPoints"];
+  Polygon.prototype['getCentroid'] = Polygon.prototype.getCentroid = function () {
+    var points = this['calcPoints'];
     var len = points.length;
     var cx = 0;
     var cy = 0;
     var ar = 0;
     for (var i = 0; i < len; i++) {
       var p1 = points[i];
-      var p2 = i === len - 1 ? points[0] : points[i+1]; // Loop around if last point
-      var a = p1["x"] * p2["y"] - p2["x"] * p1["y"];
-      cx += (p1["x"] + p2["x"]) * a;
-      cy += (p1["y"] + p2["y"]) * a;
+      var p2 = i === len - 1 ? points[0] : points[i + 1]; // Loop around if last point
+      var a = p1['x'] * p2['y'] - p2['x'] * p1['y'];
+      cx += (p1['x'] + p2['x']) * a;
+      cy += (p1['y'] + p2['y']) * a;
       ar += a;
     }
     ar = ar * 3; // we want 1 / 6 the area and we currently have 2*area
@@ -563,13 +563,13 @@
   /**
    * @return {Polygon} A new Polygon that represents this box.
    */
-  Box.prototype['toPolygon'] = Box.prototype.toPolygon = function() {
+  Box.prototype['toPolygon'] = Box.prototype.toPolygon = function () {
     var pos = this['pos'];
     var w = this['w'];
     var h = this['h'];
     return new Polygon(new Vector(pos['x'], pos['y']), [
-     new Vector(), new Vector(w, 0),
-     new Vector(w,h), new Vector(0,h)
+      new Vector(), new Vector(w, 0),
+      new Vector(w, h), new Vector(0, h)
     ]);
   };
 
@@ -599,7 +599,7 @@
   /**
    * @return {Response} This for chaining
    */
-  Response.prototype['clear'] = Response.prototype.clear = function() {
+  Response.prototype['clear'] = Response.prototype.clear = function () {
     this['aInB'] = true;
     this['bInA'] = true;
     this['overlap'] = Number.MAX_VALUE;
@@ -652,7 +652,7 @@
     var min = Number.MAX_VALUE;
     var max = -Number.MAX_VALUE;
     var len = points.length;
-    for (var i = 0; i < len; i++ ) {
+    for (var i = 0; i < len; i++) {
       // The magnitude of the projection of the point onto the normal
       var dot = points[i].dot(normal);
       if (dot < min) { min = dot; }
@@ -705,20 +705,20 @@
         if (rangeA[1] < rangeB[1]) {
           overlap = rangeA[1] - rangeB[0];
           response['bInA'] = false;
-        // B is fully inside A.  Pick the shortest way out.
+          // B is fully inside A.  Pick the shortest way out.
         } else {
           var option1 = rangeA[1] - rangeB[0];
           var option2 = rangeB[1] - rangeA[0];
           overlap = option1 < option2 ? option1 : -option2;
         }
-      // B starts further left than A
+        // B starts further left than A
       } else {
         response['bInA'] = false;
         // B ends before A ends. We have to push A out of B
         if (rangeA[1] > rangeB[1]) {
           overlap = rangeA[0] - rangeB[1];
           response['aInB'] = false;
-        // A is fully inside B.  Pick the shortest way out.
+          // A is fully inside B.  Pick the shortest way out.
         } else {
           var option1 = rangeA[1] - rangeB[0];
           var option2 = rangeB[1] - rangeA[0];
@@ -844,7 +844,7 @@
       response['overlap'] = totalRadius - dist;
       response['overlapN'].copy(differenceV.normalize());
       response['overlapV'].copy(differenceV).scale(response['overlap']);
-      response['aInB']= a['r'] <= b['r'] && dist <= b['r'] - a['r'];
+      response['aInB'] = a['r'] <= b['r'] && dist <= b['r'] - a['r'];
       response['bInA'] = b['r'] <= a['r'] && dist <= a['r'] - b['r'];
     }
     T_VECTORS.push(differenceV);
@@ -916,7 +916,7 @@
           }
         }
         T_VECTORS.push(point2);
-      // If it's the right region:
+        // If it's the right region:
       } else if (region === RIGHT_VORONOI_REGION) {
         // We need to make sure we're in the left region on the next edge
         edge.copy(polygon['edges'][next]);
@@ -939,7 +939,7 @@
             overlap = radius - dist;
           }
         }
-      // Otherwise, it's the middle region:
+        // Otherwise, it's the middle region:
       } else {
         // Need to check if the circle is intersecting the edge,
         // Change the edge into its "edge normal".
@@ -1037,7 +1037,7 @@
       }
     }
     // If any of the edge normals of B is a separating axis, no intersection.
-    for (var i = 0;i < bLen; i++) {
+    for (var i = 0; i < bLen; i++) {
       if (isSeparatingAxis(a['pos'], b['pos'], aPoints, bPoints, b['normals'][i], response)) {
         return false;
       }

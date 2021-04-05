@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0 (April 4, 2021)
+
+- Add `getAABBAsBox` methods to `Polygon` and `Circle` that returns a `Box` (`getAABB` returns a `Polygon`) - thanks [getkey](https://github.com/getkey)!
+
 ## 0.8.0 (Sept 7, 2019)
 
 - Combine consecutive duplicate points in polygons to remove zero-length edges. (Fixes #55)
